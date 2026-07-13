@@ -8,23 +8,23 @@
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BACManager &mdash; BACnet &amp; Modbus Commissioning Tool for Windows</title>
-<meta name="description" content="Discover, browse, read and write BACnet/IP and MS/TP devices from Windows &mdash; plus Modbus RTU and TCP in the same app. Property browser, schedule and calendar editor, EDE export, COV. One native tool for mixed BACnet and Modbus sites.">
+<title>BACManager &mdash; One Windows Tool for BACnet and Modbus Devices</title>
+<meta name="description" content="One native Windows tool for mixed buildings: discover, browse and write BACnet/IP and MS/TP devices AND poll Modbus RTU/TCP meters and drives &mdash; from one window. Property browser, schedule &amp; calendar editor, EDE export, COV. Stop carrying two tools.">
 <meta name="keywords" content="BACnet tool, BACnet commissioning, BACnet explorer, BACnet/IP, BACnet MS/TP, BACnet Modbus tool, BACnet and Modbus, Modbus RTU, Modbus TCP, BACnet scanner, BACnet Windows, property browser, schedule editor, EDE export, whoIs, BBMD">
 <link rel="canonical" href="https://bacmanager.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="BACManager &mdash; BACnet &amp; Modbus Commissioning Tool">
-<meta property="og:description" content="One native Windows tool for mixed BACnet and Modbus sites. BACnet/IP, MS/TP and Modbus RTU/TCP in one app.">
+<meta property="og:title" content="BACManager &mdash; One Tool for BACnet and Modbus">
+<meta property="og:description" content="The AHU speaks BACnet, the meters speak Modbus. BACManager reads both from one window. Stop carrying two tools.">
 <meta property="og:url" content="https://bacmanager.com/">
 <meta property="og:site_name" content="BACManager">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BACManager &mdash; BACnet &amp; Modbus Commissioning Tool">
-<meta name="twitter:description" content="One native Windows tool for mixed BACnet and Modbus sites.">
+<meta name="twitter:title" content="BACManager &mdash; One Tool for BACnet and Modbus">
+<meta name="twitter:description" content="The AHU speaks BACnet, the meters speak Modbus. BACManager reads both from one window.">
 <meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"description":"BACnet and Modbus commissioning tool for Windows. Discover, browse, read and write BACnet/IP and MS/TP devices, plus Modbus RTU and TCP; property browser, schedule and calendar editor, EDE export."}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"description":"One Windows tool for mixed BACnet and Modbus buildings. Discover, browse and write BACnet/IP and MS/TP devices, and poll Modbus RTU/TCP meters and drives, from one window. Property browser, schedule and calendar editor, EDE export, COV."}
 </script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -136,6 +136,14 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
 
 @media(max-width:768px){nav .nav-links.open a,nav .nav-links.open .nav-drop-label{white-space:normal!important;word-break:break-word}}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Aren't there free BACnet tools already?","acceptedAnswer":{"@type":"Answer","text":"Free BACnet tools exist and are good at BACnet, but they are BACnet-only. When a site also has Modbus energy meters, drives or inverters, a BACnet-only tool means switching to a second app. BACManager reads both BACnet and Modbus in one tool."}},
+{"@type":"Question","name":"Does BACManager support MS/TP or just BACnet/IP?","acceptedAnswer":{"@type":"Answer","text":"Full MS/TP master-node support over RS-485 alongside BACnet/IP. The same property browser, schedule editor and EDE export work over MS/TP and IP."}},
+{"@type":"Question","name":"How deep is the Modbus support?","acceptedAnswer":{"@type":"Answer","text":"Modbus RTU and TCP polling of registers, coils, common data types and scaling. For heavy Modbus work like dashboards, alarms, historian and scripting, ModbusManager goes further."}},
+{"@type":"Question","name":"Is it a one-time price or subscription?","acceptedAnswer":{"@type":"Answer","text":"One-time. $149 with free updates within the major version. No subscription, no per-point fees, no cloud dependency."}}
+]}
+</script>
 </head>
 <body>
 
@@ -147,7 +155,8 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
     <li><a href="#mstp">MS/TP</a></li>
     <li><a href="#protocols">+ Modbus</a></li>
     <li><a href="#schedule">Schedule</a></li>
-    <li><a href="#compare">Vs. BMS</a></li>
+    <li><a href="#compare">Why one tool</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
   </ul>
@@ -159,13 +168,13 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
 <section class="hero-section">
   <div class="hero">
     <div class="hero-left nameplate plate">
-      <div class="np-eyebrow">Type plate &middot; BACnet/IP + MS/TP &middot; Windows 10/11</div>
-      <h1>Talk to any<br><span class="accent">BACnet<br>device</span></h1>
-      <p class="hero-desc">Discover, browse, read and write BACnet devices with a fast native Windows application. Full property browser, schedule &amp; calendar editor, EDE export and COV &mdash; over BACnet/IP or MS/TP. And because it speaks <strong style="color:var(--amber-ink)">Modbus RTU and TCP</strong> too, one tool covers the whole mixed site &mdash; BACnet controllers and Modbus meters alike. No BMS, no engineering workstation, no per-point licensing.</p>
+      <div class="np-eyebrow">One tool for mixed buildings &middot; Windows 10/11</div>
+      <h1>One tool for<br>every device<br><span class="accent">in the building</span></h1>
+      <p class="hero-desc">The AHU speaks BACnet. The energy meters and drives speak Modbus. Stop carrying two tools. BACManager discovers, browses and writes <strong style="color:var(--amber-ink)">BACnet/IP, MS/TP</strong> and <strong style="color:var(--amber-ink)">Modbus RTU/TCP</strong> devices &mdash; property browser, schedule &amp; calendar editor, EDE export, COV &mdash; all from one native Windows window. No BMS, no engineering workstation, no per-point licensing.</p>
       <div class="np-specs">
-        <div><span>Version</span><b>v1.0</b></div>
-        <div><span>Protocols</span><b>BACnet+Modbus</b></div>
-        <div><span>Discovery</span><b class="run">&#9679; whoIs</b></div>
+        <div><span>BACnet</span><b class="run">&#9679; IP+MS/TP</b></div>
+        <div><span>Modbus</span><b class="run">&#9679; RTU+TCP</b></div>
+        <div><span>Tools needed</span><b>Just one</b></div>
         <div><span>License</span><b class="pro">ONE-TIME</b></div>
       </div>
       <div class="hero-btns">
@@ -174,9 +183,9 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
       </div>
       <div class="os-tags">
         <span class="os-tag">Windows 10/11</span>
-        <span class="os-tag">BACnet/IP</span>
-        <span class="os-tag">MS/TP (RS-485)</span>
-        <span class="os-tag">Modbus RTU &amp; TCP</span>
+        <span class="os-tag">BACnet/IP + MS/TP</span>
+        <span class="os-tag">Modbus RTU + TCP</span>
+        <span class="os-tag">One app, one window</span>
         <span class="os-tag">One-time license</span>
       </div>
     </div>
@@ -190,12 +199,12 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
             <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8e88;margin-left:6px">bacmanager &mdash; discovery</span>
           </div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.85;color:#c8ccc4">
-            <div style="color:var(--safety)">&rarr; discover &middot; broadcast whoIs</div>
-            <div>&nbsp; device 4321 &nbsp;"AHU-Controller-1" &nbsp;<span style="color:#7fd6aa">MS/TP</span></div>
+            <div style="color:var(--safety)">&rarr; scan &middot; BACnet whoIs + Modbus poll</div>
+            <div>&nbsp; device 4321 &nbsp;"AHU-Controller-1" &nbsp;<span style="color:#7fd6aa">BACnet MS/TP</span></div>
             <div>&nbsp; device 1201 &nbsp;"VAV-Zone-North" &nbsp;&nbsp;<span style="color:#6fb8e0">BACnet/IP</span></div>
-            <div>&nbsp; device 1202 &nbsp;"VAV-Zone-South" &nbsp;&nbsp;<span style="color:#6fb8e0">BACnet/IP</span></div>
+            <div>&nbsp; unit 3 &nbsp;&nbsp;&nbsp;&nbsp;"Power-Meter-Main" <span style="color:#e0a86f">Modbus RTU</span></div>
+            <div>&nbsp; 10.0.0.44 &nbsp;"Solar-Inverter-1" &nbsp;<span style="color:#e0a86f">Modbus TCP</span></div>
             <div style="color:#f0c040">&nbsp; schedule 17:0 &middot; Room_Sched &middot; 7 days</div>
-            <div style="color:#8a8e88">&nbsp; analog-value 0 &middot; 21.5 &deg;C &middot; present-value</div>
           </div>
         </div>
       </div>
@@ -205,10 +214,28 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
 
 <div class="hazard"></div>
 
+<section class="section" id="protocols">
+  <div class="sec-label">// one tool, every device</div>
+  <h2 class="sec-title">BACnet and Modbus, one app</h2>
+  <p class="sec-sub">Real buildings are mixed. The AHU talks BACnet; the energy meters and drives talk Modbus. BACManager speaks both.</p>
+  <div class="plate" style="padding:2rem 2.2rem;max-width:1100px;margin:0 auto">
+    <p style="color:var(--body);line-height:1.7;font-size:0.95rem;max-width:820px">Real buildings are mixed. The air handlers and controllers talk BACnet; the energy meters, VFDs and solar inverters talk Modbus. Every other tool forces you to pick a side &mdash; a BACnet explorer that ignores your meters, or a Modbus poller that can't see your controllers. BACManager does both natively: discover and browse BACnet/IP and MS/TP devices, <strong>and</strong> poll Modbus RTU or TCP devices on the same site, each on its own port, side by side. Walk into a plant room, plug in, and read everything with one window open.</p>
+    <div class="np-specs" style="max-width:720px;margin-top:1.4rem">
+      <div><span>BACnet</span><b class="run">&#9679; IP + MS/TP</b></div>
+      <div><span>Modbus</span><b class="run">&#9679; RTU + TCP</b></div>
+      <div><span>Ports</span><b>Simultaneous</b></div>
+      <div><span>Tools needed</span><b>Just one</b></div>
+    </div>
+    <p style="color:var(--muted);font-size:0.82rem;margin-top:1rem;line-height:1.6">Need advanced Modbus features &mdash; dashboards, alarms, historian, scripting? Our dedicated Modbus tool <a href="https://modbusmanager.com" style="color:var(--amber-ink)">ModbusManager</a> goes deeper. BACManager covers the everyday Modbus reads you hit during BACnet commissioning.</p>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
 <section class="section" id="features">
   <div class="sec-label">// what it does</div>
-  <h2 class="sec-title">Everything for BACnet commissioning</h2>
-  <p class="sec-sub">One native Windows tool for discovering, inspecting and configuring BACnet devices on site.</p>
+  <h2 class="sec-title">Everything for on-site commissioning</h2>
+  <p class="sec-sub">One native Windows tool for discovering, inspecting and configuring the BACnet <em>and</em> Modbus devices on a site.</p>
   <div class="features-grid">
     <div class="feat">
       <div class="feat-icon">&#128269;</div>
@@ -262,24 +289,6 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
 
 <div class="divider-line"></div>
 
-<section class="section" id="protocols">
-  <div class="sec-label">// one tool, every device</div>
-  <h2 class="sec-title">BACnet and Modbus, one app</h2>
-  <p class="sec-sub">Real buildings are mixed. The AHU talks BACnet; the energy meters and drives talk Modbus. BACManager speaks both.</p>
-  <div class="plate" style="padding:2rem 2.2rem;max-width:1100px;margin:0 auto">
-    <p style="color:var(--body);line-height:1.7;font-size:0.95rem;max-width:820px">Most commissioning tools force you to carry one app for BACnet and another for Modbus. BACManager does both natively: discover and browse BACnet/IP and MS/TP devices, <strong>and</strong> poll Modbus RTU or TCP meters, drives and I/O on the same site &mdash; each on its own port, side by side. Walk into a plant room, plug in, and read everything with one window open.</p>
-    <div class="np-specs" style="max-width:720px;margin-top:1.4rem">
-      <div><span>BACnet</span><b class="run">&#9679; IP + MS/TP</b></div>
-      <div><span>Modbus</span><b class="run">&#9679; RTU + TCP</b></div>
-      <div><span>Ports</span><b>Simultaneous</b></div>
-      <div><span>Tools needed</span><b>Just one</b></div>
-    </div>
-    <p style="color:var(--muted);font-size:0.82rem;margin-top:1rem;line-height:1.6">Need advanced Modbus features &mdash; dashboards, alarms, historian, scripting? Our dedicated Modbus tool <a href="https://modbusmanager.com" style="color:var(--amber-ink)">ModbusManager</a> goes deeper. BACManager covers the everyday Modbus reads you hit during BACnet commissioning.</p>
-  </div>
-</section>
-
-<div class="divider-line"></div>
-
 <section class="section" id="schedule">
   <div class="sec-label">// schedule + calendar</div>
   <h2 class="sec-title">Read and write schedules</h2>
@@ -292,21 +301,50 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
 <div class="divider-line"></div>
 
 <section class="section" id="compare">
-  <div class="sec-label">// where it fits</div>
-  <h2 class="sec-title">BACManager vs. a full BMS</h2>
-  <p class="sec-sub">BACManager is a commissioning and diagnostic tool, not a head-end. That is exactly why it is fast to use on site.</p>
+  <div class="sec-label">// why one tool</div>
+  <h2 class="sec-title">Two tools, or one</h2>
+  <p class="sec-sub">Most engineers carry a BACnet explorer <em>and</em> a Modbus tool. On a mixed site that means two apps, two windows, two workflows. BACManager is one.</p>
   <div class="table-scroll">
     <table class="compare-table">
-      <tr><th>Task</th><th class="hl">BACManager</th><th>Full BMS / head-end</th></tr>
-      <tr><td>Discover devices on site</td><td class="hl"><span class="yes">&#10003; Minutes</span></td><td>Requires project setup</td></tr>
-      <tr><td>Read/write any property</td><td class="hl"><span class="yes">&#10003; Yes</span></td><td>Often abstracted away</td></tr>
-      <tr><td>Edit schedules directly</td><td class="hl"><span class="yes">&#10003; Yes</span></td><td>Via engineering tool</td></tr>
-      <tr><td>MS/TP + IP in one tool</td><td class="hl"><span class="yes">&#10003; Yes</span></td><td>Varies</td></tr>
-      <tr><td>BACnet <em>and</em> Modbus</td><td class="hl"><span class="yes">&#10003; Both</span></td><td>BACnet only</td></tr>
-      <tr><td>EDE export</td><td class="hl"><span class="yes">&#10003; Yes</span></td><td>Varies</td></tr>
-      <tr><td>Cost</td><td class="hl"><span class="hl">$149 one-time</span></td><td>Thousands + licensing</td></tr>
-      <tr><td>Install footprint</td><td class="hl"><span class="yes">&#10003; Single app</span></td><td>Server + database</td></tr>
+      <tr><th>On a mixed BACnet + Modbus site</th><th>BACnet explorer</th><th>Modbus tool</th><th class="hl">BACManager</th></tr>
+      <tr><td>Discover BACnet devices (whoIs)</td><td><span class="yes">&#10003;</span></td><td><span class="no">&#10005;</span></td><td class="hl"><span class="yes">&#10003;</span></td></tr>
+      <tr><td>Browse / write BACnet properties</td><td><span class="yes">&#10003;</span></td><td><span class="no">&#10005;</span></td><td class="hl"><span class="yes">&#10003;</span></td></tr>
+      <tr><td>BACnet schedule &amp; calendar editor</td><td>Varies</td><td><span class="no">&#10005;</span></td><td class="hl"><span class="yes">&#10003;</span></td></tr>
+      <tr><td>Read Modbus RTU meters &amp; drives</td><td><span class="no">&#10005;</span></td><td><span class="yes">&#10003;</span></td><td class="hl"><span class="yes">&#10003;</span></td></tr>
+      <tr><td>Read Modbus TCP devices</td><td><span class="no">&#10005;</span></td><td><span class="yes">&#10003;</span></td><td class="hl"><span class="yes">&#10003;</span></td></tr>
+      <tr><td>One window for the whole site</td><td><span class="no">&#10005;</span></td><td><span class="no">&#10005;</span></td><td class="hl"><span class="yes">&#10003;</span></td></tr>
+      <tr><td>Apps to buy, learn &amp; carry</td><td colspan="2" style="text-align:center">Two</td><td class="hl"><span class="hl">One &mdash; $149</span></td></tr>
     </table>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">Honest answers</h2>
+  <p class="sec-sub">The things a careful buyer asks before paying for a commissioning tool.</p>
+  <div style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:0.6rem">
+    <details style="background:var(--plate);border:1px solid var(--steel);border-radius:3px;padding:1rem 1.2rem">
+      <summary style="font-family:'Saira Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;cursor:pointer;font-size:1.05rem">Aren&rsquo;t there free BACnet tools already?</summary>
+      <p style="color:var(--body);line-height:1.65;font-size:0.92rem;margin-top:0.8rem">Yes &mdash; and they are good at BACnet. But they are BACnet-only. The moment your site also has Modbus energy meters, VFDs or inverters &mdash; which most buildings do &mdash; a BACnet-only tool leaves you switching to a second app. BACManager is the one tool that reads both, so you are not paying for BACnet you can get free; you are paying to stop carrying two tools.</p>
+    </details>
+    <details style="background:var(--plate);border:1px solid var(--steel);border-radius:3px;padding:1rem 1.2rem">
+      <summary style="font-family:'Saira Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;cursor:pointer;font-size:1.05rem">Is the BACnet side a real implementation?</summary>
+      <p style="color:var(--body);line-height:1.65;font-size:0.92rem;margin-top:0.8rem">Yes. Full device discovery (whoIs, including devices behind routers via BBMD/FDR), complete object-list browsing, read and write of any property, COV subscriptions, and a Schedule &amp; Calendar editor. The schedule and calendar codec is validated byte-for-byte against independent reference BACnet stacks.</p>
+    </details>
+    <details style="background:var(--plate);border:1px solid var(--steel);border-radius:3px;padding:1rem 1.2rem">
+      <summary style="font-family:'Saira Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;cursor:pointer;font-size:1.05rem">Does it do MS/TP, or just BACnet/IP?</summary>
+      <p style="color:var(--body);line-height:1.65;font-size:0.92rem;margin-top:0.8rem">Full MS/TP master-node support over RS-485, alongside BACnet/IP. Point a USB-RS485 adapter at an MS/TP segment, pick the baud rate and MAC, and the same browser, schedule editor and EDE export work exactly as they do over IP. The field devices that are MS/TP-only &mdash; VAV boxes, room controllers &mdash; are reachable too.</p>
+    </details>
+    <details style="background:var(--plate);border:1px solid var(--steel);border-radius:3px;padding:1rem 1.2rem">
+      <summary style="font-family:'Saira Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;cursor:pointer;font-size:1.05rem">How deep is the Modbus support?</summary>
+      <p style="color:var(--body);line-height:1.65;font-size:0.92rem;margin-top:0.8rem">Modbus RTU and TCP polling &mdash; the everyday reads you hit during commissioning: registers, coils, common data types and scaling. If you need heavy Modbus work &mdash; dashboards, alarms, historian, scripting &mdash; our dedicated tool <a href="https://modbusmanager.com" style="color:var(--amber-ink)">ModbusManager</a> goes further. BACManager covers the Modbus you meet while commissioning BACnet.</p>
+    </details>
+    <details style="background:var(--plate);border:1px solid var(--steel);border-radius:3px;padding:1rem 1.2rem">
+      <summary style="font-family:'Saira Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;cursor:pointer;font-size:1.05rem">One-time price, or subscription?</summary>
+      <p style="color:var(--body);line-height:1.65;font-size:0.92rem;margin-top:0.8rem">One-time. $149 buys the tool with free updates within the major version. No subscription, no per-point fees, no cloud dependency &mdash; it runs entirely on your Windows machine.</p>
+    </details>
   </div>
 </section>
 
