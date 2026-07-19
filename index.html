@@ -22,6 +22,20 @@
 <meta name="twitter:title" content="BACManager &mdash; One Tool for BACnet and Modbus">
 <meta name="twitter:description" content="The AHU speaks BACnet, the meters speak Modbus. BACManager reads both from one window.">
 <meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-36F50V7797"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });
+  gtag('js', new Date());
+  gtag('config', 'G-36F50V7797');
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"description":"One Windows tool for mixed BACnet and Modbus buildings. Discover, browse and write BACnet/IP and MS/TP devices, and poll Modbus RTU/TCP meters and drives, from one window. Property browser, schedule and calendar editor, EDE export, COV."}
@@ -426,6 +440,9 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
     }).catch(function(){}).finally(function(){
       document.getElementById('notifyForm').style.display = 'none';
       document.getElementById('notifyMsg').style.display = 'block';
+      if (typeof gtag === 'function') {
+        gtag('event', 'notify_signup', { 'event_category': 'Lead', 'event_label': 'BACManager-Launch-Notify' });
+      }
     });
     return false;
   }
