@@ -394,7 +394,7 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
   <p class="sec-sub" style="margin-left:auto;margin-right:auto;max-width:560px">BACManager is in final testing. Leave your email and we&rsquo;ll notify you the moment the trial and purchase go live &mdash; early subscribers get launch pricing.</p>
   <form id="notifyForm" onsubmit="return submitNotify(event)" style="max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:12px">
     <input type="email" id="notifyEmail" required placeholder="name@company.com" style="padding:0.8rem 1rem;border:2px solid var(--ink);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;background:#fff">
-    <button type="submit" class="btn-buy btn-buy-green" style="border:none;cursor:pointer">Notify me at launch</button>
+    <button type="submit" id="notifyBtn" class="btn-buy btn-buy-green" style="border:none;cursor:pointer">Notify me at launch</button>
   </form>
   <p id="notifyMsg" style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--run);display:none">Thanks &mdash; you&rsquo;re on the list.</p>
 </section>
@@ -414,10 +414,19 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
   }
   function submitNotify(e){
     e.preventDefault();
-    var email = document.getElementById('notifyEmail').value;
-    // TODO launch: asenda päris email-kogumisega (Formspree / Make.com webhook / Paddle checkout)
-    document.getElementById('notifyForm').style.display='none';
-    document.getElementById('notifyMsg').style.display='block';
+    var email = document.getElementById('notifyEmail').value.trim();
+    if (!email) return false;
+    var btn = document.getElementById('notifyBtn');
+    if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+    fetch('https://hook.eu1.make.com/8vo2toj1mysn81ss39gs65iumgojo5ks', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'email=' + encodeURIComponent(email) + '&source=bacmanager.com&ts=' + encodeURIComponent(new Date().toISOString())
+    }).catch(function(){}).finally(function(){
+      document.getElementById('notifyForm').style.display = 'none';
+      document.getElementById('notifyMsg').style.display = 'block';
+    });
     return false;
   }
 </script>
