@@ -37,6 +37,15 @@
   gtag('js', new Date());
   gtag('config', 'G-HGQC0VZ6MK');
 </script>
+<!-- Paddle.js -->
+<script>
+  window.paddleLoaded = false;
+  function initPaddle() {
+    Paddle.Initialize({ token: 'live_ef962437cba8a2379e405749ef8' });
+    window.paddleLoaded = true;
+  }
+</script>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js" onload="initPaddle()"></script>
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"description":"One Windows tool for mixed BACnet and Modbus buildings. Discover, browse and write BACnet/IP and MS/TP devices, and poll Modbus RTU/TCP meters and drives, from one window. Property browser, schedule and calendar editor, EDE export, COV."}
@@ -193,8 +202,8 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
         <div><span>License</span><b class="pro">ONE-TIME</b></div>
       </div>
       <div class="hero-btns">
-        <a href="#pricing" class="btn-primary">Get BACManager &mdash; $149</a>
-        <a href="#notify" class="btn-primary" style="background:var(--plate);color:var(--ink);border:2px solid var(--ink)">Download trial</a>
+        <a href="#" class="btn-primary" onclick="openBuyModal();return false">Get BACManager &mdash; $149</a>
+        <a href="https://github.com/vend123/bacmanager/releases/download/v1.0.0/BACManager.Setup.1.0.0.exe" class="btn-primary" style="background:var(--plate);color:var(--ink);border:2px solid var(--ink)" onclick="trackDownload()" download>Download trial</a>
       </div>
       <div class="os-tags">
         <span class="os-tag">Windows 10/11</span>
@@ -384,7 +393,7 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
         <li>Modbus RTU &amp; TCP built in</li>
         <li>Free updates within major version</li>
       </ul>
-      <a href="#notify" class="btn-buy btn-buy-green" onclick="return notifyClick('buy')">Get BACManager &mdash; $149</a>
+      <a href="#" class="btn-buy btn-buy-green" onclick="openBuyModal();return false">Get BACManager &mdash; $149</a>
     </div>
     <div class="price-card">
       <div class="plan-label">Trial</div>
@@ -396,7 +405,7 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
         <li>Built-in device simulator</li>
         <li>No account required</li>
       </ul>
-      <a href="#notify" class="btn-buy btn-buy-ghost" onclick="return notifyClick('trial')">Download trial</a>
+      <a href="https://github.com/vend123/bacmanager/releases/download/v1.0.0/BACManager.Setup.1.0.0.exe" class="btn-buy btn-buy-ghost" onclick="trackDownload()" download>Download trial</a>
     </div>
   </div>
 </section>
@@ -404,14 +413,13 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
 <div class="divider-line"></div>
 
 <section class="section" id="notify" style="text-align:center">
-  <div class="sec-label" style="color:var(--amber-ink)">// launching soon</div>
-  <h2 class="sec-title">Be first to know</h2>
-  <p class="sec-sub" style="margin-left:auto;margin-right:auto;max-width:560px">BACManager is in final testing. Leave your email and we&rsquo;ll notify you the moment the trial and purchase go live &mdash; early subscribers get launch pricing.</p>
-  <form id="notifyForm" onsubmit="return submitNotify(event)" style="max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:12px">
-    <input type="email" id="notifyEmail" required placeholder="name@company.com" style="padding:0.8rem 1rem;border:2px solid var(--ink);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;background:#fff">
-    <button type="submit" id="notifyBtn" class="btn-buy btn-buy-green" style="border:none;cursor:pointer">Notify me at launch</button>
-  </form>
-  <p id="notifyMsg" style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--run);display:none">Thanks &mdash; you&rsquo;re on the list.</p>
+  <div class="sec-label" style="color:var(--amber-ink)">// available now</div>
+  <h2 class="sec-title">Ready to start?</h2>
+  <p class="sec-sub" style="margin-left:auto;margin-right:auto;max-width:560px">Download the free trial and test against your own devices, or buy a license &mdash; your key is emailed instantly after checkout.</p>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+    <a href="#" class="btn-buy btn-buy-green" style="padding:0.8rem 1.6rem" onclick="openBuyModal();return false">Get BACManager &mdash; $149</a>
+    <a href="https://github.com/vend123/bacmanager/releases/download/v1.0.0/BACManager.Setup.1.0.0.exe" class="btn-buy btn-buy-ghost" style="padding:0.8rem 1.6rem" onclick="trackDownload()" download>Download free trial</a>
+  </div>
 </section>
 
 <div class="hazard"></div>
@@ -422,30 +430,62 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
 </footer>
 
 <script>
-  function notifyClick(kind){
-    document.getElementById('notify').scrollIntoView({behavior:'smooth'});
-    document.getElementById('notifyEmail').focus();
-    return false;
+  var BAC_PRICE_ID = 'pri_01ky20jqe8w5gh6g934kkkevwh';
+  var BAC_DOWNLOAD_URL = 'https://github.com/vend123/bacmanager/releases/download/v1.0.0/BACManager.Setup.1.0.0.exe';
+
+  function trackDownload(){
+    if (typeof gtag === 'function') {
+      gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' });
+    }
+    return true;
   }
-  function submitNotify(e){
-    e.preventDefault();
-    var email = document.getElementById('notifyEmail').value.trim();
-    if (!email) return false;
-    var btn = document.getElementById('notifyBtn');
-    if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
-    fetch('https://hook.eu1.make.com/8vo2toj1mysn81ss39gs65iumgojo5ks', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'email=' + encodeURIComponent(email) + '&source=bacmanager.com&ts=' + encodeURIComponent(new Date().toISOString())
-    }).catch(function(){}).finally(function(){
-      document.getElementById('notifyForm').style.display = 'none';
-      document.getElementById('notifyMsg').style.display = 'block';
-      if (typeof gtag === 'function') {
-        gtag('event', 'notify_signup', { 'event_category': 'Lead', 'event_label': 'BACManager-Launch-Notify' });
-      }
+
+  function openBuyModal(){
+    if (typeof gtag === 'function') {
+      gtag('event', 'buy_button_click', { 'event_category': 'Purchase', 'event_label': 'BACManager-Buy', 'product': 'bac', 'value': 149, 'currency': 'USD' });
+    }
+    document.getElementById('buyModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    var mid = document.getElementById('buyMachineId'); if (mid) mid.focus();
+  }
+
+  function closeBuyModal(){
+    document.getElementById('buyModal').style.display = 'none';
+    document.body.style.overflow = '';
+    document.getElementById('buyMachineId').value = '';
+    document.getElementById('buyEmail').value = '';
+    document.getElementById('buyMidError').style.display = 'none';
+    document.getElementById('buyEmailError').style.display = 'none';
+  }
+
+  function proceedToCheckout(){
+    var machineId = document.getElementById('buyMachineId').value.trim();
+    var email = document.getElementById('buyEmail').value.trim();
+    var midError = document.getElementById('buyMidError');
+    var emailError = document.getElementById('buyEmailError');
+    var valid = true;
+
+    midError.style.display = 'none';
+    if (!machineId) { midError.textContent = 'Machine ID is required.'; midError.style.display = 'block'; valid = false; }
+    else if (!/^[a-zA-Z0-9]{16}$/.test(machineId)) { midError.textContent = 'Machine ID must be exactly 16 letters or digits.'; midError.style.display = 'block'; valid = false; }
+
+    emailError.style.display = 'none';
+    if (!email) { emailError.textContent = 'Email address is required.'; emailError.style.display = 'block'; valid = false; }
+    else if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) { emailError.textContent = 'Please enter a valid email address.'; emailError.style.display = 'block'; valid = false; }
+
+    if (!valid) return;
+    if (!window.paddleLoaded) { alert('Checkout is still loading — please try again in a moment.'); return; }
+
+    closeBuyModal();
+    if (typeof gtag === 'function') {
+      gtag('event', 'begin_checkout', { 'event_category': 'Purchase', 'event_label': 'BACManager-License', 'product': 'bac', 'value': 149, 'currency': 'USD' });
+    }
+    Paddle.Checkout.open({
+      items: [{ priceId: BAC_PRICE_ID, quantity: 1 }],
+      customer: { email: email },
+      customData: { machine_id: machineId, customer_email: email, product: 'bac' },
+      settings: { displayMode: 'overlay', theme: 'dark' }
     });
-    return false;
   }
 </script>
 
@@ -484,6 +524,35 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
 })();
 </script>
+
+<div id="buyModal" onclick="if(event.target===this)closeBuyModal()" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(16,24,26,0.72);align-items:center;justify-content:center;padding:1rem">
+  <div style="position:relative;background:var(--plate);border:2px solid var(--ink);border-radius:4px;max-width:460px;width:100%;padding:1.8rem;font-family:'Archivo',sans-serif;max-height:92vh;overflow-y:auto">
+    <button onclick="closeBuyModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1">&#x2715;</button>
+    <h2 style="color:var(--run);font-size:1.2rem;margin:0 0 4px;font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.03em">Activate BACManager</h2>
+    <p style="color:var(--muted);font-size:.84rem;margin:0 0 18px">$149 one-time. Enter your Machine ID and email &mdash; your license key is emailed after checkout.</p>
+
+    <div style="margin-bottom:18px">
+      <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);margin-bottom:6px">Machine ID <span style="color:var(--muted);text-transform:none">&mdash; unique to your PC</span></label>
+      <input id="buyMachineId" type="text" maxlength="16" placeholder="16-character ID" autocomplete="off" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'')" style="width:100%;padding:0.7rem 0.9rem;border:2px solid var(--ink);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:0.95rem;letter-spacing:0.08em;background:#fff">
+      <div id="buyMidError" style="display:none;color:#b3261e;font-size:0.78rem;margin-top:6px;font-family:'IBM Plex Mono',monospace"></div>
+      <div style="margin-top:10px;background:var(--enclosure2);border:1px solid var(--steel);border-radius:3px;padding:0.7rem 0.85rem;font-size:0.78rem;color:var(--body);line-height:1.6">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:4px">&#x1F4CD; Where to find your Machine ID</div>
+        1. Open <strong>BACManager</strong><br>
+        2. Click the <strong style="color:var(--amber-ink)">&#x1F511; License</strong> button in the toolbar<br>
+        3. Copy the <strong style="color:var(--run)">Machine ID</strong> shown
+      </div>
+    </div>
+
+    <div style="margin-bottom:22px">
+      <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);margin-bottom:6px">Email address <span style="color:var(--muted);text-transform:none">&mdash; license key sent here</span></label>
+      <input id="buyEmail" type="email" placeholder="you@company.com" autocomplete="email" onkeydown="if(event.key==='Enter')proceedToCheckout()" style="width:100%;padding:0.7rem 0.9rem;border:2px solid var(--ink);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:0.95rem;background:#fff">
+      <div id="buyEmailError" style="display:none;color:#b3261e;font-size:0.78rem;margin-top:6px;font-family:'IBM Plex Mono',monospace"></div>
+    </div>
+
+    <button onclick="proceedToCheckout()" class="btn-buy btn-buy-green" style="width:100%;border:none;cursor:pointer;padding:0.85rem">Continue to payment &#x2192;</button>
+    <p style="text-align:center;color:var(--muted);font-size:0.72rem;margin-top:0.9rem;font-family:'IBM Plex Mono',monospace">Secure checkout by Paddle &bull; instant delivery</p>
+  </div>
+</div>
 
 </body>
 </html>
