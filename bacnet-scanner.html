@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BACnet Scanner &amp; Device Discovery Tool for Windows</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="Discover BACnet/IP and MS/TP devices with whoIs, browse every object and property, and reach devices behind routers with BBMD/FDR &mdash; then poll the site's Modbus meters from the same window.">
+<meta name="keywords" content="BACnet scanner, BACnet discovery tool, BACnet whoIs, BACnet device finder, BBMD, foreign device registration, BACnet MS/TP scan, find BACnet devices, BACnet IP scanner">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/bacnet-scanner.html">
+<meta property="og:title" content="BACnet Scanner &amp; Device Discovery Tool for Windows">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="whoIs discovery across BACnet/IP and MS/TP, full object browsing, and BBMD support for devices behind routers &mdash; plus Modbus in the same tool.">
+<meta property="og:url" content="https://bacmanager.com/bacnet-scanner.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BACnet Scanner &amp; Device Discovery Tool for Windows">
+<meta name="twitter:description" content="whoIs discovery across BACnet/IP and MS/TP, full object browsing, BBMD support &mdash; plus Modbus in the same tool.">
+<meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "BACnet Scanner and Device Discovery",
+  "description": "How BACnet device discovery works with whoIs, BBMD/foreign device registration, and full object browsing in BACManager.",
+  "url": "https://bacmanager.com/bacnet-scanner.html",
+  "datePublished": "2026-08-22",
+  "dateModified": "2026-08-22",
+  "author": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"},
+  "publisher": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"}
+},
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How do I discover BACnet devices on my network?", "acceptedAnswer": {"@type": "Answer", "text": "Open a BACnet/IP or MS/TP connection in BACManager and run Discover. It sends a whoIs, broadcast by default, and every device that answers with an I-Am shows up in the device list with its ID, name and address."}},
+    {"@type": "Question", "name": "Can it find devices behind a router?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, via BBMD/Foreign Device Registration. Register with a BBMD on the remote subnet and broadcasts (Discover) reach devices there too, exactly as a real BMS front-end would see them."}},
+    {"@type": "Question", "name": "Does it scan MS/TP as well as BACnet/IP?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Full MS/TP master-node discovery over RS-485 alongside BACnet/IP whoIs. Point a USB-RS485 adapter at the segment, pick baud and MAC, and Discover works the same way."}},
+    {"@type": "Question", "name": "What can I do once a device is found?", "acceptedAnswer": {"@type": "Answer", "text": "Browse its full object list, read and write any property, subscribe to COV for live updates, open Schedule and Calendar objects in an editable grid, and export the object list as EDE or CSV."}},
+    {"@type": "Question", "name": "Does the same tool handle Modbus discovery too?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. BACManager includes Modbus RTU and TCP polling for the meters and drives that share a site with BACnet controllers, so you are not switching to a second application mid-commissioning."}}
+  ]
+}
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "BACnet Scanner","item": "https://bacmanager.com/bacnet-scanner.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html" style="color:#9A6700;font-weight:600">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-explorer-alternative.html">Alternative</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">// device discovery</div>
+  <h1>Find every device<br><span class="accent">on the site</span></h1>
+  <p class="hero-desc">BACnet has no single "who's there" broadcast that every tool answers the same way, and MS/TP segments hide behind serial ports no IP scanner can see. BACManager sends a real whoIs across BACnet/IP and MS/TP, reaches devices behind routers with BBMD, and lets you browse, read and write every object it finds &mdash; then poll the site's Modbus meters from the same window.</p>
+  <div class="hero-ctas">
+    <a href="https://github.com/vend123/bacmanager/releases/download/v1.2.1/BACManager.Setup.1.2.1.exe" class="btn-primary" onclick="trackDownload()" download>Download free trial</a>
+    <a href="/#pricing" class="btn-ghost">See pricing</a>
+  </div>
+  <p class="hero-note">Windows 10/11 &middot; BACnet/IP + MS/TP &middot; one-time license &middot; 14-day trial</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the problem</div>
+  <h2 class="sec-title">BACnet has no "who's there"</h2>
+  <p class="sec-sub">Unlike a network with DHCP and DNS, a BACnet device does not announce itself until asked &mdash; and MS/TP devices sit on a serial line no IP tool will ever see.</p>
+  <p style="max-width:820px;margin:1.4rem auto 0;text-align:center;color:var(--muted);line-height:1.7">On a new site, or one whose drawings are years out of date, the first job is finding what is actually there: which device IDs answer, what they are named, and whether they speak BACnet/IP or sit on an MS/TP segment behind a serial adapter. A whoIs broadcast answers the IP side. The MS/TP side needs a real master-node implementation on RS-485. And a device behind a router needs a BBMD to relay the broadcast at all. BACManager does all three from one panel &mdash; and since the same window also polls Modbus RTU/TCP meters and drives, you are not switching tools when the site turns out to be mixed, which most are.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// discovery</div>
+  <h2 class="sec-title">Two ways to find a device</h2>
+  <div style="margin-top:24px">
+    <div class="way">
+      <h3>&#128269; whoIs &mdash; broadcast or directed</h3>
+      <p>Leave the target empty for a broadcast whoIs across the local segment, or type an IP for a directed request that reaches a specific device &mdash; useful when broadcasts are filtered. Every device that answers with an I-Am appears in the list with its device ID, name, address and vendor.</p>
+    </div>
+    <div class="way">
+      <h3>&#128225; BBMD / Foreign Device Registration &mdash; devices behind a router</h3>
+      <p>Broadcasts don't cross routers on their own. Register with a BBMD on the remote subnet and BACManager's whoIs reaches devices there too, exactly as a real BMS front-end would see them &mdash; no VPN trick, no second NIC.</p>
+    </div>
+  </div>
+  <figure class="shot">
+    <img src="bac-mstp.png" alt="BACnet connection panel in BACManager with MS/TP RS-485 fields: serial port, baud rate and MAC address, plus Open and Discover buttons" loading="lazy" onerror="this.closest('figure').style.display='none'">
+    <figcaption>Connection panel &mdash; BACnet/IP or MS/TP, then Open and Discover</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// RS-485 field devices</div>
+  <h2 class="sec-title">Real MS/TP, not just IP</h2>
+  <p class="sec-sub">Most BACnet tools only speak BACnet/IP. The field devices &mdash; VAV boxes, room controllers, thermostats &mdash; are often MS/TP only.</p>
+  <p style="max-width:820px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">BACManager includes a full MS/TP master-node implementation: it joins the token ring, answers Poll-For-Master, and reads and writes confirmed requests like a native device. Point a USB-RS485 adapter at the segment, pick the baud rate (9.6k&ndash;115k) and a free MAC address, and Discover works exactly as it does over IP. <a href="/bacnet-mstp-rs485.html" style="color:var(--amber-ink)">More on MS/TP setup &rarr;</a></p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// once it's found</div>
+  <h2 class="sec-title">Browse, read, write, export</h2>
+  <p class="sec-sub">Discovery is the first step. What you do with a found device is where the real time gets saved.</p>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128193;</div><h3>Property browser</h3><p>Full object list of any device, grouped by type. Read and write any property, not just present-value &mdash; including priority arrays for commandable points.</p></div>
+    <div class="feat"><div class="feat-icon">&#9889;</div><h3>COV subscriptions</h3><p>Subscribe to Change-of-Value and watch values update live without polling, exactly as a real BMS front-end would receive them.</p></div>
+    <div class="feat"><div class="feat-icon">&#128228;</div><h3>EDE &amp; CSV export</h3><p>Export a device's full object list as BACnet EDE 2.3 &mdash; importable by other BACnet tools &mdash; or as CSV for a commissioning record.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// and Modbus too</div>
+  <h2 class="sec-title">The meters aren't BACnet</h2>
+  <p class="sec-sub">Once the BACnet side is mapped, the energy meters and drives on the same site usually turn out to be Modbus.</p>
+  <figure class="shot">
+    <img src="bac-registers.png" alt="Modbus register table in BACManager polling an AHU supply fan controller over Modbus TCP, with live values and a description column" loading="lazy" onerror="this.closest('figure').style.display='none'">
+    <figcaption>The same BACManager window polling a Modbus TCP device on the same site</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">Scanner &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I discover BACnet devices on my network?<span class="icon">+</span></div>
+      <div class="faq-a">Open a BACnet/IP or MS/TP connection and run Discover. It sends a whoIs, broadcast by default, and every device that answers with an I-Am shows up in the device list with its ID, name and address.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can it find devices behind a router?<span class="icon">+</span></div>
+      <div class="faq-a">Yes, via BBMD / Foreign Device Registration. Register with a BBMD on the remote subnet and broadcasts reach devices there too, exactly as a real BMS front-end would see them.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does it scan MS/TP as well as BACnet/IP?<span class="icon">+</span></div>
+      <div class="faq-a">Yes. Full MS/TP master-node discovery over RS-485 alongside BACnet/IP whoIs. Point a USB-RS485 adapter at the segment, pick baud and MAC, and Discover works the same way.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What can I do once a device is found?<span class="icon">+</span></div>
+      <div class="faq-a">Browse its full object list, read and write any property, subscribe to COV for live updates, open Schedule and Calendar objects in an editable grid, and export the object list as EDE or CSV.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does the same tool handle Modbus too?<span class="icon">+</span></div>
+      <div class="faq-a">Yes. BACManager includes Modbus RTU and TCP polling for the meters and drives that share a site with BACnet controllers, so you are not switching to a second application mid-commissioning.</div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-strip">
+  <h2>Find your first device today</h2>
+  <p>Download the free trial and run Discover against your own site &mdash; no credit card, no cloud.</p>
+  <div class="ctas">
+    <a href="https://github.com/vend123/bacmanager/releases/download/v1.2.1/BACManager.Setup.1.2.1.exe" class="btn-cta-yellow" onclick="trackDownload()" download>Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+</body>
+</html>
