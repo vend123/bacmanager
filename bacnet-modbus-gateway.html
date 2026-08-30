@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BACnet Schedule &amp; Calendar Editor for Windows</title>
+<title>BACnet &harr; Modbus Gateway for Windows</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="description" content="Read and write BACnet Schedule and Calendar objects in an editable weekly grid &mdash; exception schedules included, validated against reference BACnet stacks.">
-<meta name="keywords" content="BACnet schedule editor, BACnet calendar object, BACnet weekly schedule, BACnet exception schedule, edit BACnet schedule Windows, BACnet schedule object write">
+<meta name="description" content="A software BACnet-to-Modbus gateway, both directions: expose Modbus meters as a BACnet device for a BMS, or expose a BACnet device as a Modbus map for a PLC.">
+<meta name="keywords" content="BACnet to Modbus gateway, Modbus to BACnet gateway, BACnet Modbus bridge, BACnet BMS Modbus meter, software BACnet gateway, Modbus register to BACnet object">
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://bacmanager.com/bacnet-schedule-editor.html">
-<meta property="og:title" content="BACnet Schedule &amp; Calendar Editor for Windows">
+<link rel="canonical" href="https://bacmanager.com/bacnet-modbus-gateway.html">
+<meta property="og:title" content="BACnet &harr; Modbus Gateway for Windows">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="An editable weekly grid for BACnet Schedule objects and date entries for Calendar objects &mdash; read and write directly on the device.">
-<meta property="og:url" content="https://bacmanager.com/bacnet-schedule-editor.html">
+<meta property="og:description" content="Bridge BACnet and Modbus in both directions from one Windows PC &mdash; no dedicated gateway hardware. Runs unattended in the background.">
+<meta property="og:url" content="https://bacmanager.com/bacnet-modbus-gateway.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BACnet Schedule &amp; Calendar Editor for Windows">
-<meta name="twitter:description" content="An editable weekly grid for BACnet Schedule objects, plus Calendar date entries &mdash; read and write directly on the device.">
+<meta name="twitter:title" content="BACnet &harr; Modbus Gateway for Windows">
+<meta name="twitter:description" content="Software gateway, both directions: BACnet devices exposed as a Modbus map for a PLC, or Modbus meters exposed as a BACnet device for a BMS.">
 <meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,11 +32,11 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "BACnet Schedule and Calendar Editor",
-  "description": "How to read and write BACnet Schedule and Calendar objects in an editable weekly grid in BACManager, including exception schedules and calendar dates.",
-  "url": "https://bacmanager.com/bacnet-schedule-editor.html",
-  "datePublished": "2026-08-22",
-  "dateModified": "2026-08-22",
+  "headline": "BACnet to Modbus Gateway for Windows",
+  "description": "A software gateway bridging BACnet and Modbus in both directions on one Windows PC, running unattended in the background.",
+  "url": "https://bacmanager.com/bacnet-modbus-gateway.html",
+  "datePublished": "2026-08-30",
+  "dateModified": "2026-08-30",
   "author": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"},
   "publisher": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"}
 },
@@ -44,11 +44,11 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question", "name": "Can I edit a BACnet Schedule object without the original engineering tool?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Open the Schedule object on the device and BACManager shows an editable weekly grid: time and value pairs for each day, the default value, and exception schedules. Changes write straight back to the device over BACnet."}},
-    {"@type": "Question", "name": "Does it support Calendar objects too?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Calendar objects show their date entries — specific dates, date ranges and recurring weekdays — all editable and writable back to the device, the same way a schedule's exceptions reference them."}},
-    {"@type": "Question", "name": "How accurate is the schedule and calendar encoding?", "acceptedAnswer": {"@type": "Answer", "text": "The codec has been validated byte-for-byte against independent reference BACnet stacks, so what you write matches exactly what the BACnet standard specifies — no silently-wrong weekly schedules."}},
-    {"@type": "Question", "name": "Do I need to discover the device first?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Run Discover in the BACnet tab, select the device, find the Schedule or Calendar object in its object list, and click the browse icon — it opens directly into the grid editor instead of the generic property view."}},
-    {"@type": "Question", "name": "Can I see the raw property values instead of the grid?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. A \"Raw properties\" toggle switches from the schedule/calendar grid to the generic property browser for the same object, for when you need the underlying encoded values."}}
+    {"@type": "Question", "name": "Does this replace a hardware BACnet-Modbus gateway box?", "acceptedAnswer": {"@type": "Answer", "text": "For most sites, yes. A PC (or a small always-on Windows box) running BACManager does the same job a dedicated protocol converter appliance does — no separate hardware to buy, wire and maintain, as long as the PC stays powered on."}},
+    {"@type": "Question", "name": "Does the Gateway run without keeping the window open?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It can minimize to the system tray and auto-start with Windows, so it behaves like a background service rather than an application someone has to remember to open."}},
+    {"@type": "Question", "name": "Are writes from a BMS or PLC safe?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Writes forwarded to a BACnet device use the standard 16-level priority array (default priority 8, Manual Operator) instead of a blind overwrite, so they interact correctly with schedules and other controllers already writing to the same point."}},
+    {"@type": "Question", "name": "Can I bridge multiple Modbus devices and multiple BACnet objects at once?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The Gateway maps as many source points as needed — Modbus TCP, Modbus RTU, and already-discovered BACnet devices — into either a shared Modbus map or a BACnet server device, row by row."}},
+    {"@type": "Question", "name": "Does this cost extra on top of the BACManager license?", "acceptedAnswer": {"@type": "Answer", "text": "No. The Gateway is included in the standard $149 one-time BACManager license — no separate module fee."}}
   ]
 }
 ]
@@ -91,16 +91,11 @@ nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;paddi
 .way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
 .way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
 .way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
-figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
-figure.shot img{display:block;width:100%;height:auto}
-figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
 .compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
 .compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
 .compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
 .compare-table tr:last-child td{border-bottom:none}
 .compare-table .hl{background:rgba(30,122,79,0.06)}
-.yes{color:var(--run);font-weight:600}
-.no{color:var(--bad)}
 .faq-list{display:flex;flex-direction:column;gap:0}
 .faq-item{border-top:1px solid var(--steel)}
 .faq-item:last-child{border-bottom:1px solid var(--steel)}
@@ -147,7 +142,7 @@ footer a:hover{color:#fff}
   gtag('config', 'G-HGQC0VZ6MK');
 </script>
 <script type="application/ld+json">
-{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Schedule Editor","item": "https://bacmanager.com/bacnet-schedule-editor.html"}]}
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Gateway","item": "https://bacmanager.com/bacnet-modbus-gateway.html"}]}
 </script>
 </head>
 <body>
@@ -160,9 +155,9 @@ footer a:hover{color:#fff}
   <ul class="nav-links" id="navLinks">
     <li><a href="/#features">Features</a></li>
     <li><a href="/bacnet-scanner.html">Scanner</a></li>
-    <li><a href="/bacnet-schedule-editor.html" style="color:#9A6700;font-weight:600">Schedule</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
     <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
-    <li><a href="/bacnet-explorer-alternative.html">Alternative</a></li>
+    <li><a href="/bacnet-modbus-gateway.html" style="color:#9A6700;font-weight:600">Gateway</a></li>
     <li><a href="/#pricing">Pricing</a></li>
     <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
   </ul>
@@ -170,90 +165,92 @@ footer a:hover{color:#fff}
 </nav>
 
 <section class="hero">
-  <div class="eyebrow">// schedule &amp; calendar</div>
-  <h1>Read and write<br><span class="accent">BACnet schedules</span></h1>
-  <p class="hero-desc">Changing an AHU's operating hours shouldn't require the original vendor's engineering software. BACManager opens any Schedule object as an editable weekly grid &mdash; time and value pairs per day, a default, and exception schedules &mdash; and writes changes straight back to the device.</p>
+  <div class="eyebrow">// no dedicated hardware needed</div>
+  <h1>A software gateway,<br><span class="accent">both directions</span></h1>
+  <p class="hero-desc">Most protocol-converter boxes on the market do exactly one thing: bridge BACnet and Modbus, in one fixed direction, for one price per unit. BACManager's Gateway does both directions from a single Windows PC &mdash; read a BACnet controller into a Modbus map a PLC can poll, or read Modbus meters and drives into a real BACnet/IP device a BMS can discover. No protocol-converter appliance to buy, mount and wire.</p>
   <div class="hero-ctas">
     <a href="https://github.com/vend123/bacmanager/releases/download/v1.3.0/BACManager.Setup.1.3.0.exe" class="btn-primary" onclick="trackDownload()" download>Download free trial</a>
     <a href="/#pricing" class="btn-ghost">See pricing</a>
   </div>
-  <p class="hero-note">Windows 10/11 &middot; validated against reference BACnet stacks &middot; 14-day trial</p>
+  <p class="hero-note">Windows 10/11 &middot; runs in the background &middot; 14-day trial</p>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section">
   <div class="sec-label">// the problem</div>
-  <h2 class="sec-title">One vendor's tool per schedule</h2>
-  <p class="sec-sub">Schedule and Calendar objects are standard BACnet, but most tools that can edit them belong to whichever controller vendor installed the system.</p>
-  <p style="max-width:820px;margin:1.4rem auto 0;text-align:center;color:var(--muted);line-height:1.7">A site with controllers from two or three manufacturers means two or three engineering packages, each with its own login, its own quirks, and often a fee to unlock write access. But a Schedule object's actual data &mdash; seven days of time/value pairs, a default, and a list of exception schedules pointing at Calendar entries &mdash; is defined the same way by the BACnet standard regardless of vendor. BACManager reads and writes that data directly, generically, on any BACnet device that exposes it.</p>
+  <h2 class="sec-title">Mixed sites need a bridge somewhere</h2>
+  <p style="max-width:820px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">The AHU and the BMS speak BACnet. The energy meters, VFDs and older equipment speak Modbus. Somewhere between them, something has to translate &mdash; and that job usually means an off-the-shelf protocol-converter box: one specific SKU for BACnet/IP-Slave-to-Modbus-Master, a different SKU for the reverse direction, another for MS/TP instead of IP. BACManager replaces that whole shelf of boxes with one PC already running the tool your team uses for commissioning anyway.</p>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section">
-  <div class="sec-label">// the editor</div>
-  <h2 class="sec-title">A weekly grid, not a hex dump</h2>
-  <p class="sec-sub">Open a Schedule object from the property browser and it opens straight into an editable view, not raw bytes.</p>
+  <div class="sec-label">// two directions</div>
+  <h2 class="sec-title">Pick the direction each point needs</h2>
+  <p class="sec-sub">Every mapping row chooses its own source and destination — mix both directions in the same Gateway if a site needs it.</p>
+  <table class="compare-table">
+    <thead><tr><th>Direction</th><th>Source</th><th class="hl">Exposed as</th></tr></thead>
+    <tbody>
+      <tr><td>BACnet &rarr; Modbus</td><td>A BACnet/IP or MS/TP device, already discovered on the BACnet tab</td><td class="hl">A shared Modbus TCP/RTU map — any PLC polls it like a normal slave</td></tr>
+      <tr><td>Modbus &rarr; BACnet</td><td>A Modbus RTU or TCP device — meters, drives, older controllers</td><td class="hl">A real BACnet/IP device — any BMS discovers it with a normal whoIs</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:800px;margin:1.2rem auto 0;text-align:center;color:var(--muted);line-height:1.6;font-size:0.85rem">Both directions run from the same Gateway configuration, at the same time, on the same PC.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// how it fits</div>
+  <h2 class="sec-title">What you gain over a hardware box</h2>
   <div class="feat-grid">
-    <div class="feat"><div class="feat-icon">&#128197;</div><h3>Weekly grid</h3><p>Time and value pairs for every day of the week, laid out for editing &mdash; add, change or remove an entry and see the day's schedule at a glance.</p></div>
-    <div class="feat"><div class="feat-icon">&#8987;</div><h3>Default &amp; exceptions</h3><p>The schedule's default value for times not covered by an entry, plus its list of exception schedules &mdash; date-specific overrides that reference Calendar objects.</p></div>
-    <div class="feat"><div class="feat-icon">&#128204;</div><h3>Write back</h3><p>Edit the grid and write it directly to the device over BACnet &mdash; no export/import round trip through a separate configuration tool.</p></div>
+    <div class="feat"><div class="feat-icon">&#128268;</div><h3>No appliance to mount</h3><p>Runs on a Windows PC you already have on site — no DIN-rail converter, no separate power supply, no extra IP address to firewall.</p></div>
+    <div class="feat"><div class="feat-icon">&#128274;</div><h3>Priority-aware writes</h3><p>A write forwarded into a BACnet device uses the real 16-level priority array (default priority 8, Manual Operator) — not a blind overwrite that fights schedules and controllers.</p></div>
+    <div class="feat"><div class="feat-icon">&#128266;</div><h3>Runs unattended</h3><p>Minimizes to the system tray and can auto-start with Windows — it behaves like a background service, not an app someone has to remember to reopen.</p></div>
   </div>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section">
-  <div class="sec-label">// calendar objects</div>
-  <h2 class="sec-title">Holidays, ranges and recurring dates</h2>
-  <p style="max-width:820px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">Calendar objects show their date entries in the same editable style: specific dates for one-off holidays, date ranges for a shutdown period, and recurring weekday patterns for things like "every last Friday of the month." Add or remove entries and write the calendar back to the device &mdash; the schedules that reference it via exception schedules apply the new dates the next time they evaluate.</p>
-</section>
-
-<div class="divider-line"></div>
-
-<section class="section">
-  <div class="sec-label">// accuracy</div>
-  <h2 class="sec-title">Validated byte-for-byte</h2>
-  <p style="max-width:820px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">A wrong bit in a Schedule or Calendar encoding is the kind of bug that only shows up weeks later, as a zone running on the wrong hours with no error anywhere. BACManager's schedule and calendar codec has been checked byte-for-byte against independent reference BACnet stacks, so what you write is exactly what the standard specifies &mdash; not an approximation that happens to look right in one viewer.</p>
-  <figure class="shot">
-    <img src="bac-simulator.png" alt="BACManager's built-in BACnet device simulator with the 'Include Schedule and Calendar demo objects' option checked, for testing the schedule editor without a live controller" loading="lazy" onerror="this.closest('figure').style.display='none'">
-    <figcaption>The built-in simulator can include demo Schedule &amp; Calendar objects, so you can try the editor before touching a live controller</figcaption>
-  </figure>
+  <div class="sec-label">// commissioning tool, not just a box</div>
+  <h2 class="sec-title">The same PC that discovered the devices</h2>
+  <p style="max-width:820px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">A hardware gateway is configured once, then usually forgotten about — troubleshooting it means dragging out a laptop and a different tool. BACManager's Gateway is a feature of the same application already used to discover, browse and commission the BACnet devices on the job. When a mapping row shows an error, the property browser, the object list and the BACnet activity log are one tab away, not a separate application on a different machine.</p>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section" id="faq">
   <div class="sec-label">// questions</div>
-  <h2 class="sec-title">Schedule editor &mdash; FAQ</h2>
+  <h2 class="sec-title">Gateway &mdash; FAQ</h2>
   <div class="faq-list">
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Can I edit a Schedule object without the original engineering tool?<span class="icon">+</span></div>
-      <div class="faq-a">Yes. Open the Schedule object on the device and BACManager shows an editable weekly grid: time and value pairs for each day, the default value, and exception schedules. Changes write straight back to the device over BACnet.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Does this replace a hardware BACnet-Modbus gateway box?<span class="icon">+</span></div>
+      <div class="faq-a">For most sites, yes. A PC (or a small always-on Windows box) running BACManager does the same job a dedicated protocol converter appliance does — no separate hardware to buy, wire and maintain, as long as the PC stays powered on.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Does it support Calendar objects too?<span class="icon">+</span></div>
-      <div class="faq-a">Yes. Calendar objects show their date entries — specific dates, date ranges and recurring weekdays — all editable and writable back to the device, the same way a schedule's exceptions reference them.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Does the Gateway run without keeping the window open?<span class="icon">+</span></div>
+      <div class="faq-a">Yes. It can minimize to the system tray and auto-start with Windows, so it behaves like a background service rather than an application someone has to remember to open.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">How accurate is the schedule and calendar encoding?<span class="icon">+</span></div>
-      <div class="faq-a">The codec has been validated byte-for-byte against independent reference BACnet stacks, so what you write matches exactly what the BACnet standard specifies.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Are writes from a BMS or PLC safe?<span class="icon">+</span></div>
+      <div class="faq-a">Yes. Writes forwarded to a BACnet device use the standard 16-level priority array (default priority 8, Manual Operator) instead of a blind overwrite, so they interact correctly with schedules and other controllers already writing to the same point. See our <a href="/bacnet-priority-array.html" style="color:var(--amber-ink)">Priority Array guide</a> for how this works.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Do I need to discover the device first?<span class="icon">+</span></div>
-      <div class="faq-a">Yes. Run Discover in the BACnet tab, select the device, find the Schedule or Calendar object in its object list, and click the browse icon — it opens directly into the grid editor instead of the generic property view.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Can I bridge multiple Modbus devices and multiple BACnet objects at once?<span class="icon">+</span></div>
+      <div class="faq-a">Yes. The Gateway maps as many source points as needed — Modbus TCP, Modbus RTU, and already-discovered BACnet devices — into either a shared Modbus map or a BACnet server device, row by row.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Can I see the raw property values instead of the grid?<span class="icon">+</span></div>
-      <div class="faq-a">Yes. A "Raw properties" toggle switches from the schedule/calendar grid to the generic property browser for the same object, for when you need the underlying encoded values.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Does this cost extra on top of the BACManager license?<span class="icon">+</span></div>
+      <div class="faq-a">No. The Gateway is included in the standard $149 one-time BACManager license — no separate module fee.</div>
     </div>
   </div>
 </section>
 
 <div class="cta-strip">
-  <h2>Edit your first schedule today</h2>
-  <p>Download the free trial and open a real Schedule object &mdash; or try the built-in simulator's demo objects first.</p>
+  <h2>Try it against your own site</h2>
+  <p>Download the free trial and bridge a real BACnet device or Modbus meter &mdash; no credit card, no cloud.</p>
   <div class="ctas">
     <a href="https://github.com/vend123/bacmanager/releases/download/v1.3.0/BACManager.Setup.1.3.0.exe" class="btn-cta-yellow" onclick="trackDownload()" download>Download free trial</a>
     <a href="/#pricing" class="btn-cta-outline">See pricing</a>

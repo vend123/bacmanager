@@ -9,8 +9,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BACManager &mdash; One Windows Tool for BACnet and Modbus Devices</title>
-<meta name="description" content="One Windows tool for mixed buildings: discover and write BACnet/IP + MS/TP devices, poll Modbus RTU/TCP meters &mdash; from one window. Stop carrying two tools.">
-<meta name="keywords" content="BACnet tool, BACnet commissioning, BACnet explorer, BACnet/IP, BACnet MS/TP, BACnet Modbus tool, BACnet and Modbus, Modbus RTU, Modbus TCP, BACnet scanner, BACnet Windows, property browser, schedule editor, EDE export, whoIs, BBMD">
+<meta name="description" content="One Windows tool for mixed buildings: discover and write BACnet/IP + MS/TP devices, poll Modbus RTU/TCP meters, and bridge either direction with a built-in gateway &mdash; from one window. Stop carrying two tools.">
+<meta name="keywords" content="BACnet tool, BACnet commissioning, BACnet explorer, BACnet/IP, BACnet MS/TP, BACnet Modbus tool, BACnet and Modbus, Modbus RTU, Modbus TCP, BACnet scanner, BACnet Windows, property browser, schedule editor, EDE export, whoIs, BBMD, BACnet Modbus gateway">
 <link rel="canonical" href="https://bacmanager.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="BACManager &mdash; One Tool for BACnet and Modbus">
@@ -48,7 +48,7 @@
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js" onload="initPaddle()"></script>
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"description":"One Windows tool for mixed BACnet and Modbus buildings. Discover, browse and write BACnet/IP and MS/TP devices, and poll Modbus RTU/TCP meters and drives, from one window. Property browser, schedule and calendar editor, EDE export, COV."}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"description":"One Windows tool for mixed BACnet and Modbus buildings. Discover, browse and write BACnet/IP and MS/TP devices, poll Modbus RTU/TCP meters and drives, and bridge either direction with a built-in gateway that runs unattended in the background — from one window. Property browser, schedule and calendar editor, EDE export, COV."}
 </script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -182,6 +182,7 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
         <a href="/bacnet-scanner.html" style="color:#9A6700;font-weight:600">&#128269; BACnet Scanner</a>
         <a href="/bacnet-schedule-editor.html">&#128197; Schedule Editor</a>
         <a href="/bacnet-mstp-rs485.html">MS/TP &amp; RS-485</a>
+        <a href="/bacnet-modbus-gateway.html">BACnet &harr; Modbus Gateway</a>
         <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
         <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
         <a href="/bacnet-priority-array.html">Priority Array Explained</a>
@@ -211,7 +212,7 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
       </div>
       <div class="hero-btns">
         <a href="#" class="btn-primary" onclick="openBuyModal();return false">Get BACManager &mdash; $149</a>
-        <a href="https://github.com/vend123/bacmanager/releases/download/v1.2.3/BACManager.Setup.1.2.3.exe" class="btn-primary" style="background:var(--plate);color:var(--ink);border:2px solid var(--ink)" onclick="trackDownload()" download>Download trial</a>
+        <a href="https://github.com/vend123/bacmanager/releases/download/v1.3.0/BACManager.Setup.1.3.0.exe" class="btn-primary" style="background:var(--plate);color:var(--ink);border:2px solid var(--ink)" onclick="trackDownload()" download>Download trial</a>
       </div>
       <div class="os-tags">
         <span class="os-tag">Windows 10/11</span>
@@ -334,6 +335,11 @@ document.addEventListener('keydown', function(e){
       <div class="feat-icon">&#128290;</div>
       <h3>BACnet <span style="color:var(--muted);font-weight:400">and</span> Modbus</h3>
       <p>BACnet/IP, MS/TP over RS-485, <strong>and Modbus RTU/TCP</strong> &mdash; all in one app. Commission the BACnet controllers and read the Modbus energy meters on the same site without switching tools.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">&#128268;</div>
+      <h3>BACnet &harr; Modbus gateway</h3>
+      <p>Bridge either direction from one PC &mdash; expose Modbus meters as a BACnet device for a BMS, or a BACnet device as a Modbus map for a PLC. Priority-aware writes, runs unattended in the background. <a href="/bacnet-modbus-gateway.html" style="color:var(--amber-ink)">Gateway guide &rarr;</a></p>
     </div>
   </div>
 </section>
@@ -460,7 +466,7 @@ document.addEventListener('keydown', function(e){
         <li>Built-in device simulator</li>
         <li>No account required</li>
       </ul>
-      <a href="https://github.com/vend123/bacmanager/releases/download/v1.2.3/BACManager.Setup.1.2.3.exe" class="btn-buy btn-buy-ghost" onclick="trackDownload()" download>Download trial</a>
+      <a href="https://github.com/vend123/bacmanager/releases/download/v1.3.0/BACManager.Setup.1.3.0.exe" class="btn-buy btn-buy-ghost" onclick="trackDownload()" download>Download trial</a>
     </div>
   </div>
 </section>
@@ -473,7 +479,7 @@ document.addEventListener('keydown', function(e){
   <p class="sec-sub" style="margin-left:auto;margin-right:auto;max-width:560px">Download the free trial and test against your own devices, or buy a license &mdash; your key is emailed instantly after checkout.</p>
   <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
     <a href="#" class="btn-buy btn-buy-green" style="padding:0.8rem 1.6rem" onclick="openBuyModal();return false">Get BACManager &mdash; $149</a>
-    <a href="https://github.com/vend123/bacmanager/releases/download/v1.2.3/BACManager.Setup.1.2.3.exe" class="btn-buy btn-buy-ghost" style="padding:0.8rem 1.6rem" onclick="trackDownload()" download>Download free trial</a>
+    <a href="https://github.com/vend123/bacmanager/releases/download/v1.3.0/BACManager.Setup.1.3.0.exe" class="btn-buy btn-buy-ghost" style="padding:0.8rem 1.6rem" onclick="trackDownload()" download>Download free trial</a>
   </div>
 </section>
 
@@ -484,6 +490,7 @@ document.addEventListener('keydown', function(e){
     <a href="/bacnet-scanner.html" style="color:var(--muted)">Scanner</a>
     <a href="/bacnet-schedule-editor.html" style="color:var(--muted)">Schedule Editor</a>
     <a href="/bacnet-mstp-rs485.html" style="color:var(--muted)">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html" style="color:var(--muted)">Gateway</a>
     <a href="/bacnet-explorer-alternative.html" style="color:var(--muted)">Alternative to YABE</a>
     <a href="/cas-bacnet-explorer-alternative.html" style="color:var(--muted)">Alternative to CAS</a>
     <a href="/bacnet-priority-array.html" style="color:var(--muted)">Priority Array</a>
@@ -494,7 +501,7 @@ document.addEventListener('keydown', function(e){
 
 <script>
   var BAC_PRICE_ID = 'pri_01ky20jqe8w5gh6g934kkkevwh';
-  var BAC_DOWNLOAD_URL = 'https://github.com/vend123/bacmanager/releases/download/v1.2.3/BACManager.Setup.1.2.3.exe';
+  var BAC_DOWNLOAD_URL = 'https://github.com/vend123/bacmanager/releases/download/v1.3.0/BACManager.Setup.1.3.0.exe';
 
   function trackDownload(){
     if (typeof gtag === 'function') {
