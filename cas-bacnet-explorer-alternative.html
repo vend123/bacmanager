@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BACnet Explorer Alternative: BACManager vs YABE</title>
+<title>CAS BACnet Explorer Alternative: BACManager vs CAS</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="description" content="A comparison of BACManager and YABE for engineers who need MS/TP, a schedule editor, and Modbus alongside BACnet &mdash; not just a free IP-only explorer.">
-<meta name="keywords" content="BACnet explorer alternative, YABE alternative, Yet Another Bacnet Explorer alternative, BACnet browser Windows, BACnet explorer comparison, BACnet tool vs YABE">
+<meta name="description" content="A comparison of BACManager and CAS BACnet Explorer for engineers who also need a schedule editor, Modbus polling, or a BACnet-to-Modbus gateway.">
+<meta name="keywords" content="CAS BACnet Explorer alternative, CAS BACnet Explorer vs, BACnet explorer comparison, BACnet browser Windows, Chipkin BACnet Explorer alternative">
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://bacmanager.com/bacnet-explorer-alternative.html">
-<meta property="og:title" content="BACnet Explorer Alternative: BACManager vs YABE">
+<link rel="canonical" href="https://bacmanager.com/cas-bacnet-explorer-alternative.html">
+<meta property="og:title" content="CAS BACnet Explorer Alternative: BACManager vs CAS">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="YABE is a good free BACnet/IP explorer. BACManager adds MS/TP, a schedule editor, and Modbus RTU/TCP in the same window.">
-<meta property="og:url" content="https://bacmanager.com/bacnet-explorer-alternative.html">
+<meta property="og:description" content="CAS BACnet Explorer is a strong free BACnet/IP + MS/TP tool. BACManager adds a schedule editor, Modbus RTU/TCP, and a BACnet-to-Modbus gateway.">
+<meta property="og:url" content="https://bacmanager.com/cas-bacnet-explorer-alternative.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BACnet Explorer Alternative: BACManager vs YABE">
-<meta name="twitter:description" content="YABE is a good free BACnet/IP explorer. BACManager adds MS/TP, a schedule editor, and Modbus RTU/TCP in the same window.">
+<meta name="twitter:title" content="CAS BACnet Explorer Alternative: BACManager vs CAS">
+<meta name="twitter:description" content="CAS BACnet Explorer is free and BACnet/SC-capable. BACManager adds Modbus, a schedule editor, and a BACnet-to-Modbus gateway.">
 <meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,11 +32,11 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "BACnet Explorer Alternative for Windows",
-  "description": "A comparison of BACManager and YABE for engineers who need MS/TP support, a schedule editor, and Modbus in the same tool as BACnet.",
-  "url": "https://bacmanager.com/bacnet-explorer-alternative.html",
-  "datePublished": "2026-08-22",
-  "dateModified": "2026-08-22",
+  "headline": "CAS BACnet Explorer Alternative for Windows",
+  "description": "A fair comparison of BACManager and CAS BACnet Explorer for engineers who need Modbus polling, a schedule editor, or a BACnet-to-Modbus gateway alongside BACnet discovery.",
+  "url": "https://bacmanager.com/cas-bacnet-explorer-alternative.html",
+  "datePublished": "2026-08-30",
+  "dateModified": "2026-08-30",
   "author": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"},
   "publisher": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"}
 },
@@ -44,10 +44,11 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question", "name": "Is BACManager a drop-in replacement for YABE?", "acceptedAnswer": {"@type": "Answer", "text": "For BACnet/IP discovery and property browsing, yes - the core workflow is similar. BACManager adds MS/TP support, a Schedule and Calendar editor, EDE export, and Modbus RTU/TCP polling, which YABE does not include."}},
-    {"@type": "Question", "name": "Why would I pay for BACManager when YABE is free?", "acceptedAnswer": {"@type": "Answer", "text": "If your site is BACnet/IP only and you never need schedules edited, EDE export, or Modbus, YABE may be all you need. BACManager is for mixed BACnet+Modbus sites, MS/TP field devices, and schedule/calendar commissioning work in one licensed, supported tool."}},
-    {"@type": "Question", "name": "Does YABE support MS/TP?", "acceptedAnswer": {"@type": "Answer", "text": "YABE is primarily a BACnet/IP tool. BACManager includes a full MS/TP master-node implementation over RS-485 for field devices that are serial-only."}},
-    {"@type": "Question", "name": "Is the price a subscription?", "acceptedAnswer": {"@type": "Answer", "text": "No. BACManager is a one-time $149 license with free updates within the major version - no subscription, no per-point fees."}}
+    {"@type": "Question", "name": "Is CAS BACnet Explorer really free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, per Chipkin's own product page it is free to download and use, including commercial and OEM work, with no license key required."}},
+    {"@type": "Question", "name": "Does CAS BACnet Explorer support MS/TP?", "acceptedAnswer": {"@type": "Answer", "text": "Yes - it supports BACnet/IP, MS/TP over RS-485 with a standard USB-to-RS485 adapter, and BACnet/SC (Secure Connect)."}},
+    {"@type": "Question", "name": "What does BACManager add that CAS BACnet Explorer doesn't have?", "acceptedAnswer": {"@type": "Answer", "text": "A Schedule and Calendar editor with an editable weekly grid, Modbus RTU/TCP polling in the same window, and a Gateway that bridges BACnet present-values into a Modbus map a PLC can read and write."}},
+    {"@type": "Question", "name": "Does BACManager support BACnet/SC?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet - only BACnet/IP and MS/TP. If a site specifically requires BACnet Secure Connect, CAS BACnet Explorer currently supports it and BACManager does not."}},
+    {"@type": "Question", "name": "Is the BACManager price a subscription?", "acceptedAnswer": {"@type": "Answer", "text": "No. BACManager is a one-time $149 license with free updates within the major version - no subscription, no per-point fees."}}
   ]
 }
 ]
@@ -146,7 +147,7 @@ footer a:hover{color:#fff}
   gtag('config', 'G-HGQC0VZ6MK');
 </script>
 <script type="application/ld+json">
-{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Alternative","item": "https://bacmanager.com/bacnet-explorer-alternative.html"}]}
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "CAS Alternative","item": "https://bacmanager.com/cas-bacnet-explorer-alternative.html"}]}
 </script>
 </head>
 <body>
@@ -161,7 +162,7 @@ footer a:hover{color:#fff}
     <li><a href="/bacnet-scanner.html">Scanner</a></li>
     <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
     <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
-    <li><a href="/bacnet-explorer-alternative.html" style="color:#9A6700;font-weight:600">Alternative</a></li>
+    <li><a href="/cas-bacnet-explorer-alternative.html" style="color:#9A6700;font-weight:600">vs CAS</a></li>
     <li><a href="/#pricing">Pricing</a></li>
     <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
   </ul>
@@ -170,8 +171,8 @@ footer a:hover{color:#fff}
 
 <section class="hero">
   <div class="eyebrow">// comparison</div>
-  <h1>A BACnet explorer<br><span class="accent">alternative</span> for mixed sites</h1>
-  <p class="hero-desc">YABE (Yet Another Bacnet Explorer) is a solid, free BACnet/IP browser that plenty of engineers know well. If your site is BACnet/IP only and you never need schedules edited or Modbus polled, it may be all you need. BACManager is for the sites that aren't that simple &mdash; MS/TP field devices, schedule and calendar commissioning, and Modbus meters sharing the panel &mdash; in one licensed, supported tool for $149 one-time.</p>
+  <h1>A CAS BACnet Explorer<br><span class="accent">alternative</span> for mixed sites</h1>
+  <p class="hero-desc">CAS BACnet Explorer (Chipkin) is a genuinely capable, completely free tool &mdash; BACnet/IP, MS/TP and BACnet/SC discovery and browsing, no license key required. If your site is BACnet-only and you never need to edit a schedule in a grid or touch Modbus, it's hard to beat free. BACManager is for the sites that aren't that clean &mdash; a Schedule and Calendar editor, Modbus RTU/TCP meters on the same panel, and a Gateway that bridges BACnet into a PLC's Modbus map &mdash; for $149 one-time.</p>
   <div class="hero-ctas">
     <a href="https://github.com/vend123/bacmanager/releases/download/v1.2.2/BACManager.Setup.1.2.2.exe" class="btn-primary" onclick="trackDownload()" download>Download free trial</a>
     <a href="/#pricing" class="btn-ghost">See pricing</a>
@@ -182,45 +183,45 @@ footer a:hover{color:#fff}
 <div class="divider-line"></div>
 
 <section class="section">
-  <div class="sec-label">// why engineers look for an alternative</div>
-  <h2 class="sec-title">What sends people looking</h2>
-  <p class="sec-sub">YABE does its core job &mdash; BACnet/IP discovery and property browsing &mdash; well, and free is a real advantage.</p>
-  <p style="max-width:820px;margin:1.4rem auto 0;text-align:center;color:var(--muted);line-height:1.7">The friction usually shows up once the job goes past discovery and browsing. MS/TP field devices need a real serial master node, which a browser built around BACnet/IP doesn't provide. Editing a Schedule object commonly means opening the vendor's own engineering software instead. And the moment a site's energy meters or VFDs turn out to be Modbus &mdash; which most mixed buildings' do &mdash; a BACnet-only tool means a second application. None of this makes YABE a bad tool; it just means the job frequently needs more than one.</p>
+  <div class="sec-label">// being upfront</div>
+  <h2 class="sec-title">CAS BACnet Explorer is good. Free, even.</h2>
+  <p style="max-width:820px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">Per Chipkin's own product page, CAS BACnet Explorer covers BACnet/IP, MS/TP over RS-485 (with a standard USB adapter), and BACnet/SC, plus device discovery, property read/write, EDE 2.3 export and a built-in simulator &mdash; free, with no license key, commercial use included. That's a strong free tool, and if a site is purely BACnet with no scheduling to edit and no Modbus in the picture, there's little reason to pay for anything else.</p>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section">
   <div class="sec-label">// side by side</div>
-  <h2 class="sec-title">BACManager vs YABE</h2>
-  <p class="sec-sub">An honest comparison. YABE is free and open-source; BACManager is a commercial, licensed tool built for mixed BACnet+Modbus sites.</p>
+  <h2 class="sec-title">BACManager vs CAS BACnet Explorer</h2>
+  <p class="sec-sub">Checked against Chipkin's public product page in August 2026 &mdash; both tools are actively developed and this may have changed. Verify current features on each vendor's site before deciding.</p>
   <table class="compare-table">
-    <thead><tr><th>Capability</th><th>YABE</th><th class="hl">BACManager</th></tr></thead>
+    <thead><tr><th>Capability</th><th>CAS BACnet Explorer</th><th class="hl">BACManager</th></tr></thead>
     <tbody>
       <tr><td>BACnet/IP discovery (whoIs)</td><td class="yes">✓</td><td class="hl yes">✓</td></tr>
       <tr><td>Property browser (read/write)</td><td class="yes">✓</td><td class="hl yes">✓</td></tr>
-      <tr><td>BBMD / Foreign Device Registration</td><td class="yes">✓</td><td class="hl yes">✓</td></tr>
-      <tr><td>COV subscriptions</td><td class="yes">✓</td><td class="hl yes">✓</td></tr>
-      <tr><td>MS/TP over RS-485</td><td class="no">Limited / plugin-dependent</td><td class="hl yes">✓ full master node</td></tr>
-      <tr><td>Schedule &amp; Calendar editor (grid)</td><td class="no">Raw properties only</td><td class="hl yes">✓ editable weekly grid</td></tr>
-      <tr><td>EDE export</td><td class="no">✗</td><td class="hl yes">✓ EDE 2.3 + CSV</td></tr>
+      <tr><td>MS/TP over RS-485</td><td class="yes">✓ (USB-RS485 adapter)</td><td class="hl yes">✓ full master node</td></tr>
+      <tr><td>BACnet/SC (Secure Connect)</td><td class="yes">✓</td><td class="hl no">✗ not yet</td></tr>
+      <tr><td>Built-in BACnet device simulator</td><td class="yes">✓</td><td class="hl yes">✓</td></tr>
+      <tr><td>EDE export</td><td class="yes">✓ (2.3 CSV)</td><td class="hl yes">✓ EDE 2.3 + CSV</td></tr>
+      <tr><td>Schedule &amp; Calendar editor (grid)</td><td class="no">✗</td><td class="hl yes">✓ editable weekly grid</td></tr>
       <tr><td>Modbus RTU / TCP polling</td><td class="no">✗</td><td class="hl yes">✓ built in</td></tr>
-      <tr><td>Support</td><td>Community</td><td class="hl">Vendor-supported</td></tr>
-      <tr><td>Licensing</td><td>Free, open-source</td><td class="hl" style="color:#9A6700">$149 one-time</td></tr>
+      <tr><td>BACnet-to-Modbus gateway (bridge to a PLC)</td><td class="no">✗</td><td class="hl yes">✓ Gateway, read + write</td></tr>
+      <tr><td>Platform</td><td>Windows, Linux (macOS coming)</td><td class="hl">Windows 10/11</td></tr>
+      <tr><td>Licensing</td><td>Free</td><td class="hl" style="color:#9A6700">$149 one-time</td></tr>
     </tbody>
   </table>
-  <p style="max-width:800px;margin:1.2rem auto 0;text-align:center;color:var(--muted);line-height:1.6;font-size:0.85rem">YABE's feature set checked against its public documentation mid-2026 &mdash; it is actively maintained and may have changed. Check both projects' current documentation before deciding.</p>
+  <p style="max-width:800px;margin:1.2rem auto 0;text-align:center;color:var(--muted);line-height:1.6;font-size:0.85rem">CAS BACnet Explorer's feature set per Chipkin's public documentation, August 2026 — it is actively maintained and may have changed. Check both projects' current documentation before deciding.</p>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section">
   <div class="sec-label">// what you gain</div>
-  <h2 class="sec-title">Three things a free explorer doesn't cover</h2>
+  <h2 class="sec-title">Three things a BACnet-only tool doesn't cover</h2>
   <div class="feat-grid">
-    <div class="feat"><div class="feat-icon">&#128268;</div><h3>Real MS/TP</h3><p>A full master-node implementation over RS-485 &mdash; joins the token ring and talks to serial-only field devices, not just BACnet/IP.</p></div>
-    <div class="feat"><div class="feat-icon">&#128197;</div><h3>Schedule editor</h3><p>Weekly grid editing for Schedule and Calendar objects, validated byte-for-byte against reference stacks &mdash; not a vendor tool detour.</p></div>
-    <div class="feat"><div class="feat-icon">&#128290;</div><h3>Modbus, built in</h3><p>RTU and TCP polling for the meters and drives that share almost every real BACnet site, in the same window.</p></div>
+    <div class="feat"><div class="feat-icon">&#128197;</div><h3>Schedule editor</h3><p>Weekly grid editing for Schedule and Calendar objects, validated byte-for-byte against reference stacks &mdash; not raw property values or a vendor tool detour.</p></div>
+    <div class="feat"><div class="feat-icon">&#128290;</div><h3>Modbus, built in</h3><p>RTU and TCP polling for the meters and drives that share almost every real BACnet site, in the same window as the BACnet side.</p></div>
+    <div class="feat"><div class="feat-icon">&#128268;</div><h3>BACnet-to-Modbus gateway</h3><p>Map a BACnet present-value into a shared Modbus register map a PLC reads directly &mdash; and write back from the PLC through BACnet's priority array, not a blind overwrite.</p></div>
   </div>
 </section>
 
@@ -228,30 +229,34 @@ footer a:hover{color:#fff}
 
 <section class="section">
   <div class="sec-label">// being fair</div>
-  <h2 class="sec-title">When YABE is the right call</h2>
-  <p style="max-width:800px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">If your work is entirely BACnet/IP, you never need to edit a schedule directly, and there is no Modbus in the picture, YABE's price is hard to argue with &mdash; it's free, capable, and has a long track record in the BACnet community. BACManager earns its price on sites that are messier than that: MS/TP segments, schedules that need editing on-site, and Modbus meters that would otherwise mean a second tool. The fastest way to know which camp your work falls into is to run BACManager's free trial against your own site.</p>
+  <h2 class="sec-title">When CAS BACnet Explorer is the right call</h2>
+  <p style="max-width:800px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">If your work is entirely BACnet — IP, MS/TP or SC — and there's no schedule that needs a real editing grid and no Modbus device on the site, CAS BACnet Explorer is free, capable, and actively maintained. It's also currently ahead on BACnet/SC, which BACManager doesn't support yet. BACManager earns its price on the messier sites: Modbus meters or drives sharing the panel, schedules that need on-site editing, or a PLC that needs BACnet data without speaking BACnet itself. The fastest way to know which camp a given site falls into is to run BACManager's free trial against it.</p>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section" id="faq">
   <div class="sec-label">// questions</div>
-  <h2 class="sec-title">Alternative &mdash; FAQ</h2>
+  <h2 class="sec-title">vs CAS BACnet Explorer &mdash; FAQ</h2>
   <div class="faq-list">
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Is BACManager a drop-in replacement for YABE?<span class="icon">+</span></div>
-      <div class="faq-a">For BACnet/IP discovery and property browsing, yes — the core workflow is similar. BACManager adds MS/TP support, a Schedule and Calendar editor, EDE export, and Modbus RTU/TCP polling, which YABE does not include.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Is CAS BACnet Explorer really free?<span class="icon">+</span></div>
+      <div class="faq-a">Yes, per Chipkin's own product page it is free to download and use, including commercial and OEM work, with no license key required.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Why would I pay for BACManager when YABE is free?<span class="icon">+</span></div>
-      <div class="faq-a">If your site is BACnet/IP only and you never need schedules edited, EDE export, or Modbus, YABE may be all you need. BACManager is for mixed BACnet+Modbus sites, MS/TP field devices, and schedule/calendar commissioning work in one licensed, supported tool.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Does CAS BACnet Explorer support MS/TP?<span class="icon">+</span></div>
+      <div class="faq-a">Yes — it supports BACnet/IP, MS/TP over RS-485 with a standard USB-to-RS485 adapter, and BACnet/SC (Secure Connect).</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Does YABE support MS/TP?<span class="icon">+</span></div>
-      <div class="faq-a">YABE is primarily a BACnet/IP tool. BACManager includes a full MS/TP master-node implementation over RS-485 for field devices that are serial-only.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">What does BACManager add that CAS BACnet Explorer doesn't have?<span class="icon">+</span></div>
+      <div class="faq-a">A Schedule and Calendar editor with an editable weekly grid, Modbus RTU/TCP polling in the same window, and a Gateway that bridges BACnet present-values into a Modbus map a PLC can read and write.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Is the price a subscription?<span class="icon">+</span></div>
+      <div class="faq-q" onclick="toggleFaq(this)">Does BACManager support BACnet/SC?<span class="icon">+</span></div>
+      <div class="faq-a">Not yet — only BACnet/IP and MS/TP. If a site specifically requires BACnet Secure Connect, CAS BACnet Explorer currently supports it and BACManager does not.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is the BACManager price a subscription?<span class="icon">+</span></div>
       <div class="faq-a">No. BACManager is a one-time $149 license with free updates within the major version — no subscription, no per-point fees.</div>
     </div>
   </div>
@@ -259,7 +264,7 @@ footer a:hover{color:#fff}
 
 <div class="cta-strip">
   <h2>Try it against your own site</h2>
-  <p>Download the free trial and run it next to YABE or your current tool &mdash; no credit card, no cloud.</p>
+  <p>Download the free trial and run it next to CAS BACnet Explorer or your current tool &mdash; no credit card, no cloud.</p>
   <div class="ctas">
     <a href="https://github.com/vend123/bacmanager/releases/download/v1.2.2/BACManager.Setup.1.2.2.exe" class="btn-cta-yellow" onclick="trackDownload()" download>Download free trial</a>
     <a href="/#pricing" class="btn-cta-outline">See pricing</a>
