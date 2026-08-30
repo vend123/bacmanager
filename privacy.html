@@ -12,11 +12,11 @@
 <meta property="og:description" content="How BACManager (E-Netter OU) handles your data under GDPR. The software is offline and collects no telemetry.">
 <meta property="og:url" content="https://bacmanager.com/privacy.html">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://bacmanager.com/og-hmi.png">
+<meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Privacy Policy | BACManager">
 <meta name="twitter:description" content="How BACManager (E-Netter OU) handles your data under GDPR. The software is offline and collects no telemetry.">
-<meta name="twitter:image" content="https://bacmanager.com/og-hmi.png">
+<meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
@@ -190,7 +190,7 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
 
 
 <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-42Q8HEKC0X"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -201,9 +201,9 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
     'ad_personalization': 'denied',
     'analytics_storage': 'denied'
   });
-  try { if (localStorage.getItem('mm_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
   gtag('js', new Date());
-  gtag('config', 'G-42Q8HEKC0X');
+  gtag('config', 'G-HGQC0VZ6MK');
 </script>
 <script type="application/ld+json">
 {"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Privacy Policy","item": "https://bacmanager.com/privacy.html"}]}
@@ -345,35 +345,35 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
 
 <!-- Cookie consent (Google Analytics) -->
 <style>
-#mm-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
-#mm-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
-#mm-consent p{margin:0;max-width:720px}
-#mm-consent a{color:var(--safety,#F2A900);text-decoration:underline}
-#mm-consent .mm-btns{display:flex;gap:.6rem;flex-shrink:0}
-#mm-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
-#mm-consent .mm-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
-#mm-consent .mm-decline{background:transparent;color:var(--safety,#F2A900)}
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
 </style>
-<div id="mm-consent" role="dialog" aria-label="Cookie consent">
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
   <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off. See our <a href="/privacy.html">Privacy Policy</a>.</p>
-  <div class="mm-btns">
-    <button class="mm-decline" type="button" onclick="mmConsent(false)">Decline</button>
-    <button class="mm-accept" type="button" onclick="mmConsent(true)">Accept</button>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
   </div>
 </div>
 <script>
 (function(){
   function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
-  window.mmConsent=function(ok){
-    try{ localStorage.setItem('mm_consent', ok?'granted':'denied'); }catch(e){}
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
     apply(ok);
-    var b=document.getElementById('mm-consent'); if(b){ b.classList.remove('show'); }
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
   };
   function init(){
-    var c=null; try{ c=localStorage.getItem('mm_consent'); }catch(e){}
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
     if(c==='granted'){ apply(true); }
     else if(c==='denied'){ apply(false); }
-    else { var b=document.getElementById('mm-consent'); if(b){ b.classList.add('show'); } }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
   }
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
 })();
