@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BACnet Priority Array Explained: Why Your Write Doesn't Stick</title>
+<title>BACnet BBMD and Foreign Device Registration Explained</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="description" content="How the BACnet 16-level priority array actually works, why a write can be silently overridden, and how to relinquish a slot instead of fighting it.">
-<meta name="keywords" content="BACnet priority array, BACnet commandable point, relinquish default, BACnet write priority, manual operator override, BACnet present value">
+<meta name="description" content="Why Who-Is stops at the router, how a BBMD and Foreign Device Registration carry BACnet broadcasts across subnets, and the configuration mistakes that silently break discovery.">
+<meta name="keywords" content="BACnet BBMD, BACnet foreign device registration, BACnet discovery across subnets, BACnet Who-Is not working, BACnet devices not showing up, BBMD configuration, BACnet across VLAN, BACnet broadcast router">
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://bacmanager.com/bacnet-priority-array.html">
-<meta property="og:title" content="BACnet Priority Array Explained: Why Your Write Doesn't Stick">
+<link rel="canonical" href="https://bacmanager.com/bacnet-bbmd-foreign-device.html">
+<meta property="og:title" content="BACnet BBMD and Foreign Device Registration Explained">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="Commandable BACnet points aren't last-write-wins. Here's how the 16-level priority array decides Present_Value, and how to write and relinquish correctly.">
-<meta property="og:url" content="https://bacmanager.com/bacnet-priority-array.html">
-<meta property="og:type" content="website">
+<meta property="og:description" content="Discovery is a broadcast, and routers drop broadcasts. A BBMD forwards them between subnets; Foreign Device Registration gets a laptop in from outside.">
+<meta property="og:url" content="https://bacmanager.com/bacnet-bbmd-foreign-device.html">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BACnet Priority Array Explained">
-<meta name="twitter:description" content="Why a BACnet write can be silently overridden, and how to write and relinquish at the right priority.">
+<meta name="twitter:title" content="BACnet BBMD and Foreign Device Registration Explained">
+<meta name="twitter:description" content="Why Who-Is stops at the router, and the two mechanisms in the standard that carry it across.">
 <meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,11 +32,11 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "BACnet Priority Array Explained",
-  "description": "How the BACnet 16-level priority array decides a commandable point's Present_Value, why writes can be silently overridden, and how to relinquish a slot correctly.",
-  "url": "https://bacmanager.com/bacnet-priority-array.html",
-  "datePublished": "2026-08-30",
-  "dateModified": "2026-08-30",
+  "headline": "BACnet BBMD and Foreign Device Registration Explained",
+  "description": "Why BACnet/IP discovery stops at a router, how a BBMD and Foreign Device Registration carry broadcasts across subnets, and the configuration mistakes that break it.",
+  "url": "https://bacmanager.com/bacnet-bbmd-foreign-device.html",
+  "datePublished": "2026-09-13",
+  "dateModified": "2026-09-13",
   "author": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"},
   "publisher": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"}
 },
@@ -44,11 +44,12 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question", "name": "Why doesn't my BACnet write take effect?", "acceptedAnswer": {"@type": "Answer", "text": "On a commandable object, Present_Value is the value in the highest-priority occupied slot of a 16-level priority array, not simply the last thing written. If a controller, schedule or safety input is already holding a higher-priority slot (a lower number, 1 being highest), your write at a lower priority is stored but has no visible effect until that higher slot is relinquished."}},
-    {"@type": "Question", "name": "What priority level should I use for a manual override?", "acceptedAnswer": {"@type": "Answer", "text": "Priority 8 is the conventional slot for 'Manual Operator' in the BACnet standard's example priority assignments, and most controllers reserve it for exactly this kind of manual override. Using it keeps your write out of the way of life-safety (1-2), automatic critical (3-5) and scheduling (usually 12-16) priorities that other logic relies on."}},
-    {"@type": "Question", "name": "How do I release a priority-array write?", "acceptedAnswer": {"@type": "Answer", "text": "Write a NULL to the priority slot you used, not a new value. This relinquishes that slot, and Present_Value falls back to the next-highest occupied slot, or to Relinquish_Default if every slot is empty. Leaving your value in place at that priority means it keeps competing with the next thing that also writes there."}},
-    {"@type": "Question", "name": "Does every BACnet object have a priority array?", "acceptedAnswer": {"@type": "Answer", "text": "No, only commandable objects: Analog Output, Binary Output, Multi-State Output, and the writable Value variants (AV, BV, MSV) when a device implements them as commandable. Plain inputs and most read-only points expose a single Present_Value with no array behind it."}},
-    {"@type": "Question", "name": "Can BACManager's Gateway write to a BACnet device from a PLC?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The Gateway maps a BACnet object as a write-forward endpoint with an explicit priority (default 8, Manual Operator) - a PLC writes to the shared Modbus map like any other point, and BACManager forwards it as a proper BACnet WriteProperty at that priority, not a blind overwrite."}}
+    {"@type": "Question", "name": "Why can't I see BACnet devices on another subnet?", "acceptedAnswer": {"@type": "Answer", "text": "Discovery uses a Who-Is broadcast on UDP 47808, and IP routers do not forward broadcasts. Devices on another subnet never hear the request, so they never answer. The BACnet standard solves this with a BBMD on each subnet, or by registering your tool as a foreign device with one of them."}},
+    {"@type": "Question", "name": "What is a BBMD?", "acceptedAnswer": {"@type": "Answer", "text": "A BACnet/IP Broadcast Management Device. It holds a Broadcast Distribution Table listing the BBMDs on the other subnets. When a broadcast appears locally, it unicasts a copy to each peer, and each peer re-broadcasts it on its own subnet. There must be exactly one BBMD per IP subnet."}},
+    {"@type": "Question", "name": "What is Foreign Device Registration?", "acceptedAnswer": {"@type": "Answer", "text": "A device that is not on a BACnet subnet at all, an engineering laptop typically, sends Register-Foreign-Device to a BBMD with a time-to-live. The BBMD adds it to its Foreign Device Table and forwards broadcasts to it by unicast until the registration expires. The device has to re-register before the time-to-live runs out."}},
+    {"@type": "Question", "name": "Why did my devices appear and then disappear?", "acceptedAnswer": {"@type": "Answer", "text": "A foreign-device registration expires. The BBMD removes the entry after the time-to-live plus a 30-second grace period, and broadcasts stop reaching you. A tool that re-registers automatically before the time-to-live elapses does not have this problem."}},
+    {"@type": "Question", "name": "Can I have two BBMDs on one subnet?", "acceptedAnswer": {"@type": "Answer", "text": "No. Each would forward the same broadcast to the other, which re-broadcasts it locally, and the traffic multiplies. One BBMD per IP subnet is the rule, and every BBMD distribution table has to list the same set of peers."}},
+    {"@type": "Question", "name": "Does BACManager support BBMD registration?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Enter the BBMD address and a time-to-live in the BACnet/IP panel and press Register. BACManager re-registers automatically at 75 percent of the time-to-live, shows whether the registration is live, and reports the reason when it fails, distinguishing a refusal from the BBMD from no answer at all."}}
   ]
 }
 ]
@@ -152,7 +153,7 @@ footer a:hover{color:#fff}
   gtag('config', 'G-HGQC0VZ6MK');
 </script>
 <script type="application/ld+json">
-{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Priority Array","item": "https://bacmanager.com/bacnet-priority-array.html"}]}
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "BBMD & Foreign Device","item": "https://bacmanager.com/bacnet-bbmd-foreign-device.html"}]}
 </script>
 </head>
 <body>
@@ -167,7 +168,7 @@ footer a:hover{color:#fff}
     <li><a href="/bacnet-scanner.html">Scanner</a></li>
     <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
     <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
-    <li><a href="/bacnet-priority-array.html" style="color:#9A6700;font-weight:600">Priority Array</a></li>
+    <li><a href="/bacnet-bbmd-foreign-device.html" style="color:#9A6700;font-weight:600">BBMD</a></li>
     <li><a href="/#pricing">Pricing</a></li>
     <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
   </ul>
@@ -175,105 +176,113 @@ footer a:hover{color:#fff}
 </nav>
 
 <section class="hero">
-  <div class="eyebrow">// the most misunderstood part of BACnet</div>
-  <h1>Your write isn't gone.<br><span class="accent">It's outranked.</span></h1>
-  <p class="hero-desc">A commandable BACnet point isn't last-write-wins like a Modbus register. Present_Value comes from a 16-level priority array, and a write at priority 12 does nothing visible while a schedule or controller is holding priority 6 &mdash; not because the write failed, but because it lost. Here's how the array actually works, and how BACManager's property browser and Gateway write at the right level instead of guessing.</p>
+  <div class="eyebrow">// bacnet/ip discovery</div>
+  <h1>Your Who-Is<br><span class="accent">stops at the router</span></h1>
+  <p class="hero-desc">Discovery in BACnet/IP is a broadcast on UDP 47808, and IP routers do not forward broadcasts. Everything on your own subnet answers; everything one hop away stays silent, and the tool looks broken when the network is simply doing what it is designed to do. The standard has two answers for this &mdash; a BBMD on each subnet, and Foreign Device Registration for anything arriving from outside. Here is what each one actually does, and the handful of configuration mistakes that quietly break both.</p>
   <div class="hero-ctas">
     <a href="https://github.com/vend123/bacmanager/releases/download/v1.3.2/BACManager.Setup.1.3.2.exe" class="btn-primary" onclick="trackDownload()" download>Download free trial</a>
-    <a href="/#pricing" class="btn-ghost">See pricing</a>
+    <a href="/bacnet-scanner.html" class="btn-ghost">See the scanner</a>
   </div>
-  <p class="hero-note">Windows 10/11 &middot; BACnet/IP &amp; MS/TP &middot; 14-day trial</p>
+  <p class="hero-note">Windows 10/11 &middot; one-time license &middot; 14-day trial</p>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section">
-  <div class="sec-label">// the 16 slots</div>
-  <h2 class="sec-title">One value, sixteen competing writers</h2>
-  <p class="sec-sub">Every commandable object (Analog Output, Binary Output, Multi-State Output, and commandable Value objects) carries a Priority_Array property alongside Present_Value: 16 slots, numbered 1 to 16. Present_Value is simply whichever occupied slot has the lowest number &mdash; the highest priority. Empty slots are skipped. If every slot is empty, Present_Value falls back to Relinquish_Default.</p>
-  <table class="pa-table">
-    <thead><tr><th>Priority</th><th>Conventional use (BACnet standard example)</th></tr></thead>
+  <div class="sec-label">// why it happens</div>
+  <h2 class="sec-title">Discovery is a broadcast. Broadcasts are local.</h2>
+  <p class="sec-sub">A Who-Is goes to the subnet broadcast address. Every BACnet device that hears it replies with an I-Am. That is the whole mechanism, and it works perfectly &mdash; within one IP subnet.</p>
+  <p style="max-width:820px;color:var(--body);line-height:1.75">A router exists in part to stop broadcasts from crossing. So the moment a plant is split across VLANs, buildings or floors &mdash; which is to say, the moment it is a real site &mdash; a Who-Is reaches a fraction of the equipment. Nothing reports an error. The scan simply returns fewer devices than exist, and nothing anywhere says why.</p>
+  <p style="max-width:820px;color:var(--body);line-height:1.75;margin-top:1rem">This is not a defect in BACnet or in your tool. It is the reason Annex J of the standard defines a way to carry broadcasts between subnets deliberately and under control, instead of asking the network to leak them.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the two mechanisms</div>
+  <h2 class="sec-title">A BBMD relays. A foreign device subscribes.</h2>
+  <p class="sec-sub">The two are often spoken about as one thing. They are not, and knowing which one a situation calls for saves an afternoon.</p>
+
+  <div class="way">
+    <h3>&#127760; BBMD &mdash; one per subnet, permanently</h3>
+    <p>A <strong>BACnet/IP Broadcast Management Device</strong> sits on a subnet and holds a <strong>Broadcast Distribution Table</strong>: the list of BBMDs on the other subnets. When a broadcast appears locally, the BBMD sends a unicast copy to each peer in that table, and each peer re-broadcasts it on its own subnet. The broadcast crosses the router as ordinary unicast traffic, which routers forward without complaint.</p>
+    <p style="margin-top:0.6rem">This is infrastructure. It is configured once, in devices that stay powered, and it is usually a controller or a BACnet router that already has the function built in &mdash; you rarely add hardware for it.</p>
+  </div>
+
+  <div class="way">
+    <h3>&#128187; Foreign device &mdash; temporary, for something outside</h3>
+    <p>An engineering laptop is not on a BACnet subnet at all. It sits on the office network, or at the end of a VPN. Rather than adding a BBMD for one machine, it sends a <strong>Register-Foreign-Device</strong> message to an existing BBMD with a <strong>time-to-live</strong>. The BBMD adds it to its <strong>Foreign Device Table</strong> and starts forwarding broadcasts to it by unicast.</p>
+    <p style="margin-top:0.6rem">The registration is a lease, not a setting. It expires, and the tool has to renew it before it does. This is the mechanism an explorer or a commissioning tool should be using.</p>
+  </div>
+
+  <div class="way">
+    <h3>&#9888; Which one you need</h3>
+    <p>If the equipment itself is spread across subnets and has to find its peers, the site needs <strong>BBMDs</strong>. If the equipment is fine and only <em>you</em> cannot see it from where you are sitting, you need <strong>Foreign Device Registration</strong> against a BBMD that already exists. Adding a second BBMD to solve a laptop problem is the common wrong turn, and it causes the third fault in the next section.</p>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// what actually goes wrong</div>
+  <h2 class="sec-title">Five ways this breaks in the field</h2>
+  <table class="compare-table">
+    <thead><tr><th>What you see</th><th class="hl">Usually this</th></tr></thead>
     <tbody>
-      <tr><td>1&ndash;2</td><td>Manual / Automatic Life Safety</td></tr>
-      <tr><td>3&ndash;5</td><td>Automatic Critical Equipment / Safety</td></tr>
-      <tr><td>6</td><td>Minimum On/Off (unoccupied protection, etc.)</td></tr>
-      <tr class="hl"><td>8</td><td>Manual Operator &mdash; the usual slot for a human override</td></tr>
-      <tr><td>9&ndash;10</td><td>Available (vendor / site-specific)</td></tr>
-      <tr><td>11</td><td>Available</td></tr>
-      <tr><td>12&ndash;15</td><td>Available / Local scheduling</td></tr>
-      <tr><td>16</td><td>Available (lowest active priority)</td></tr>
+      <tr><td>Only local devices answer, nothing from the other subnet</td><td class="hl">No BBMD on one of the subnets, or your tool is not registered as a foreign device with one</td></tr>
+      <tr><td>Devices appeared, then vanished a few minutes later</td><td class="hl">The foreign-device lease expired. A BBMD drops the entry after the time-to-live plus a 30-second grace period</td></tr>
+      <tr><td>Every device answers twice, or the network gets busy for no clear reason</td><td class="hl">Two BBMDs on the same IP subnet, each re-broadcasting what the other forwarded</td></tr>
+      <tr><td>Some subnets work, one never does</td><td class="hl">That BBMD is missing a peer in its distribution table. Every BBMD has to know about every other one &mdash; the table is configured, not learned</td></tr>
+      <tr><td>Registration is refused outright</td><td class="hl">The BBMD returned a NAK, result <span class="mono">0x0030</span>. Its foreign-device table is full, or it is configured not to accept registrations</td></tr>
     </tbody>
   </table>
-  <p style="max-width:800px;margin:1.2rem auto 0;text-align:center;color:var(--muted);line-height:1.6;font-size:0.85rem">These are the example uses given in the BACnet standard, not a hard rule &mdash; individual devices and site standards can assign priorities differently. Priority 8 (Manual Operator) is the closest thing to a universal convention for a human override, which is why it's BACManager's default.</p>
-</section>
-
-<div class="divider-line"></div>
-
-<section class="section">
-  <div class="sec-label">// the actual failure mode</div>
-  <h2 class="sec-title">"I wrote it and nothing happened"</h2>
-  <p style="max-width:820px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">This is almost always a priority problem, not a communication problem. You write a setpoint at priority 12. A schedule object is already commanding that same point at priority 10. Your write is accepted, stored, and completely invisible &mdash; Present_Value keeps reporting the schedule's value, because 10 outranks 12. Nothing is broken. The write succeeded exactly as BACnet defines it; it just isn't the value in charge right now. The fix isn't to write harder or retry &mdash; it's to write at a priority that actually wins, or to relinquish whatever is holding the slot above yours.</p>
-</section>
-
-<div class="divider-line"></div>
-
-<section class="section">
-  <div class="sec-label">// releasing, not overwriting</div>
-  <h2 class="sec-title">Relinquish is a write, not a delete</h2>
-  <div style="margin-top:0.5rem">
-    <div class="way">
-      <h3>&#9998; Write a value</h3>
-      <p>Puts your value in the slot you chose. It stays there — competing with whatever else targets that same slot — until something explicitly relinquishes it.</p>
-    </div>
-    <div class="way">
-      <h3>&#8998; Relinquish (write NULL)</h3>
-      <p>Clears your slot back to empty. Present_Value then falls through to the next-highest occupied slot, or to Relinquish_Default if the whole array is now empty. This is how you hand a point back after a manual override.</p>
-    </div>
-    <div class="way">
-      <h3>&#9888; The common mistake</h3>
-      <p>Writing priority 16 "just to be safe" and leaving it there. It never gets in anyone's way, which also means it's silently doing nothing the moment any other priority is active — indistinguishable from a write that never landed.</p>
-    </div>
-  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Two more are worth knowing because nothing in BACnet will tell you about them. <strong>A firewall blocking UDP 47808</strong> produces exactly the same silence as a missing BBMD: no error, no answer. And <strong>NAT breaks BBMDs</strong> &mdash; a distribution table holds real IP addresses, and a translated address is not the one a peer will reply to. Where a site sits behind NAT, foreign-device registration through a reachable BBMD is the workable route, not a table entry.</p>
+  <p style="max-width:820px;margin:1rem auto 0;color:var(--body);line-height:1.75">One historical trap: older setups used <strong>one-hop</strong> forwarding, where a peer entry carries the real subnet mask and the peer forwards using a directed broadcast. Modern routers drop directed broadcasts by default, so one-hop configurations that worked for years stop after a network refresh. <strong>Two-hop</strong> &mdash; mask <span class="mono">255.255.255.255</span>, peer receives unicast and re-broadcasts locally &mdash; is what to use now.</p>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section">
   <div class="sec-label">// where BACManager fits</div>
-  <h2 class="sec-title">Write at a priority, on purpose</h2>
-  <p class="sec-sub">Both places BACManager writes to a commandable point make the priority explicit instead of hiding it.</p>
+  <h2 class="sec-title">Register, and see whether it took</h2>
+  <p class="sec-sub">Foreign Device Registration lives in the BACnet/IP panel: a BBMD address, a time-to-live, a Register button. What matters is what happens after you press it.</p>
   <div class="feat-grid">
-    <div class="feat"><div class="feat-icon">&#128194;</div><h3>Property browser</h3><p>Writing a value from the object browser lets you pick the priority slot directly, and shows the full Priority_Array so you can see what's already occupying a higher one before you write.</p></div>
-    <div class="feat"><div class="feat-icon">&#128268;</div><h3>Gateway write-forward</h3><p>Mapping a BACnet object as a Gateway write endpoint has a Priority field (default 8, Manual Operator) — a PLC writing to the shared Modbus map forwards as a proper WriteProperty at that priority, not a blind overwrite.</p></div>
-    <div class="feat"><div class="feat-icon">&#9995;</div><h3>Relinquish from the same UI</h3><p>Releasing a priority slot is the same write dialog with a Relinquish option — no separate tool, no manually constructing a NULL application-tagged value.</p></div>
+    <div class="feat"><div class="feat-icon">&#128257;</div><h3>Renews itself</h3><p>The registration is re-sent at 75% of the time-to-live, so the lease never lapses while the tool is open. The default is 300 s; anything from 30 s upward is accepted.</p></div>
+    <div class="feat"><div class="feat-icon">&#128161;</div><h3>Says which failure it is</h3><p>A refusal from the BBMD and no answer at all look identical in most tools. Here they are separate &mdash; a NAK reports its BVLC result code, a timeout says the BBMD never replied.</p></div>
+    <div class="feat"><div class="feat-icon">&#128274;</div><h3>Survives a reconnect</h3><p>The BBMD address and time-to-live are remembered and registration is re-established when the connection returns, so you are not re-entering it after every restart.</p></div>
   </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--muted);line-height:1.7;font-size:0.9rem">Foreign Device Registration applies to BACnet/IP only. On MS/TP there are no IP broadcasts to manage, and BACManager says so rather than appearing to accept the setting &mdash; see <a href="/bacnet-mstp-rs485.html" style="color:var(--amber-ink)">MS/TP over RS-485</a> for the discovery problems that segment has instead.</p>
 </section>
 
 <div class="divider-line"></div>
 
 <section class="section" id="faq">
   <div class="sec-label">// questions</div>
-  <h2 class="sec-title">Priority array &mdash; FAQ</h2>
+  <h2 class="sec-title">BBMD &amp; foreign devices &mdash; FAQ</h2>
   <div class="faq-list">
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Why doesn't my BACnet write take effect?<span class="icon">+</span></div>
-      <div class="faq-a">On a commandable object, Present_Value is the value in the highest-priority occupied slot of a 16-level priority array, not simply the last thing written. If a controller, schedule or safety input is already holding a higher-priority slot (a lower number, 1 being highest), your write at a lower priority is stored but has no visible effect until that higher slot is relinquished.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Why can&rsquo;t I see BACnet devices on another subnet?<span class="icon">+</span></div>
+      <div class="faq-a">Discovery uses a Who-Is broadcast on UDP 47808, and IP routers do not forward broadcasts. Devices on another subnet never hear the request, so they never answer. The standard solves it with a BBMD on each subnet, or by registering your tool as a foreign device with one of them.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">What priority level should I use for a manual override?<span class="icon">+</span></div>
-      <div class="faq-a">Priority 8 is the conventional slot for "Manual Operator" in the BACnet standard's example priority assignments, and most controllers reserve it for exactly this kind of manual override. Using it keeps your write out of the way of life-safety (1-2), automatic critical (3-5) and scheduling priorities that other logic relies on.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">What is a BBMD?<span class="icon">+</span></div>
+      <div class="faq-a">A BACnet/IP Broadcast Management Device. It holds a Broadcast Distribution Table listing the BBMDs on the other subnets. When a broadcast appears locally it unicasts a copy to each peer, and each peer re-broadcasts it on its own subnet. There must be exactly one BBMD per IP subnet.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">How do I release a priority-array write?<span class="icon">+</span></div>
-      <div class="faq-a">Write a NULL to the priority slot you used, not a new value. This relinquishes that slot, and Present_Value falls back to the next-highest occupied slot, or to Relinquish_Default if every slot is empty. Leaving your value in place at that priority means it keeps competing with the next thing that also writes there.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">What is Foreign Device Registration?<span class="icon">+</span></div>
+      <div class="faq-a">A device that is not on a BACnet subnet at all &mdash; an engineering laptop, typically &mdash; sends Register-Foreign-Device to a BBMD with a time-to-live. The BBMD adds it to its Foreign Device Table and forwards broadcasts to it by unicast until the registration expires. The device has to re-register before the time-to-live runs out.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Does every BACnet object have a priority array?<span class="icon">+</span></div>
-      <div class="faq-a">No, only commandable objects: Analog Output, Binary Output, Multi-State Output, and the writable Value variants (AV, BV, MSV) when a device implements them as commandable. Plain inputs and most read-only points expose a single Present_Value with no array behind it.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Why did my devices appear and then disappear?<span class="icon">+</span></div>
+      <div class="faq-a">A foreign-device registration expires. The BBMD removes the entry after the time-to-live plus a 30-second grace period, and broadcasts stop reaching you. A tool that re-registers automatically before the time-to-live elapses does not have this problem.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Can BACManager's Gateway write to a BACnet device from a PLC?<span class="icon">+</span></div>
-      <div class="faq-a">Yes. The Gateway maps a BACnet object as a write-forward endpoint with an explicit priority (default 8, Manual Operator) — a PLC writes to the shared Modbus map like any other point, and BACManager forwards it as a proper BACnet WriteProperty at that priority, not a blind overwrite.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Can I have two BBMDs on one subnet?<span class="icon">+</span></div>
+      <div class="faq-a">No. Each would forward the same broadcast to the other, which re-broadcasts it locally, and the traffic multiplies. One BBMD per IP subnet is the rule, and every BBMD distribution table has to list the same set of peers.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does BACManager support BBMD registration?<span class="icon">+</span></div>
+      <div class="faq-a">Yes. Enter the BBMD address and a time-to-live in the BACnet/IP panel and press Register. BACManager re-registers automatically at 75% of the time-to-live, shows whether the registration is live, and reports the reason when it fails &mdash; a refusal from the BBMD is distinguished from no answer at all.</div>
     </div>
   </div>
 </section>
