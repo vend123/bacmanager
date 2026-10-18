@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BACManager User Manual &amp; Documentation</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="BACManager 1.4.4 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedule editor, EDE, simulator, Modbus, dashboards and gateway.">
+<meta name="keywords" content="BACManager manual, BACnet explorer documentation, BACnet MS/TP how to, BACnet priority array write, BACnet schedule editor, BACnet EDE export, BACnet Modbus gateway setup, BACnet simulator">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/manual.html">
+<meta property="og:title" content="BACManager User Manual &amp; Documentation">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="The complete BACManager 1.4.4 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway and Runtime.">
+<meta property="og:url" content="https://bacmanager.com/manual.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BACManager User Manual &amp; Documentation">
+<meta name="twitter:description" content="Discover, browse, write and schedule BACnet devices, read Modbus, build dashboards and a BACnet-Modbus gateway: the BACManager manual.">
+<meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.4: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-10-18","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://github.com/vend123/bacmanager/releases/download/v1.4.4/BACManager.Setup.1.4.4.exe"}},
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Does BACManager work on MS/TP or only BACnet/IP?","acceptedAnswer":{"@type":"Answer","text":"Both. With a USB-RS485 adapter it joins an MS/TP trunk as a master node and does everything it does on BACnet/IP: discover, browse, write with priority, COV, schedules and EDE export."}},
+{"@type":"Question","name":"Which priority does BACManager write with?","acceptedAnswer":{"@type":"Answer","text":"The one you choose in Write priority. Tags, dashboard elements and gateway rows default to 8, Manual Operator. An empty value relinquishes the slot."}},
+{"@type":"Question","name":"Can a BMS read Modbus devices through BACManager?","acceptedAnswer":{"@type":"Answer","text":"Yes. The gateway exposes mapping rows as objects of its own BACnet/IP device, which a BMS discovers with Who-Is, reads, subscribes to and writes."}},
+{"@type":"Question","name":"Can I try it without a controller?","acceptedAnswer":{"@type":"Answer","text":"Yes. The built-in simulator runs a BACnet device with analog, binary, multi-state and Loop objects, plus demo Schedule and Calendar objects, on the same PC."}}
+]}
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;counter-reset:step}
+.step{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem;position:relative}
+.step::before{counter-increment:step;content:counter(step);font-family:'Saira Condensed',sans-serif;font-size:2.5rem;font-weight:700;color:var(--enclosure2);position:absolute;top:0.5rem;right:1rem;line-height:1}
+.step-label{font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:var(--amber-ink);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem}
+.step-title{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.step-text{font-size:0.85rem;color:var(--body);line-height:1.65}
+
+.code-box{background:var(--ink);color:#D4D8D0;font-family:'IBM Plex Mono',monospace;font-size:0.8rem;line-height:1.7;padding:1.4rem 1.6rem;border-radius:3px;overflow-x:auto}
+.code-box .cm{color:#5F7A5F}
+.code-box .ck{color:var(--safety)}
+.code-box .cv{color:#8EC0B0}
+
+/* DOC LAYOUT (manual page) */
+.doc-wrap{display:grid;grid-template-columns:232px 1fr;gap:3rem;max-width:1140px;margin:0 auto;padding:2.5rem 3rem 1rem;align-items:start}
+.doc-toc{position:sticky;top:84px;font-family:'IBM Plex Mono',monospace;font-size:0.78rem}
+.doc-toc .toc-label{font-size:0.62rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem}
+.doc-toc ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.doc-toc a{color:var(--body);text-decoration:none;border-left:2px solid var(--steel);padding-left:0.7rem;display:block}
+.doc-toc a:hover{color:var(--ink);border-left-color:var(--amber-ink)}
+.doc-main{min-width:0}
+.doc-section{padding:0 0 2.4rem;scroll-margin-top:90px}
+.doc-section>h2{font-family:'Saira Condensed',sans-serif;font-size:1.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.5rem;padding-top:0.9rem;border-top:2px solid var(--ink)}
+.doc-section h3{font-family:'Saira Condensed',sans-serif;font-size:1.12rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin:1.3rem 0 0.5rem}
+.doc-section p{font-size:0.95rem;color:var(--body);line-height:1.75;margin-bottom:0.9rem}
+.doc-section ul.body-list,.doc-section ol.body-list{margin:0 0 1rem 1.15rem;color:var(--body);font-size:0.95rem;line-height:1.65}
+.doc-section ul.body-list li,.doc-section ol.body-list li{margin-bottom:0.4rem}
+.callout{border:2px solid var(--ink);border-left-width:5px;border-radius:3px;background:var(--plate);padding:0.9rem 1.1rem;margin:0.4rem 0 1.1rem}
+.callout .c-label{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem}
+.callout p{font-size:0.88rem;margin-bottom:0;color:var(--body);line-height:1.65}
+.callout.note{border-left-color:var(--run)} .callout.note .c-label{color:var(--run)}
+.callout.tip{border-left-color:var(--amber-ink)} .callout.tip .c-label{color:var(--amber-ink)}
+.callout.warn{border-left-color:var(--bad)} .callout.warn .c-label{color:var(--bad)}
+a.inline-link{color:var(--amber-ink);text-decoration:none;border-bottom:1px solid var(--steel)}
+a.inline-link:hover{border-bottom-color:var(--amber-ink)}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin:0.4rem 0 0.6rem}
+.quick-card{display:block;background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.1rem 1.2rem;text-decoration:none;color:var(--ink)}
+.quick-card:hover{background:var(--enclosure2)}
+.quick-card .q-k{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--amber-ink);letter-spacing:0.1em;text-transform:uppercase}
+.quick-card .q-t{font-family:'Saira Condensed',sans-serif;font-size:1.12rem;font-weight:700;text-transform:uppercase;margin:0.3rem 0}
+.quick-card .q-d{font-size:0.82rem;color:var(--body);line-height:1.5}
+.doc-table{width:100%;border-collapse:collapse;font-size:0.86rem;margin:0.3rem 0 1.2rem}
+.doc-table th{font-family:'IBM Plex Mono',monospace;font-size:0.66rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.8rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.doc-table td{padding:0.5rem 0.8rem;border-bottom:1px solid var(--steel);color:var(--body);vertical-align:top}
+.doc-table tr:last-child td{border-bottom:none}
+@media(max-width:768px){
+  .doc-wrap{grid-template-columns:1fr;padding:1.6rem 1.2rem;gap:1.2rem}
+  .doc-toc{position:static}
+  .quick-grid{grid-template-columns:1fr}
+}
+
+/* manual v1.9.3 additions */
+.shot{margin:1rem 0 1.4rem;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:#0d1117}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#C9CDC6;background:var(--ink);padding:.55rem .85rem;line-height:1.5}
+.shot.narrow{max-width:640px}
+.shot.mid{max-width:860px}
+.ed{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:2px;vertical-align:middle;margin-left:.35rem;border:1px solid}
+.ed.pro{color:var(--amber-ink);border-color:var(--amber-ink)}
+.ed.both{color:var(--run);border-color:var(--run)}
+.ed.beta{color:var(--bad);border-color:var(--bad)}
+.kbd{font-family:'IBM Plex Mono',monospace;font-size:.8rem;background:var(--plate);border:1px solid var(--steel);border-bottom-width:2px;border-radius:3px;padding:0 5px}
+.doc-section code{font-family:'IBM Plex Mono',monospace;font-size:.84rem;background:var(--plate);border:1px solid var(--steel);border-radius:2px;padding:0 4px}
+.vid{display:flex;align-items:center;gap:.9rem;text-decoration:none;color:inherit;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate);max-width:520px;margin:1rem 0 .4rem}
+.vid .th{position:relative;flex-shrink:0;width:160px;aspect-ratio:16/9;background:#000}
+.vid .th img{width:100%;height:100%;object-fit:cover;display:block}
+.vid .th span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;text-shadow:0 0 8px #000}
+.vid .lb{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--ink);padding-right:.8rem}
+.doc-toc ul ul{margin:.35rem 0 .2rem .7rem;gap:.3rem;font-size:.72rem}
+@media print{nav,.hazard,.doc-toc,.cta-strip,footer,#mm-consent,.hero-ctas,.vid{display:none!important}.doc-wrap{display:block;padding:0}.doc-section{break-inside:auto}.shot{break-inside:avoid}body{background:#fff}.faq-a{display:block!important}.doc-section h2,.doc-section h3{break-after:avoid}.faq-q .icon{display:none}}
+
+@media(max-width:768px){.steps{grid-template-columns:1fr 1fr}}@media(max-width:520px){.steps{grid-template-columns:1fr}}
+figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "User Manual","item": "https://bacmanager.com/manual.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-explorer-alternative.html">vs YABE</a></li>
+    <li><a href="/manual.html" style="color:#9A6700;font-weight:600">Manual</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Documentation &mdash; BACManager v1.4.4 &middot; updated 18 October 2026</div>
+  <h1>BACManager <span class="accent">User Manual</span></h1>
+  <p class="hero-desc">How to discover, browse, write and schedule BACnet/IP and MS/TP devices, read Modbus devices in the same window, and build dashboards, logs, alarms and a BACnet&ndash;Modbus gateway with BACManager on Windows. Jump to a topic, or download the manual as a PDF.</p>
+  <div class="hero-ctas">
+    <a href="/BACManager_UserManual.pdf" class="btn-primary">Download PDF manual</a>
+    <a href="https://github.com/vend123/bacmanager/releases/download/v1.4.4/BACManager.Setup.1.4.4.exe" class="btn-ghost" onclick="trackDownload()" download>Download free trial</a>
+  </div>
+  <p class="hero-note">Free 14-day trial &bull; BACManager &#36;149 one-time &bull; Runtime &#36;39 per machine &bull; Windows 10 / 11</p>
+</header>
+
+<div class="doc-wrap">
+<aside class="doc-toc"><div class="toc-label">On this page</div><ul>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#main-window">The main window</a></li>
+<li><a href="#bacnet-ip">BACnet/IP connection</a></li>
+<li><a href="#bbmd">BBMD &amp; foreign device</a></li>
+<li><a href="#mstp">MS/TP (RS-485)</a></li>
+<li><a href="#discovery">Discovering devices</a></li>
+<li><a href="#objects">Objects &amp; polling</a></li>
+<li><a href="#properties">Property browser</a></li>
+<li><a href="#writing">Writing &amp; priorities</a></li>
+<li><a href="#cov">COV subscriptions</a></li>
+<li><a href="#schedule">Schedule &amp; calendar</a></li>
+<li><a href="#export">EDE &amp; CSV export</a></li>
+<li><a href="#simulator">BACnet simulator</a></li>
+<li><a href="#modbus">Modbus tools</a></li>
+<li><a href="#tags">Tags &amp; Structured Text</a></li>
+<li><a href="#dashboard">Dashboard &amp; PID faceplate</a></li>
+<li><a href="#history-alarms">History &amp; alarms</a></li>
+<li><a href="#gateway">Gateway</a></li>
+<li><a href="#s7">Siemens S7 (beta)</a></li>
+<li><a href="#runtime">Runtime edition</a></li>
+<li><a href="#workspaces">Workspaces</a></li>
+<li><a href="#licensing">Licensing</a></li>
+<li><a href="#limits">Not supported yet</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ul></aside>
+<main class="doc-main">
+
+<section id="getting-started" class="doc-section">
+<h2>Getting started</h2>
+<p>BACManager is a Windows tool for buildings where BACnet and Modbus meet. It discovers BACnet/IP and MS/TP devices, browses and writes their objects with the priority array, edits Schedule and Calendar objects, subscribes to COV and exports EDE &mdash; and in the same window reads Modbus RTU and TCP meters and drives. Dashboards, a Historian, alarms, tags with Structured Text and a BACnet&ndash;Modbus gateway are included. Everything runs locally.</p>
+<table class="doc-table"><thead><tr><th style="width:170px">Licence</th><th>What it includes</th></tr></thead><tbody>
+<tr><td><b>BACManager</b> &mdash; &#36;149</td><td>Everything in this manual: BACnet explorer and editors, BACnet simulator, Modbus tools, dashboard editor, Historian, alarms, gateway, Siemens S7 (beta), Runtime package export.</td></tr>
+<tr><td><b>Runtime</b> &mdash; &#36;39 / machine</td><td>Runs a dashboard package full screen on a panel PC with live BACnet and Modbus, alarms and trends; no editor, scanner, schedule editor, gateway or simulator. See <a class="inline-link" href="#runtime">Runtime edition</a>.</td></tr>
+</tbody></table>
+<div class="steps"><div class="step"><div class="step-label">Install</div><div class="step-title">Run the installer</div><div class="step-text">Download the installer and start BACManager from the Start menu.</div></div><div class="step"><div class="step-label">Trial</div><div class="step-title">14 days, full features</div><div class="step-text">No account, no credit card. The licence button shows the days left.</div></div><div class="step"><div class="step-label">Open</div><div class="step-title">Open the BACnet client</div><div class="step-text">BACnet/IP or MS/TP, then <b>Open</b>.</div></div><div class="step"><div class="step-label">Discover</div><div class="step-title">Find the devices</div><div class="step-text"><b>Discover</b> sends Who-Is; pick a device and browse its objects.</div></div></div>
+<div class="callout tip"><div class="c-label">No device at hand?</div><p>Start the built-in <a class="inline-link" href="#simulator">BACnet simulator</a>, tick <b>localhost (sim)</b> in the BACnet tab, Open, Discover &mdash; everything in this manual can be tried on it.</p></div>
+</section>
+
+<section id="main-window" class="doc-section">
+<h2>The main window</h2>
+<p>The tabs are, in order: <b>BACnet</b> (the explorer, opened at start), <b>Slave sim</b> (the BACnet simulator), then the Modbus tools <b>Registers, Chart, Write, Serial Monitor, Test Center, Slave Scan, Address Scan, Slave</b>, and the shared tools <b>Dashboard, Tags, History, Alarms, Gateway</b>. The toolbar above them belongs to Modbus: Connect, the poll window settings, display options, Workspace, Templates, Print and <b>License</b>. While the BACnet tab is open, the Modbus TX/RX log is hidden and BACnet has its own <a class="inline-link" href="#objects">activity log</a>.</p>
+<p>The tray icon offers <i>Keep running when window is closed</i> and <i>Start with Windows</i>, for a gateway or alarms that must run unattended. On quit, BACManager asks whether to save the workspace.</p>
+</section>
+
+<section id="bacnet-ip" class="doc-section">
+<h2>BACnet/IP connection</h2>
+<figure class="shot"><img src="/manual-bacnet.jpg" width="1300" height="770" loading="lazy" alt="BACnet tab: datalink BACnet/IP, interface 127.0.0.1, port 47809, localhost (sim) ticked, Discover and Close buttons, the BBMD row, the device Sim-Controller in the device list and its objects grouped by type with live values, and the activity log"><figcaption>The BACnet tab polling the simulator: connection row, BBMD row, devices on the left, objects on the right, activity log below.</figcaption></figure>
+<ol class="body-list">
+<li>Choose the datalink <b>BACnet/IP</b>.</li>
+<li><b>Interface</b>: the IP address of the network card to use, or empty for all interfaces. <b>Port</b>: 47808 (0xBAC0) unless the site uses another.</li>
+<li>Press <b>Open</b>. The status on the right shows &ldquo;Client open (port 47808)&rdquo;; <b>Close</b> closes it. A dropped client is retried (&ldquo;Connection lost &mdash; retrying&hellip;&rdquo;).</li>
+</ol>
+<p><b>localhost (sim)</b> sets Interface 127.0.0.1 and Port 47809, so the client can talk to the simulator on the same PC. The interface, port, poll interval, COV subscriptions and BBMD registration are remembered for the next start.</p>
+<div class="callout note"><div class="c-label">Note &mdash; port 47808 in use</div><p>Only one program can own UDP 47808 on an interface. If another BACnet tool or a BMS runs on the same PC, close it, or open BACManager on a different interface.</p></div>
+</section>
+
+<section id="bbmd" class="doc-section">
+<h2>BBMD &amp; foreign device registration</h2>
+<p>Who-Is is a broadcast and stops at the router. To discover devices on another subnet, register BACManager as a <b>foreign device</b> with that network&rsquo;s BBMD:</p>
+<ol class="body-list"><li>Open the client (BACnet/IP).</li><li>Enter the <b>BBMD</b> address (<code>IP</code> or <code>IP:port</code>, port 47808 by default) and the <b>TTL</b> in seconds (default 300, minimum 30).</li><li>Press <b>Register</b>. The dot turns green and the status reads &ldquo;FDR: registered @ &hellip;&rdquo;; a refusal shows the BVLC result code, a timeout means the BBMD never replied.</li><li>Run <b>Discover</b> &mdash; broadcasts now reach the remote subnet.</li></ol>
+<p>The registration is renewed automatically at 75 % of the TTL, and re-applied the next time the client opens. <b>Unregister</b> ends it. Registration applies to BACnet/IP only; the row is hidden on MS/TP. Background: <a class="inline-link" href="/bacnet-bbmd-foreign-device.html">BBMD &amp; foreign device registration explained</a>.</p>
+</section>
+
+<section id="mstp" class="doc-section">
+<h2>MS/TP (RS-485)</h2>
+<figure class="shot"><img src="/bac-mstp.png" loading="lazy" alt="BACnet connection row with the MS/TP datalink: serial port, refresh, baud and MAC"><figcaption>MS/TP: serial port, baud rate and this station&rsquo;s MAC address.</figcaption></figure>
+<ol class="body-list">
+<li>Connect a USB-RS485 adapter to the MS/TP trunk and choose the datalink <b>MS/TP (RS-485)</b>.</li>
+<li><b>Serial</b>: the COM port (&#8635; refreshes the list if the adapter was plugged in later).</li>
+<li><b>Baud</b>: 9600, 19200, 38400 (default), 57600, 76800 or 115200 &mdash; the same as the trunk.</li>
+<li><b>MAC</b>: this station&rsquo;s address, 0&ndash;127 (default 99). It must be unique on the segment.</li>
+<li><b>Open</b>, then <b>Discover</b>.</li>
+</ol>
+<p>BACManager joins the token ring as a master node (it answers Poll-For-Master and passes the token; Max Master 127), so it can send confirmed requests: browse, write, COV, schedules and EDE work as on BACnet/IP. Discover sends one broadcast Who-Is on the segment; Target IP and BBMD do not apply. MS/TP and Modbus RTU use separate COM ports, so both can run at once. More: <a class="inline-link" href="/bacnet-mstp-rs485.html">BACnet MS/TP over RS-485</a>.</p>
+</section>
+
+<section id="discovery" class="doc-section">
+<h2>Discovering devices</h2>
+<p><b>Target IP</b> decides where <b>Discover</b> sends Who-Is:</p>
+<table class="doc-table"><thead><tr><th style="width:230px">Target IP</th><th>Who-Is sent as</th></tr></thead><tbody>
+<tr><td>empty</td><td>a broadcast on the local subnet (and through the BBMD when registered)</td></tr>
+<tr><td><code>192.168.10.25</code></td><td>a directed Who-Is to one address, e.g. across a router</td></tr>
+<tr><td><code>192.168.10.1-254</code> or <code>192.168.10.0/24</code></td><td>a sweep of up to 256 addresses, one directed Who-Is each</td></tr>
+</tbody></table>
+<p>Each I-Am adds the device to <b>Devices</b>: name (read after discovery), &ldquo;ID &hellip; &middot; address &middot; vendor &hellip;&rdquo;, sorted by device instance. The activity log shows every &ldquo;iAm &larr; device &hellip;&rdquo;. More on finding devices: <a class="inline-link" href="/bacnet-scanner.html">BACnet scanner</a>.</p>
+</section>
+
+<section id="objects" class="doc-section">
+<h2>Objects &amp; polling</h2>
+<p>Click a device to read its object list. Objects are grouped by type (&ldquo;analog-input (3)&rdquo;) and sorted by instance. Each row shows the present value and, on the right:</p>
+<ul class="body-list">
+<li>click the row &mdash; read the present value now;</li>
+<li>&#9998; <b>Write value</b> &mdash; on commandable types (AO, AV, BO, BV, MSO, MSV);</li>
+<li>&#128200; <b>Log to History</b> &mdash; start or stop logging the value;</li>
+<li>&#128225; <b>COV subscription</b> &mdash; live updates without polling;</li>
+<li>&#127991; <b>Add as tag</b> &mdash; a tag for dashboards, alarms, scripts and the gateway;</li>
+<li>&#128269; <b>Browse / read / write all properties</b> &mdash; the property browser, or the grid editor for schedules and calendars.</li>
+</ul>
+<p>The bar above the list: <b>Interval</b> (ms, minimum 200) and <b>Poll</b> / <b>Stop</b> read the present value of every object with ReadPropertyMultiple; <b>Write priority</b> (&mdash; or 1&ndash;16) is used by &#9998; writes; <b>&#11015; CSV</b> and <b>&#11015; EDE</b> export the list. Selecting another device stops the poll.</p>
+<p><b>Activity &#9662;</b> opens the decoded activity log (Who-Is, I-Am, reads, writes, COV, exports) with a filter box, All/TX/RX/Err chips, Pause and Clear; it keeps the last 600 entries.</p>
+</section>
+
+<section id="properties" class="doc-section">
+<h2>Property browser</h2>
+<p>&#128269; on an object opens its properties. <b>Read common set</b> reads the properties that matter for that object type &mdash; name, type, description, present value, units, status flags, event state, reliability, out-of-service, limits, COV increment, and for commandable objects the <b>priority-array</b> (87) and <b>relinquish-default</b> (104); for the device object the vendor, model, firmware, protocol revision, APDU and segmentation settings.</p>
+<p>Any other property: choose it in <b>&mdash; property &mdash;</b> or type its number in <b>ID</b>, then <b>Read</b>. To write, enter the value (empty = NULL), leave the type on <b>auto</b> or pick Real, Unsigned, Signed, Boolean, Enumerated or String, and press <b>Write</b>; the value is read back at once. A property the device does not have shows &ldquo;error&rdquo; &mdash; hover for the reason.</p>
+<div class="callout tip"><div class="c-label">Loop objects</div><p>A Loop&rsquo;s setpoint is property <b>108</b>, its process value (controlled variable) <b>21</b>, the output is the present value <b>85</b>, and P / I / D are <b>93 / 49 / 26</b>. Type the ID to read or write them.</p></div>
+</section>
+
+<section id="writing" class="doc-section">
+<h2>Writing &amp; priorities</h2>
+<p>Commandable objects (AO, BO, MSO, and AV/BV/MSV where the device makes them commandable) keep a 16-slot <b>priority array</b>; the present value is the highest-priority slot that is not NULL, or the relinquish default.</p>
+<ul class="body-list">
+<li>Set <b>Write priority</b> in the bar (8 = Manual Operator is the usual choice), then &#9998; on the row and enter the value.</li>
+<li><b>Relinquish</b>: leave the value empty &mdash; NULL is written at that priority and the slot is released.</li>
+<li>With priority &ldquo;&mdash;&rdquo; no priority is sent and the device applies its default (normally 16).</li>
+<li>Properties other than the present value (e.g. a Loop setpoint) are written without a priority.</li>
+<li>Tags, dashboard elements and gateway rows that write BACnet carry their own priority, 8 by default.</li>
+</ul>
+<table class="doc-table"><thead><tr><th style="width:110px">Priority</th><th>Typical use</th></tr></thead><tbody><tr><td>1&ndash;2</td><td>Life safety</td></tr><tr><td>3&ndash;5</td><td>Critical equipment control</td></tr><tr><td>6</td><td>Minimum on/off</td></tr><tr><td>8</td><td>Manual operator</td></tr><tr><td>9&ndash;15</td><td>Available, local scheduling</td></tr><tr><td>16</td><td>Lowest &mdash; many controllers&rsquo; own logic</td></tr></tbody></table>
+<p>To see who is holding a point, read property 87 in the property browser. More: <a class="inline-link" href="/bacnet-priority-array.html">BACnet priority array explained</a>.</p>
+</section>
+
+<section id="cov" class="doc-section">
+<h2>COV subscriptions</h2>
+<p>&#128225; on a row subscribes to Change-of-Value notifications: the device sends the value when it changes, and the row updates without polling. Click again to unsubscribe. BACManager subscribes for unconfirmed notifications with a 300 s lifetime and renews at 75 % of it; subscriptions are remembered and restored when the device announces itself again (&ldquo;COV subscribed &hellip; (restored)&rdquo;).</p>
+</section>
+
+<section id="schedule" class="doc-section">
+<h2>Schedule &amp; calendar editor</h2>
+<figure class="shot"><img src="/manual-sched.jpg" width="1190" height="560" loading="lazy" alt="Schedule editor: present value 21.50, default 16, priority 8; Monday to Friday 06:00 21.5 and 18:00 18, Saturday and Sunday 08:00 19; writes to AV:0 present-value; one exception referencing calendar CAL:0 at priority 10; Reload and Write schedule buttons"><figcaption>A Schedule object as a weekly grid; it writes AV 0 at priority 8.</figcaption></figure>
+<p>&#128269; on a <b>schedule</b> object opens the weekly grid instead of the property list. The line above shows the present value, the schedule default and the priority it writes with.</p>
+<ul class="body-list">
+<li>Each day lists time/value pairs: edit them in place, &times; removes one, <b>+ add</b> adds one. Times are <code>HH:MM</code>.</li>
+<li><b>Write schedule</b> writes the weekly schedule to the device; <b>Reload</b> reads it again; <b>Raw properties</b> switches to the property browser.</li>
+<li><b>Writes to</b> (the object properties the schedule commands) and <b>Exceptions</b> (dates, week-n-day entries and calendar references with their priority) are shown read-only.</li>
+</ul>
+<p>A <b>calendar</b> object opens as a list of entries: specific dates (<code>yyyy-mm-dd</code>, an empty part means &ldquo;any&rdquo;), <b>date ranges</b> (from &hellip; to, e.g. a summer shutdown, or 1&ndash;15 August of every year with the year left empty) and week-n-day patterns (month, week, weekday). <b>+ date</b>, <b>+ range</b> and <b>+ weekday</b> add entries, &times; removes one, <b>Write calendar</b> writes the list.</p>
+<p>More: <a class="inline-link" href="/bacnet-schedule-editor.html">BACnet schedule &amp; calendar editor</a>.</p>
+</section>
+
+<section id="export" class="doc-section">
+<h2>EDE &amp; CSV export</h2>
+<p>With a device selected, <b>&#11015; EDE</b> writes its object list as a BACnet <b>EDE 2.3</b> file (keyname, device instance, object name, type and instance, description, default present value, min/max, commandable, high/low limit, unit code&hellip;) that other BACnet tools import, and <b>&#11015; CSV</b> writes a plain list (device, type, instance, name, description, present value, units). Each object is read during the export; the status counts them.</p>
+</section>
+
+<section id="simulator" class="doc-section">
+<h2>BACnet simulator</h2>
+<figure class="shot mid"><img src="/manual-sim.jpg" width="940" height="560" loading="lazy" alt="Slave sim tab: device ID 1234, device name Sim-Controller, include schedule and calendar demo objects ticked, an object table with Room_Temp, Supply_Humidity, Setpoint, Fan_Enable and Supply_Air_Loop with their simulations, and the running device's live values"><figcaption>The simulator running device 1234 with a sine-wave room temperature and a simulated PID loop.</figcaption></figure>
+<p>The <b>Slave sim</b> tab runs a BACnet/IP device on this PC (127.0.0.1, port 47808) for testing the explorer, dashboards, the gateway or a BMS without hardware.</p>
+<ol class="body-list">
+<li>Set the <b>Device ID</b> and <b>Device name</b>; tick <b>Include Schedule &amp; Calendar demo objects</b> for a demo Schedule and Calendar.</li>
+<li>Edit the object table: type (AI, AO, AV, BI, BO, BV, MSV, Loop), instance, name, value, units (BACnet unit code, e.g. 62 = &deg;C, 98 = %RH) and description. <b>+ Add object</b>, <b>&#11014; Import CSV / EDE</b>, <b>&#11015; Export</b>, <b>Reset to demo</b>.</li>
+<li>Click a <b>Simulation</b> cell: Static value, Counter &uarr;/&darr;, Sine wave, Random, Ramp, or <b>PID loop (simulated process)</b> on a Loop object &mdash; a PI controller drives a first-order process between Min and Max, with Period as its time constant; writing the Loop&rsquo;s setpoint (108) makes the process follow.</li>
+<li><b>Start simulator</b> (later <b>Apply &amp; restart</b>). In the BACnet tab tick <b>localhost (sim)</b>, Open, Discover.</li>
+</ol>
+<p>The simulator answers Who-Is, ReadProperty, ReadPropertyMultiple, COV and WriteProperty with a priority array on the present value. Besides name, present value, description and units it answers the properties every object has &mdash; object type, status flags, event state, reliability, out-of-service, and for commandable objects the live priority array and relinquish default &mdash; and the device object&rsquo;s vendor, model, protocol and APDU properties, so the property browser&rsquo;s <b>Read common set</b> works on it.</p>
+</section>
+
+<section id="modbus" class="doc-section">
+<h2>Modbus tools</h2>
+<p>The Modbus tabs are the same as in ModbusManager, so the <a class="inline-link" href="https://modbusmanager.com/manual.html">ModbusManager manual</a> describes them in detail. In short:</p>
+<ul class="body-list">
+<li><b>Connect</b>: Modbus TCP (IP, port 502), RTU (COM port, baud, parity, data and stop bits) and further transports; auto-reconnect. See <a class="inline-link" href="https://modbusmanager.com/manual.html#connecting">Connecting</a>.</li>
+<li><b>Poll windows &amp; Registers</b>: FC01&ndash;FC04 blocks with their own slave ID and interval; every value as decimal, hex, binary, 32- and 64-bit; value names, conditional colours, word order, CSV export, snapshot and PDF report.</li>
+<li><b>Write</b> (FC05, 06, 16, 22, 23), <b>Chart</b>, <b>Serial Monitor</b>, <b>Test Center</b> (incl. FC08, FC43/14).</li>
+<li><b>Slave Scan</b> with <b>Auto-detect</b>, <b>Address Scan</b>, and the <b>Slave</b> simulator with simulations and the Link panel.</li>
+</ul>
+</section>
+
+<section id="tags" class="doc-section">
+<h2>Tags &amp; Structured Text</h2>
+<figure class="shot"><img src="/manual-mm-tags-crop.jpg" width="1300" height="280" loading="lazy" alt="Tags list with register and internal tags and a Structured Text script"><figcaption>Tags and a Structured Text loop (shown with Modbus register tags).</figcaption></figure>
+<p>Tags name values so dashboards, alarms, the Historian, the gateway and scripts can use them. Types: <b>Register</b> (Modbus, with data type, word order, Scale &times; and Offset +), <b>Internal</b>, <b>Siemens S7 (beta)</b> and <b>BACnet</b>:</p>
+<ul class="body-list">
+<li><b>BACnet</b> tag: Device ID, Object (AI, AO, AV, BI, BO, BV, MSI, MSO, MSV or Loop), Instance, <b>Property</b> (85 = present value; for a Loop 21, 108, 93, 49, 26) and the write <b>Priority</b> (8 by default). The list shows it as <code>BAC [1234 analog-value:0]</code>.</li>
+<li>&#127991; <b>Add as tag</b> in the object list creates a present-value tag in one click.</li>
+<li>A BACnet tag gets values while its device is polled or COV-subscribed &mdash; in the BACnet tab, by a gateway BACnet source, or automatically in a Runtime kiosk. Extra properties such as a Loop&rsquo;s 108 and 21 are read in the same poll.</li>
+</ul>
+<p>The <b>Script Editor (Structured Text)</b> computes with tags: <code>:=</code>, arithmetic, comparisons, <code>AND OR NOT</code>, <code>IF/ELSIF/ELSE/END_IF</code>, <code>FOR &hellip; TO &hellip; DO &hellip; END_FOR</code> and <code>(* comments *)</code>, run once or as a loop (interval &ge; 100 ms). Writing a BACnet tag from a script writes the device with the tag&rsquo;s priority.</p>
+</section>
+
+<section id="dashboard" class="doc-section">
+<h2>Dashboard &amp; PID faceplate</h2>
+<p>The dashboard editor is the one from ModbusManager Pro &mdash; pages and popup pages, Classic and Modern themes, 57 elements in Standard Objects, Basic, Solar/Energy, Process, <b>HVAC</b> (fan, damper, coils, filter, AHU, thermostat, humidifier, heat exchanger&hellip;), Input/Data and Charts, undo/redo, Runtime mode and full screen. The <a class="inline-link" href="https://modbusmanager.com/manual.html#dashboard">ModbusManager manual</a> describes the editor in detail. BACManager adds:</p>
+<ul class="body-list">
+<li><b>Source &rarr; BACnet</b> in an element&rsquo;s properties: Device ID, Object, Instance (and Property for a Loop: output, process value, setpoint, P, I, D). The device must be polled or COV-subscribed in the BACnet tab or by a gateway source to show a live value.</li>
+<li><b>PID Loop faceplate</b> with a <b>BACnet Loop object</b> box: enter the Device ID and Loop instance and press <b>Bind PV, SP, OUT, P/I/D</b> &mdash; PV is bound to property 21, SP to 108, OUT to 85, P/I/D to 93/49/26. Auto/Manual is bound by hand if the controller exposes it.</li>
+<li>In Runtime the operator changes the setpoint (written to property 108) after a confirmation.</li>
+</ul>
+<figure class="shot mid"><img src="/manual-dash.jpg" width="680" height="280" loading="lazy" alt="Dashboard in Runtime with a PID faceplate for Loop 0: PV 27.9 degrees, setpoint 28.0, output 64.7 percent, a small trend of the setpoint step and the process following, P 8, I 20, D 0; beside it room temperature and supply humidity from analog inputs"><figcaption>A PID faceplate bound to a BACnet Loop after a setpoint step from 25 to 28 &deg;C, with two analog inputs.</figcaption></figure>
+<p>Write elements write only in <b>Runtime</b> and only after the element has read a value. A BACnet write uses priority 8 unless the tag says otherwise.</p>
+</section>
+
+<section id="history-alarms" class="doc-section">
+<h2>History &amp; alarms</h2>
+<figure class="shot"><img src="/manual-mm-history.jpg" width="1300" height="830" loading="lazy" alt="History tab with logged series, time range, data management and a chart"><figcaption>The Historian: series on the left, the chart on the right.</figcaption></figure>
+<p><b>History</b>: &#128200; on a BACnet object (or a tag, or a Modbus register) starts logging; the series list sets a <b>Deadband</b> and a display scale. Choose 1h/24h/7d/All or a date range, zoom by dragging, export CSV, and delete old data. Values are stored as they arrive (at the poll rate or on COV).</p>
+<figure class="shot"><img src="/manual-mm-alarms.jpg" width="1300" height="235" loading="lazy" alt="Alarms tab with an active alarm and alarm definitions"><figcaption>Active alarms with acknowledgement, and definitions.</figcaption></figure>
+<p><b>Alarms</b>: <b>+ New alarm</b> with source <b>BACnet</b> (Device ID, Object, Instance), a tag or a Modbus register; condition (&gt;, &lt;, &ge;, &le;, =, &ne;, between, outside), warning and critical limits, hysteresis and delay. Active alarms are acknowledged in the tab or from a dashboard Alarm Banner / Alarm List; sound can be muted. These are BACManager&rsquo;s own alarms on values &mdash; BACnet event notifications from devices are not received (see <a class="inline-link" href="#limits">Not supported yet</a>).</p>
+</section>
+
+<section id="gateway" class="doc-section">
+<h2>Gateway</h2>
+<figure class="shot"><img src="/bac-gateway-bidirectional.png" loading="lazy" alt="Gateway tab with a read row from a Modbus register to a BACnet analog input, a write row from a BACnet analog value to a Modbus register, and the BMS side BACnet/IP server panel"><figcaption>Both directions on one PC: Modbus registers exposed as BACnet objects, and BACnet points exposed as Modbus registers.</figcaption></figure>
+<p>The gateway connects the two worlds in both directions at once. Each mapping row has its own source and destination:</p>
+<ul class="body-list">
+<li><b>Sources</b> (endpoints): <b>+ TCP</b> and <b>+ RTU</b> Modbus devices, <b>+ BACnet</b> (a device already discovered in the BACnet tab; the row sets object type, instance, property and the write priority, 8 by default), <b>+ Siemens S7 (beta)</b> and <b>+ Tags</b>.</li>
+<li><b>Destinations</b>: the <b>Modbus map</b> &mdash; a Modbus TCP slave (PLC side, port 502) any PLC or SCADA polls; a <b>BACnet obj</b> on the gateway&rsquo;s own BACnet/IP device; or an <b>S7 DB (beta)</b> a Siemens PLC reads with GET.</li>
+<li><b>BMS side</b>: tick <b>Expose mapping rows as a BACnet device</b>, set the Device ID (default 1001), name and BACnet/IP port (47808). It runs as a separate process, so it can use 47808 while the BACnet tab&rsquo;s client uses another port. Rows with Dest &ldquo;BACnet obj&rdquo; become AI, AO, AV, BI, BO, BV, MSV or Loop objects with an instance and optional units. A BMS discovers it with Who-Is and can read, subscribe to COV and &mdash; for rows in write mode on commandable types &mdash; write with priority; the write goes on to the source device.</li>
+<li><b>Mode</b> read (source &rarr; destination) or write (destination &rarr; source); data type, scale and offset per row.</li>
+</ul>
+<p><b>Start gateway</b>; <b>Start gateway automatically</b> plus the tray options keep it running unattended. Rows and endpoints import from and export to CSV, and the configuration is saved with the workspace. The S7 server needs its <b>Allowed PLC addresses</b> list &mdash; empty means no PLC can connect. More: <a class="inline-link" href="/bacnet-modbus-gateway.html">BACnet &harr; Modbus gateway</a>.</p>
+</section>
+
+<section id="s7" class="doc-section">
+<h2>Siemens S7 (beta)</h2>
+<p>BACManager reads and writes Siemens S7-1200/1500 (and S7-300/400) PLCs over PUT/GET, the same way as ModbusManager Pro: permit PUT/GET in the CPU, turn off optimized block access for the DBs, add the PLC in Tags &rarr; <b>Siemens S7 (beta)&hellip;</b> (IP, rack 0, slot 1; slot 2 for S7-300/400), then use S7 tags, the dashboard&rsquo;s S7 source or an S7 gateway endpoint. Addresses look like <code>DB1,REAL4</code>, <code>DB1,X12.0</code>, <code>MW2</code>. It is released as beta, tested against a simulated PLC. Guide: <a class="inline-link" href="https://modbusmanager.com/siemens-s7-put-get.html">S7-1200 / S7-1500 PUT/GET from a PC</a>.</p>
+</section>
+
+<section id="runtime" class="doc-section">
+<h2>Runtime edition</h2>
+<figure class="shot narrow" style="max-width:460px"><img src="/manual-mm-runtime-pkg.jpg" width="456" height="539" loading="lazy" alt="Runtime package dialog with machine name, service PIN, start with Windows, screen size, Export package and Choose package"><figcaption>&#128230; in the dashboard toolbar.</figcaption></figure>
+<ol class="body-list">
+<li>In BACManager, build the dashboard and press &#128230;: machine or line name, a 4&ndash;8 digit <b>Service PIN</b>, <i>Start with Windows</i>, <i>Fit to the machine&rsquo;s screen</i> or <i>Actual size</i>, <b>Export package</b> &rarr; a <code>.mmrt</code> file. Network settings are not in the package.</li>
+<li>On the panel PC (same installer): &#128230; &rarr; <b>Choose package&hellip;</b>, restart. It opens the dashboard full screen, always dark, with finger-sized controls.</li>
+<li>The kiosk opens BACnet with this PC&rsquo;s saved settings, sends Who-Is every 30 s until each device its tags use has answered, and polls them; Modbus and S7 connect too.</li>
+<li><b>Service</b>: <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">F12</span> or hold the top-right corner 5 s, then the PIN (five wrong PINs lock for a minute). The menu sets the <b>BACnet network</b> (BACnet/IP interface, port, Who-Is target, or MS/TP port, baud, MAC), the Modbus connection, S7 PLCs, installs another package, the licence, <i>Open the editor</i> (BACManager licence or trial only), <i>Make this an ordinary PC</i> and <i>Close the application</i>.</li>
+</ol>
+<p>A <b>Runtime key</b> (<code>BACR-</code>, &#36;39 per machine) runs packages without limit; ordered by e-mail to license@bacmanager.com with the Machine IDs. Without a key the PC runs on the 14-day trial, then 2 hours at a time before polling stops. Details: <a class="inline-link" href="/bacnet-hmi-runtime.html">BACnet HMI Runtime</a>.</p>
+</section>
+
+<section id="workspaces" class="doc-section">
+<h2>Workspaces &amp; templates</h2>
+<p><b>&#128190; Workspace</b> saves one JSON file to Documents; the folder button opens one. It holds the Modbus poll windows and their settings, the dashboard, tags and script, the Historian&rsquo;s logged series, the slave blocks, the BACnet simulator configuration and BACnet panel state, and the gateway configuration (opening a workspace asks before applying it). Connection settings stay with each PC; alarm definitions and the S7 PLC list are kept by the application. ModbusManager Pro and BACManager open each other&rsquo;s workspaces. <b>Templates</b> load ready Modbus poll windows for common devices.</p>
+</section>
+
+<section id="licensing" class="doc-section">
+<h2>Licensing</h2>
+<ul class="body-list">
+<li><b>Trial</b>: 14 days with every feature, from the first start; reinstalling does not reset it.</li>
+<li><b>Machine ID</b>: &#128273; <b>License</b> in the toolbar shows it with a copy button.</li>
+<li><b>Buy</b>: on <a class="inline-link" href="/#pricing">bacmanager.com</a> enter the Machine ID and e-mail; the key (<code>BACP-</code>&hellip;) is e-mailed after checkout. Paste it in the licence window and press <b>Activate license</b>. Runtime keys start <code>BACR-</code>.</li>
+<li>A key is perpetual and bound to one machine; to move it to a new PC write to <a class="inline-link" href="mailto:support@bacmanager.com">support@bacmanager.com</a>. Terms: <a class="inline-link" href="/license-terms.html">licence terms</a>.</li>
+</ul>
+<p><b>Languages</b>: English, German, Spanish, French, Portuguese, Ukrainian, Chinese, Polish and Estonian, from the flag in the toolbar. A few BACnet-specific labels and prompts are in English only.</p>
+</section>
+
+<section id="limits" class="doc-section">
+<h2>Not supported yet</h2>
+<p>So you know before you need it, BACManager 1.4.4 does <b>not</b>:</p>
+<ul class="body-list">
+<li>use BACnet/SC (secure connect) &mdash; only BACnet/IP and MS/TP;</li>
+<li>read Trend Log objects (they are listed, but ReadRange is not implemented);</li>
+<li>receive BACnet event or alarm notifications, or acknowledge device alarms;</li>
+<li>send DeviceCommunicationControl, ReinitializeDevice or TimeSynchronization;</li>
+<li>discover routers (Who-Is-Router-To-Network) or set Who-Is instance limits;</li>
+<li>poll devices that lack ReadPropertyMultiple (single reads by clicking a row and the property browser still work);</li>
+<li>edit exception schedules (they are shown).</li>
+</ul>
+</section>
+
+<section id="troubleshooting" class="doc-section">
+<h2>Troubleshooting</h2>
+<table class="doc-table"><thead><tr><th style="width:230px">Symptom</th><th>Check</th></tr></thead><tbody>
+<tr><td>Discover finds nothing</td><td>The client is open on the right interface; the devices are on the same subnet (otherwise a directed Target IP or a BBMD); Windows Firewall allows BACManager on UDP 47808; no other program holds the port.</td></tr>
+<tr><td>Devices behind a router</td><td>Register with the BBMD, or use Target IP with the device&rsquo;s address or a range.</td></tr>
+<tr><td>MS/TP: no devices</td><td>Baud matches the trunk, the MAC is unique and within the masters&rsquo; Max Master, A/B polarity and termination, the adapter&rsquo;s COM port.</td></tr>
+<tr><td>Every value shows &ldquo;error&rdquo; while polling</td><td>The device may not support ReadPropertyMultiple; read single values by clicking the rows.</td></tr>
+<tr><td>A write is refused</td><td>The object is not commandable, the value type is wrong (set the type in the property browser), or a higher priority holds the point &mdash; read property 87.</td></tr>
+<tr><td>A dashboard value stays empty</td><td>BACnet sources need the device polled or COV-subscribed (BACnet tab or gateway); dashboards write only in Runtime.</td></tr>
+<tr><td>Gateway BACnet server not visible to the BMS</td><td>Expose mapping rows is ticked, the gateway is started, the device ID is unique on the network, rows have Dest &ldquo;BACnet obj&rdquo;, and the firewall allows UDP 47808.</td></tr>
+</tbody></table>
+</section>
+
+<section id="faq" class="doc-section">
+<h2>FAQ</h2>
+<div class="faq-list">
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Does BACManager work on MS/TP or only BACnet/IP?<span class="icon">+</span></div><div class="faq-a">Both. With a USB-RS485 adapter it joins an MS/TP trunk as a master node and does everything it does on BACnet/IP: discover, browse, write with priority, COV, schedules and EDE export.</div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Which priority does BACManager write with?<span class="icon">+</span></div><div class="faq-a">The one you choose in Write priority. Tags, dashboard elements and gateway rows default to 8, Manual Operator. An empty value relinquishes the slot.</div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can a BMS read Modbus devices through BACManager?<span class="icon">+</span></div><div class="faq-a">Yes. The gateway exposes mapping rows as objects of its own BACnet/IP device, which a BMS discovers with Who-Is, reads, subscribes to and writes.</div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I try it without a controller?<span class="icon">+</span></div><div class="faq-a">Yes. The built-in simulator runs a BACnet device with analog, binary, multi-state and Loop objects, plus demo Schedule and Calendar objects, on the same PC.</div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is it a subscription?<span class="icon">+</span></div><div class="faq-a">No. BACManager is $149 one-time per machine, with a 14-day free trial. Runtime is $39 per machine.</div></div>
+</div>
+</section>
+</main>
+</div>
+
+
+<div class="cta-strip">
+  <h2>Try it on your building</h2>
+  <p>Download the 14-day trial, open the BACnet client and discover your devices &mdash; or start the simulator and follow this manual.</p>
+  <div class="ctas">
+    <a href="https://github.com/vend123/bacmanager/releases/download/v1.4.4/BACManager.Setup.1.4.4.exe" class="btn-cta-yellow" onclick="trackDownload()" download>Download free trial</a>
+    <a href="/BACManager_UserManual.pdf" class="btn-cta-outline">Download PDF manual</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+    <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    <a href="/bacnet-priority-array.html">Priority Array</a>
+    <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/manual.html">Manual</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+</body>
+</html>
