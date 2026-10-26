@@ -8,14 +8,14 @@
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="description" content="BACManager 1.4.4 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedule editor, EDE, simulator, Modbus, dashboards and gateway.">
+<meta name="description" content="BACManager 1.4.5 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedules, EDE, simulator, Modbus, dashboards, gateway and MQTT.">
 <meta name="keywords" content="BACManager manual, BACnet explorer documentation, BACnet MS/TP how to, BACnet priority array write, BACnet schedule editor, BACnet EDE export, BACnet Modbus gateway setup, BACnet simulator">
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bacmanager.com/manual.html">
 <meta property="og:title" content="BACManager User Manual &amp; Documentation">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="The complete BACManager 1.4.4 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway and Runtime.">
+<meta property="og:description" content="The complete BACManager 1.4.5 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway with MQTT and Home Assistant, and Runtime.">
 <meta property="og:url" content="https://bacmanager.com/manual.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
@@ -29,7 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 [
-{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.4: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-10-18","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
+{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.5: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway with MQTT and Home Assistant discovery, and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-10-26","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Does BACManager work on MS/TP or only BACnet/IP?","acceptedAnswer":{"@type":"Answer","text":"Both. With a USB-RS485 adapter it joins an MS/TP trunk as a master node and does everything it does on BACnet/IP: discover, browse, write with priority, COV, schedules and EDE export."}},
 {"@type":"Question","name":"Which priority does BACManager write with?","acceptedAnswer":{"@type":"Answer","text":"The one you choose in Write priority. Tags, dashboard elements and gateway rows default to 8, Manual Operator. An empty value relinquishes the slot."}},
@@ -240,12 +240,12 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 </div>
 
 <header class="hero">
-  <div class="eyebrow">Documentation &mdash; BACManager v1.4.4 &middot; updated 18 October 2026</div>
+  <div class="eyebrow">Documentation &mdash; BACManager v1.4.5 &middot; updated 26 October 2026</div>
   <h1>BACManager <span class="accent">User Manual</span></h1>
   <p class="hero-desc">How to discover, browse, write and schedule BACnet/IP and MS/TP devices, read Modbus devices in the same window, and build dashboards, logs, alarms and a BACnet&ndash;Modbus gateway with BACManager on Windows. Jump to a topic, or download the manual as a PDF.</p>
   <div class="hero-ctas">
     <a href="/BACManager_UserManual.pdf" class="btn-primary">Download PDF manual</a>
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.4/BACManager.Setup.1.4.4.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
   </div>
   <p class="hero-note">Free 14-day trial &bull; BACManager &#36;149 one-time &bull; Runtime &#36;39 per machine &bull; Windows 10 / 11</p>
 </header>
@@ -269,7 +269,7 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 <li><a href="#tags">Tags &amp; Structured Text</a></li>
 <li><a href="#dashboard">Dashboard &amp; PID faceplate</a></li>
 <li><a href="#history-alarms">History &amp; alarms</a></li>
-<li><a href="#gateway">Gateway</a></li>
+<li><a href="#gateway">Gateway</a><ul><li><a href="#mqtt">MQTT &amp; Home Assistant</a></li></ul></li>
 <li><a href="#s7">Siemens S7 (beta)</a></li>
 <li><a href="#runtime">Runtime edition</a></li>
 <li><a href="#workspaces">Workspaces</a></li>
@@ -461,11 +461,14 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 <p>The gateway connects the two worlds in both directions at once. Each mapping row has its own source and destination:</p>
 <ul class="body-list">
 <li><b>Sources</b> (endpoints): <b>+ TCP</b> and <b>+ RTU</b> Modbus devices, <b>+ BACnet</b> (a device already discovered in the BACnet tab; the row sets object type, instance, property and the write priority, 8 by default), <b>+ Siemens S7 (beta)</b> and <b>+ Tags</b>.</li>
-<li><b>Destinations</b>: the <b>Modbus map</b> &mdash; a Modbus TCP slave (PLC side, port 502) any PLC or SCADA polls; a <b>BACnet obj</b> on the gateway&rsquo;s own BACnet/IP device; or an <b>S7 DB (beta)</b> a Siemens PLC reads with GET.</li>
+<li><b>Destinations</b>: the <b>Modbus map</b> &mdash; a Modbus TCP slave (PLC side, port 502) any PLC or SCADA polls; a <b>BACnet obj</b> on the gateway&rsquo;s own BACnet/IP device; an <b>S7 DB (beta)</b> a Siemens PLC reads with GET; or <b>MQTT</b> (below).</li>
 <li><b>BMS side</b>: tick <b>Expose mapping rows as a BACnet device</b>, set the Device ID (default 1001), name and BACnet/IP port (47808). It runs as a separate process, so it can use 47808 while the BACnet tab&rsquo;s client uses another port. Rows with Dest &ldquo;BACnet obj&rdquo; become AI, AO, AV, BI, BO, BV, MSV or Loop objects with an instance and optional units. A BMS discovers it with Who-Is and can read, subscribe to COV and &mdash; for rows in write mode on commandable types &mdash; write with priority; the write goes on to the source device.</li>
 <li><b>Mode</b> read (source &rarr; destination) or write (destination &rarr; source); data type, scale and offset per row.</li>
 </ul>
 <p><b>Start gateway</b>; <b>Start gateway automatically</b> plus the tray options keep it running unattended. Rows and endpoints import from and export to CSV, and the configuration is saved with the workspace. The S7 server needs its <b>Allowed PLC addresses</b> list &mdash; empty means no PLC can connect. More: <a class="inline-link" href="/bacnet-modbus-gateway.html">BACnet &harr; Modbus gateway</a>.</p>
+<h3 id="mqtt">MQTT and Home Assistant</h3>
+<p>A third destination, <b>MQTT</b>, publishes a row&rsquo;s value to an MQTT broker &mdash; Home Assistant&rsquo;s Mosquitto add-on or any other &mdash; as <code>&lt;base topic&gt;/&lt;topic&gt;/state</code>. Any source works: a BACnet object, a Modbus register, an S7 address or a tag. In the <b>MQTT</b> panel set the broker, port (1883; 8883 with TLS), user, password and base topic; per row set the topic (empty: from the name), unit and Home Assistant device class.</p>
+<p>With <b>Home Assistant discovery</b> on, the rows appear in Home Assistant by themselves under one device: values as sensors (BI, BO and BV as binary sensors), write rows as numbers or switches whose commands go to the object at the row&rsquo;s write priority. Energy rows are growing totals for the Energy dashboard, and the device shows as unavailable when the gateway stops. The password stays on this PC: it is never written to a workspace or a CSV export.</p>
 </section>
 
 <section id="s7" class="doc-section">
@@ -503,14 +506,13 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 
 <section id="limits" class="doc-section">
 <h2>Not supported yet</h2>
-<p>So you know before you need it, BACManager 1.4.4 does <b>not</b>:</p>
+<p>So you know before you need it, BACManager 1.4.5 does <b>not</b>:</p>
 <ul class="body-list">
 <li>use BACnet/SC (secure connect) &mdash; only BACnet/IP and MS/TP;</li>
 <li>read Trend Log objects (they are listed, but ReadRange is not implemented);</li>
 <li>receive BACnet event or alarm notifications, or acknowledge device alarms;</li>
 <li>send DeviceCommunicationControl, ReinitializeDevice or TimeSynchronization;</li>
 <li>discover routers (Who-Is-Router-To-Network) or set Who-Is instance limits;</li>
-<li>poll devices that lack ReadPropertyMultiple (single reads by clicking a row and the property browser still work);</li>
 <li>edit exception schedules (they are shown).</li>
 </ul>
 </section>
@@ -546,7 +548,7 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
   <h2>Try it on your building</h2>
   <p>Download the 14-day trial, open the BACnet client and discover your devices &mdash; or start the simulator and follow this manual.</p>
   <div class="ctas">
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.4/BACManager.Setup.1.4.4.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
     <a href="/BACManager_UserManual.pdf" class="btn-cta-outline">Download PDF manual</a>
   </div>
   <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
