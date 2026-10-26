@@ -184,7 +184,7 @@ footer a:hover{color:#fff}
   <h1>A YABE<br><span class="accent">alternative</span> for mixed sites</h1>
   <p class="hero-desc">YABE (Yet Another Bacnet Explorer) is a solid, free BACnet/IP browser that plenty of engineers know well. If your site is BACnet/IP only and you never need schedules edited or Modbus polled, it may be all you need. BACManager is for the sites that aren't that simple &mdash; MS/TP field devices, schedule and calendar commissioning, and Modbus meters sharing the panel &mdash; in one licensed, supported tool for $149 one-time.</p>
   <div class="hero-ctas">
-    <a href="https://github.com/vend123/bacmanager/releases/download/v1.4.4/BACManager.Setup.1.4.4.exe" class="btn-primary" onclick="trackDownload()" download>Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.4/BACManager.Setup.1.4.4.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
     <a href="/#pricing" class="btn-ghost">See pricing</a>
   </div>
   <p class="hero-note">Windows 10/11 &middot; one-time license &middot; 14-day trial</p>
@@ -272,7 +272,7 @@ footer a:hover{color:#fff}
   <h2>Try it against your own site</h2>
   <p>Download the free trial and run it next to YABE or your current tool &mdash; no credit card, no cloud.</p>
   <div class="ctas">
-    <a href="https://github.com/vend123/bacmanager/releases/download/v1.4.4/BACManager.Setup.1.4.4.exe" class="btn-cta-yellow" onclick="trackDownload()" download>Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.4/BACManager.Setup.1.4.4.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
     <a href="/#pricing" class="btn-cta-outline">See pricing</a>
   </div>
   <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
@@ -342,5 +342,17 @@ function openBuyModal(){
 })();
 </script>
 
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://. */
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  window.location.href = 'https://' + a.getAttribute('data-dl');
+});
+</script>
 </body>
 </html>
