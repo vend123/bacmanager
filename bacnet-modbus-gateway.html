@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BACnet &harr; Modbus Gateway for Windows</title>
+<title>BACnet to Modbus &amp; MQTT Gateway Software for Windows</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="description" content="A software BACnet-to-Modbus gateway, both directions: expose Modbus meters as a BACnet device for a BMS, or expose a BACnet device as a Modbus map for a PLC.">
-<meta name="keywords" content="BACnet to Modbus gateway, Modbus to BACnet gateway, BACnet Modbus bridge, BACnet BMS Modbus meter, software BACnet gateway, Modbus register to BACnet object">
+<meta name="description" content="Software gateway, both directions: Modbus meters as a BACnet device for the BMS, BACnet points as a Modbus map for a PLC, and BACnet to MQTT and Home Assistant.">
+<meta name="keywords" content="BACnet to Modbus gateway, Modbus to BACnet gateway, BACnet Modbus bridge, BACnet BMS Modbus meter, software BACnet gateway, Modbus register to BACnet object, BACnet to MQTT, BACnet MQTT gateway, BACnet IP to MQTT, BACnet Home Assistant, Modbus to BACnet converter software">
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bacmanager.com/bacnet-modbus-gateway.html">
-<meta property="og:title" content="BACnet &harr; Modbus Gateway for Windows">
+<meta property="og:title" content="BACnet to Modbus &amp; MQTT Gateway Software for Windows">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="Bridge BACnet and Modbus in both directions from one Windows PC &mdash; no dedicated gateway hardware. Runs unattended in the background.">
+<meta property="og:description" content="Bridge BACnet and Modbus in both directions from one Windows PC, and publish BACnet and Modbus points to MQTT and Home Assistant &mdash; no dedicated gateway hardware. Runs unattended in the background.">
 <meta property="og:url" content="https://bacmanager.com/bacnet-modbus-gateway.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BACnet &harr; Modbus Gateway for Windows">
-<meta name="twitter:description" content="Software gateway, both directions: BACnet devices exposed as a Modbus map for a PLC, or Modbus meters exposed as a BACnet device for a BMS.">
+<meta name="twitter:title" content="BACnet to Modbus &amp; MQTT Gateway Software for Windows">
+<meta name="twitter:description" content="Software gateway, both directions: BACnet devices exposed as a Modbus map for a PLC, Modbus meters exposed as a BACnet device for a BMS, and both published to MQTT and Home Assistant.">
 <meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,10 +33,10 @@
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "BACnet to Modbus Gateway for Windows",
-  "description": "A software gateway bridging BACnet and Modbus in both directions on one Windows PC, running unattended in the background.",
+  "description": "A software gateway bridging BACnet and Modbus in both directions on one Windows PC, publishing to MQTT and Home Assistant, running unattended in the background.",
   "url": "https://bacmanager.com/bacnet-modbus-gateway.html",
   "datePublished": "2026-08-30",
-  "dateModified": "2026-08-30",
+  "dateModified": "2026-10-26",
   "author": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"},
   "publisher": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"}
 },
@@ -47,7 +47,8 @@
     {"@type": "Question", "name": "Does this replace a hardware BACnet-Modbus gateway box?", "acceptedAnswer": {"@type": "Answer", "text": "For most sites, yes. A PC (or a small always-on Windows box) running BACManager does the same job a dedicated protocol converter appliance does — no separate hardware to buy, wire and maintain, as long as the PC stays powered on."}},
     {"@type": "Question", "name": "Does the Gateway run without keeping the window open?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It can minimize to the system tray and auto-start with Windows, so it behaves like a background service rather than an application someone has to remember to open."}},
     {"@type": "Question", "name": "Are writes from a BMS or PLC safe?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Writes forwarded to a BACnet device use the standard 16-level priority array (default priority 8, Manual Operator) instead of a blind overwrite, so they interact correctly with schedules and other controllers already writing to the same point."}},
-    {"@type": "Question", "name": "Can I bridge multiple Modbus devices and multiple BACnet objects at once?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The Gateway maps as many source points as needed — Modbus TCP, Modbus RTU, and already-discovered BACnet devices — into either a shared Modbus map or a BACnet server device, row by row."}},
+    {"@type": "Question", "name": "Can I bridge multiple Modbus devices and multiple BACnet objects at once?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The Gateway maps as many source points as needed — Modbus TCP, Modbus RTU, already-discovered BACnet devices, Siemens S7 data blocks and the application's own tags — into a shared Modbus map, a BACnet server device, an S7 data block or MQTT, row by row."}},
+    {"@type": "Question", "name": "Can BACManager send BACnet values to MQTT or Home Assistant?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Set a mapping row's destination to MQTT and the value is published to your broker as a retained topic. With Home Assistant discovery switched on, each row appears in Home Assistant as a sensor, binary sensor, switch or number with its unit. Rows in write mode accept commands back from Home Assistant and write them to the BACnet object at the priority you choose."}},
     {"@type": "Question", "name": "Does this cost extra on top of the BACManager license?", "acceptedAnswer": {"@type": "Answer", "text": "No. The Gateway is included in the standard $149 one-time BACManager license — no separate module fee."}}
   ]
 }
@@ -178,7 +179,7 @@ footer a:hover{color:#fff}
 <section class="hero">
   <div class="eyebrow">// no dedicated hardware needed</div>
   <h1>A software gateway,<br><span class="accent">both directions</span></h1>
-  <p class="hero-desc">Most protocol-converter boxes on the market do exactly one thing: bridge BACnet and Modbus, in one fixed direction, for one price per unit. BACManager's Gateway does both directions from a single Windows PC &mdash; read a BACnet controller into a Modbus map a PLC can poll, or read Modbus meters and drives into a real BACnet/IP device a BMS can discover. No protocol-converter appliance to buy, mount and wire.</p>
+  <p class="hero-desc">Most protocol-converter boxes on the market do exactly one thing: bridge BACnet and Modbus, in one fixed direction, for one price per unit. BACManager's Gateway does both directions from a single Windows PC &mdash; read a BACnet controller into a Modbus map a PLC can poll, or read Modbus meters and drives into a real BACnet/IP device a BMS can discover. The same rows can also go <strong>BACnet to MQTT</strong> &mdash; Home Assistant finds them by itself &mdash; or into a Siemens S7 data block. No protocol-converter appliance to buy, mount and wire.</p>
   <div class="hero-ctas">
     <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
     <a href="/#pricing" class="btn-ghost">See pricing</a>
@@ -203,11 +204,13 @@ footer a:hover{color:#fff}
   <table class="compare-table">
     <thead><tr><th>Direction</th><th>Source</th><th class="hl">Exposed as</th></tr></thead>
     <tbody>
-      <tr><td>BACnet &rarr; Modbus</td><td>A BACnet/IP or MS/TP device, already discovered on the BACnet tab</td><td class="hl">A shared Modbus TCP/RTU map — any PLC polls it like a normal slave</td></tr>
+      <tr><td>BACnet &rarr; Modbus</td><td>A BACnet/IP or MS/TP device, already discovered on the BACnet tab</td><td class="hl">A shared Modbus TCP map — any PLC polls it like a normal slave</td></tr>
       <tr><td>Modbus &rarr; BACnet</td><td>A Modbus RTU or TCP device — meters, drives, older controllers</td><td class="hl">A real BACnet/IP device — any BMS discovers it with a normal whoIs</td></tr>
+      <tr><td>BACnet / Modbus &rarr; MQTT</td><td>Any of the above, plus the application's own calculated tags</td><td class="hl">Retained topics on your MQTT broker — Home Assistant discovers each row as an entity</td></tr>
+      <tr><td>Siemens S7 &harr; both</td><td>An S7-1200/1500 data block over PUT/GET</td><td class="hl">Modbus registers or BACnet objects — or values written into an S7 data block the PLC reads with GET</td></tr>
     </tbody>
   </table>
-  <p style="max-width:800px;margin:1.2rem auto 0;text-align:center;color:var(--muted);line-height:1.6;font-size:0.85rem">Both directions run from the same Gateway configuration, at the same time, on the same PC.</p>
+  <p style="max-width:800px;margin:1.2rem auto 0;text-align:center;color:var(--muted);line-height:1.6;font-size:0.85rem">All of these run from the same Gateway configuration, at the same time, on the same PC.</p>
   <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
     <img src="bac-gateway-bidirectional.png" alt="BACManager Gateway tab configured with a Modbus source endpoint, a read row mapping a Modbus register to a BACnet AI object, a write row mapping a BACnet AV object back to a Modbus register, and the BMS-side BACnet/IP server panel enabled" loading="lazy" style="display:block;width:100%;height:auto" onerror="this.closest('figure').style.display='none'">
     <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">One Gateway config: a Modbus reading exposed as a BACnet object, and a BACnet write forwarded back to a Modbus register</figcaption>
@@ -223,6 +226,9 @@ footer a:hover{color:#fff}
     <div class="feat"><div class="feat-icon">&#128268;</div><h3>No appliance to mount</h3><p>Runs on a Windows PC you already have on site — no DIN-rail converter, no separate power supply, no extra IP address to firewall.</p></div>
     <div class="feat"><div class="feat-icon">&#128274;</div><h3>Priority-aware writes</h3><p>A write forwarded into a BACnet device uses the real 16-level priority array (default priority 8, Manual Operator) — not a blind overwrite that fights schedules and controllers.</p></div>
     <div class="feat"><div class="feat-icon">&#128266;</div><h3>Runs unattended</h3><p>Minimizes to the system tray and can auto-start with Windows — it behaves like a background service, not an app someone has to remember to reopen.</p></div>
+    <div class="feat"><div class="feat-icon">&#128225;</div><h3>BACnet to MQTT</h3><p>Rows with MQTT as destination are published to any broker &mdash; Mosquitto, Home Assistant, Node-RED &mdash; with TLS, user and password and an online/offline status topic. Home Assistant discovery turns each row into an entity with its unit, no YAML.</p></div>
+    <div class="feat"><div class="feat-icon">&#128208;</div><h3>Type and scale conversion</h3><p>Each row has its own source and destination data type, scale and offset, applied on the way in and reversed on the way back &mdash; a meter's 123 reaches the BMS as 12.3, a BMS setpoint reaches the meter as 123.</p></div>
+    <div class="feat"><div class="feat-icon">&#128203;</div><h3>CSV import and export</h3><p>Build hundreds of rows in a spreadsheet, BACnet endpoints included, and import them; export a working gateway to reuse on the next site. The whole gateway also travels inside a saved workspace.</p></div>
   </div>
 </section>
 
@@ -254,7 +260,11 @@ footer a:hover{color:#fff}
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Can I bridge multiple Modbus devices and multiple BACnet objects at once?<span class="icon">+</span></div>
-      <div class="faq-a">Yes. The Gateway maps as many source points as needed — Modbus TCP, Modbus RTU, and already-discovered BACnet devices — into either a shared Modbus map or a BACnet server device, row by row.</div>
+      <div class="faq-a">Yes. The Gateway maps as many source points as needed — Modbus TCP, Modbus RTU, already-discovered BACnet devices, Siemens S7 data blocks and the application's own tags — into a shared Modbus map, a BACnet server device, an S7 data block or MQTT, row by row.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can BACManager send BACnet values to MQTT or Home Assistant?<span class="icon">+</span></div>
+      <div class="faq-a">Yes. Set a mapping row's destination to <em>MQTT</em>, enter the broker, and the value is published as a retained topic under your base topic. Switch on <em>Home Assistant discovery</em> and each row appears in Home Assistant as a sensor, binary sensor, switch or number with its unit &mdash; no YAML, no cloud. Rows in write mode accept commands from Home Assistant and write them to the BACnet object at the priority you choose.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Does this cost extra on top of the BACManager license?<span class="icon">+</span></div>
