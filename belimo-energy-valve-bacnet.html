@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belimo Energy Valve BACnet Points List &amp; Setup</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="Belimo Energy Valve 4 on BACnet: protocol None from the factory, setpoint source Analog, the bus watchdog, units and the points list. Free workspace.">
+<meta name="keywords" content="Belimo Energy Valve BACnet points list, Belimo Energy Valve BACnet, Energy Valve 4 BACnet, EV..R2+BAC BACnet, Belimo energy valve BACnet setup, Belimo Energy Valve bus watchdog, Belimo energy valve MS/TP, Belimo Energy Valve web view, Belimo BACnet object list, Belimo energy valve device instance">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/belimo-energy-valve-bacnet.html">
+<meta property="og:title" content="Belimo Energy Valve BACnet Points List &amp; Setup">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="Bring a Belimo Energy Valve 4 onto a BMS over BACnet/IP or MS/TP: switch the protocol on, set the setpoint source to Bus, and keep the bus watchdog from sending the valve to its fail position. Points list and a free BACManager workspace.">
+<meta property="og:url" content="https://bacmanager.com/belimo-energy-valve-bacnet.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bacmanager.com/og-belimo-energy-valve.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Belimo Energy Valve BACnet Points List &amp; Setup">
+<meta name="twitter:description" content="Bring a Belimo Energy Valve 4 onto a BMS over BACnet/IP or MS/TP: switch the protocol on, set the setpoint source to Bus, and keep the bus watchdog from sending the valve to its fail position. Points list and a free BACManager workspace.">
+<meta name="twitter:image" content="https://bacmanager.com/og-belimo-energy-valve.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Belimo Energy Valve 4 BACnet Points List and Setup",
+    "description": "Bring a Belimo Energy Valve 4 onto a BMS over BACnet/IP or MS/TP: switch the protocol on, set the setpoint source to Bus, and keep the bus watchdog from sending the valve to its fail position. Points list and a free BACManager workspace.",
+    "url": "https://bacmanager.com/belimo-energy-valve-bacnet.html",
+    "image": "https://bacmanager.com/og-belimo-energy-valve.png",
+    "datePublished": "2026-10-28",
+    "dateModified": "2026-10-28",
+    "author": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where is the Belimo Energy Valve BACnet points list?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In Belimo's BACnet Interface Description for the Energy Valve DN 15…50 (Version 4); generations 1 to 3 have a separate document. The table on this page lists the points a BMS uses most."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I enable BACnet on the Energy Valve 4?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The protocol is None from the factory. Choose BACnet/IP or BACnet MS/TP with the Belimo Assistant app over NFC, or in the valve's Web View, and set the instance, port or MAC and baud rate before connecting it to the BACnet network."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Energy Valve's default BACnet device instance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1. The MS/TP MAC is also 1 and the baud rate 38400; BACnet/IP uses UDP port 47808. Give every valve its own instance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why doesn't the Energy Valve follow the BACnet setpoint?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SpRel (AO1) only acts when SpSource (MV122) is 2: Bus. From the factory it is 1: Analog, and the valve follows the 0.5&ndash;10 V signal on wire 3 instead."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Energy Valve bus watchdog?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "With a bus fail action set in MV130, the valve moves to that position if neither SpRel (AO1) nor Override (MV1) is written within BusWatchdog (AV130), 120 s from the factory, and sets bit 15 in ErrorState (AV140). The BMS has to write the setpoint again cyclically."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which Energy Valve points may a BMS write cyclically?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SpRel (AO1) and Override (MV1). Belimo asks that persistent writable objects from instance 90 up — setpoint source, control mode, watchdog, limits and units — are not written on a regular basis."
+        }
+      }
+    ]
+  }
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.pa-table{width:100%;border-collapse:collapse;font-size:0.86rem;max-width:640px;margin:0 auto}
+.pa-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.9rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.pa-table td{padding:0.5rem 0.9rem;border-bottom:1px solid var(--steel);font-family:'IBM Plex Mono',monospace;font-size:0.82rem}
+.pa-table tr.hl td{background:rgba(242,169,0,0.12);font-weight:600}
+.pa-table tr:last-child td{border-bottom:none}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+
+/* family slogan band, slim (2026-10-22) */
+.slogan-band.slim{background:var(--safety,#F2A900);border-bottom:2px solid var(--ink,#16181A);padding:0.5rem 1rem;text-align:center;color:var(--ink,#16181A);display:flex;gap:0.3rem 1rem;justify-content:center;align-items:baseline;flex-wrap:wrap}
+.slogan-band.slim .sb-main{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.3rem;line-height:1.1;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim .sb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim a{color:var(--ink,#16181A);font-weight:700}
+@media(max-width:768px){.slogan-band.slim .sb-main{font-size:1.05rem}.slogan-band.slim .sb-sub{display:none}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Belimo Energy Valve BACnet","item": "https://bacmanager.com/belimo-energy-valve-bacnet.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-bbmd-foreign-device.html">BBMD</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+<div class="slogan-band slim">
+  <span class="sb-main">Every device. One tool. Pay once.</span>
+  <span class="sb-sub">Modbus &middot; BACnet &middot; Siemens S7 &middot; one-time licence &middot; also from us: <a href="https://modbusmanager.com">ModbusManager&nbsp;&#8599;</a></span>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">// belimo &middot; energy valve 4 &middot; ev..r2+bac</div>
+  <h1>Belimo Energy Valve<br><span class="accent">BACnet Points List &amp; Setup</span></h1>
+  <p class="hero-desc">How to bring a Belimo Energy Valve 4 onto a BMS over BACnet/IP or MS/TP: a protocol that is off from the factory, a setpoint that listens to the analog wire until you tell it otherwise, the units behind every value &mdash; and the bus watchdog that moves the valve to its fail position when the BMS stops writing. With a free BACManager workspace.</p>
+  <div class="hero-ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#workspace" class="btn-ghost">Free Energy Valve workspace</a>
+  </div>
+  <p class="hero-note">Sources: Belimo &ldquo;BACnet Interface Description, Energy Valve DN 15&hellip;50 (Version 4)&rdquo; V4.2.2 and the Belimo Energy Valve Operating Manual</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// before you start</div>
+  <h2 class="sec-title">Which Energy Valve is it?</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128269;</div><h3>Find the Ethernet socket</h3><p>Belimo's own rule: if the Ethernet socket sits on the actuator, the valve is a generation 1, 2 or 3 with its own BACnet document. If it sits on the flow sensor, it is an Energy Valve 4 &mdash; this page. It covers the DN&nbsp;15&ndash;50 models EV..R2+BAC, EV..R2+MID and EV..R3+BAC.</p></div>
+    <div class="feat"><div class="feat-icon">&#127760;</div><h3>IP or MS/TP</h3><p>The same valve does BACnet/IP (UDP 47808 from the factory, also as a foreign device with a BBMD) or BACnet MS/TP on RS-485. For MS/TP from a PC see <a href="/bacnet-mstp-rs485.html" style="color:var(--amber-ink)">BACnet MS/TP over RS-485</a>.</p></div>
+    <div class="feat"><div class="feat-icon">&#128203;</div><h3>What the valve serves</h3><p>Per Belimo's PICS: B-ASC, protocol revision 14, ReadPropertyMultiple, WriteProperty, COV (at most 6 subscriptions, up to 8 hours each), no segmentation, no alarms, schedules or trend logs. BTL-listed.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// setup</div>
+  <h2 class="sec-title">Switch BACnet on first</h2>
+  <p class="sec-sub">The protocol is <strong>None</strong> from the factory: the valve says nothing on the network until you choose BACnet. Do it with the Belimo Assistant app over NFC, or in the valve's Web View &mdash; and set everything below before you connect the valve to the BACnet network.</p>
+  <table class="compare-table">
+    <thead><tr><th>Setting</th><th>Factory</th><th class="hl">Set to</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">Protocol</td><td><strong>None</strong></td><td class="hl">BACnet/IP or BACnet MS/TP</td></tr>
+      <tr><td class="mono">Device instance</td><td><strong>1</strong></td><td class="hl">A unique instance, 0&ndash;4194302. Every valve leaves the factory as 1</td></tr>
+      <tr><td class="mono">UDP port (IP)</td><td>47808</td><td class="hl">Your BACnet/IP port; BBMD address and time-to-live for a foreign device</td></tr>
+      <tr><td class="mono">MS/TP MAC</td><td>1</td><td class="hl">A free address on the trunk</td></tr>
+      <tr><td class="mono">Baud rate (MS/TP)</td><td>38400</td><td class="hl">The trunk's rate: 9600, 19200, 38400, 76800 or 115200</td></tr>
+      <tr><td class="mono">Max Master</td><td>&mdash;</td><td class="hl">The highest master MAC on the trunk; Belimo: if unsure, 127</td></tr>
+      <tr><td class="mono">120 &Omega; termination</td><td>Off</td><td class="hl">On only at the two ends of the trunk</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">For Web View, connect a laptop straight to the Ethernet socket and open <span class="mono">http://169.254.1.1</span>; firmware from 4.2 also offers https with a certificate the valve generates. A segment takes up to 32 valves without a repeater &mdash; each is one full unit load. An older edition of Belimo's document (V4.2.0) says that on MS/TP the instance you set plus the MAC address make up the device ID; the current edition no longer says so, so discover the valve and use the instance it reports.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// control</div>
+  <h2 class="sec-title">Tell the setpoint to listen to BACnet</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#9881;</div><h3>SpSource = Bus</h3><p>The setpoint SpRel (AO1) does nothing while SpSource (MV122) is 1: Analog &mdash; the factory value, which takes the setpoint from 0.5&ndash;10&nbsp;V on wire 3. Write <strong>2: Bus</strong> once. With nothing on wire 3, a valve left on Analog just sits closed whatever the BMS writes.</p></div>
+    <div class="feat"><div class="feat-icon">%</div><h3>What the % means</h3><p>ControlMode (MV100) decides: 1 position, <strong>2 flow</strong> (factory), 3 power, 4 differential pressure. In flow control SpRel is a share of the flow range up to V'max (AV94), in power control of P'max (AV110). Changing ControlMode <strong>resets the valve</strong>, so set it at commissioning, not from a BMS program.</p></div>
+    <div class="feat"><div class="feat-icon">&#9112;</div><h3>Override</h3><p>Override (MV1) is commandable: 1 None, 2 Open, 3 Close, 4 Minimum, 6 Maximum, 7 Nominal, 11 Motor stop. SpRel's default is 0&nbsp;%, so a BMS that relinquishes its setpoint leaves the valve at 0.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the rules that bite</div>
+  <h2 class="sec-title">A watchdog that wants to hear from you</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">120 s</div><h3>Bus watchdog</h3><p>If BusFailAction (MV130) is anything but 1: None, the valve expects SpRel (AO1) or Override (MV1) to be written within BusWatchdog (AV130) &mdash; 5 to 3600&nbsp;s, 120 from the factory. If neither is, it goes to the fail position (open, close, max, min or stop) and sets bit 15 of ErrorState (AV140).</p></div>
+    <div class="feat"><div class="feat-icon">&#8635;</div><h3>Writing on change is not enough</h3><p>Many BMS programs write a setpoint only when it changes. On a steady load that is no write at all, and after the watchdog time the valve drops to its fail position. The setpoint has to be written again, cyclically, faster than AV130.</p></div>
+    <div class="feat"><div class="feat-icon">&#9888;</div><h3>&hellip;but not everything</h3><p>Belimo marks every persistent writable object from instance 90 up &mdash; SpSource, ControlMode, the watchdog, the flow and power limits, the unit selectors &mdash; as <strong>not to be written on a regular basis</strong>. Only SpRel and Override are meant for cyclic writes.</p></div>
+  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">In BACManager a BACnet tag has <strong>Refresh (s)</strong>: the last value written to it is written again every that many seconds until it is relinquished. The free workspace sets 10&nbsp;s on SpRel (AO1) and on nothing else. Tested against the simulated valve with bus fail action Close and a 30-second watchdog, SpRel written once at 60&nbsp;%: with Refresh the valve held its position for the whole 90-second run; without it, ErrorState went to 32768 (bit 15) about 30&nbsp;s after the write and the valve closed.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="points">
+  <div class="sec-label">// points list</div>
+  <h2 class="sec-title">The Energy Valve points a BMS uses</h2>
+  <p class="sec-sub">Object names as Belimo lists them. C = commandable, W = writable, R = read only. Most values are in the unit chosen by a unit selector &mdash; read it before you scale a point.</p>
+  <table class="compare-table">
+    <thead><tr><th>Object</th><th>Object name</th><th>Access</th><th class="hl">What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">AO1</td><td class="mono">SpRel</td><td>C</td><td class="hl">Setpoint, 0&ndash;100 % (position, flow or power by ControlMode)</td></tr>
+      <tr><td class="mono">MV122</td><td class="mono">SpSource</td><td>W</td><td class="hl">1 Analog (factory), 2 Bus</td></tr>
+      <tr><td class="mono">MV100</td><td class="mono">ControlMode</td><td>W</td><td class="hl">1 Position, 2 Flow (factory), 3 Power, 4 Differential pressure &mdash; a change resets the valve</td></tr>
+      <tr><td class="mono">MV1</td><td class="mono">Override</td><td>C</td><td class="hl">1 None, 2 Open, 3 Close, 4 Minimum, 6 Maximum, 7 Nominal, 11 Motor stop</td></tr>
+      <tr><td class="mono">MV130 / AV130</td><td class="mono">BusFailAction / BusWatchdog</td><td>W</td><td class="hl">Fail position (1 None factory); watchdog 5&ndash;3600 s, 120 factory</td></tr>
+      <tr><td class="mono">AI1 / AV2</td><td class="mono">RelPos / AbsPos</td><td>R</td><td class="hl">Valve position, % and 0&ndash;96&deg;</td></tr>
+      <tr><td class="mono">AV19 / AV10 / AV17</td><td class="mono">AbsFlow_UnitSel / RelFlow / SpAbsFlow_UnitSel</td><td>R</td><td class="hl">Flow in the selected unit, % of V'max, flow setpoint</td></tr>
+      <tr><td class="mono">AV90 / AV94 / AV100</td><td class="mono">Vmin / Vmax / Vnom_UnitSel</td><td>W / W / R</td><td class="hl">Flow limits in %; V'max 25&ndash;100 %; nominal flow</td></tr>
+      <tr><td class="mono">AV45 / AV46 / AV40</td><td class="mono">CoolingPower_UnitSel / HeatingPower_UnitSel / RelPower</td><td>R</td><td class="hl">Cooling and heating power; power in % of P'max</td></tr>
+      <tr><td class="mono">AV47 / AV48 / AV52</td><td class="mono">CoolingEnergy_UnitSel / HeatingEnergy_UnitSel / Volume_UnitSel</td><td>R</td><td class="hl">Energy and volume counters (also as integers in PIV31 / PIV32 / PIV50)</td></tr>
+      <tr><td class="mono">AI22 / AI23 / AV22</td><td class="mono">T1_UnitSel / T2_UnitSel / DeltaT_UnitSel</td><td>R</td><td class="hl">Remote sensor, flow-body sensor, their difference</td></tr>
+      <tr><td class="mono">AV60</td><td class="mono">GlycolConcentration</td><td>R</td><td class="hl">Glycol, %</td></tr>
+      <tr><td class="mono">MV99 / AV140</td><td class="mono">SummaryStatus / ErrorState</td><td>R</td><td class="hl">1 OK, 2 Warning, 3 Not OK; error bits 0&ndash;18</td></tr>
+      <tr><td class="mono">MV103&ndash;107</td><td class="mono">StatusSensor, StatusFlow, StatusMedia, StatusActuator, StatusPower</td><td>R</td><td class="hl">The status behind the summary</td></tr>
+      <tr><td class="mono">MV123&ndash;128</td><td class="mono">UnitSelFlow, UnitSelPower, UnitSelEnergy, UnitSelVolume, UnitSelTemperature, UnitSelDeltaT</td><td>W</td><td class="hl">Units: l/h, kW, kWh, m&sup3;, &deg;C, &deg;C from the factory</td></tr>
+      <tr><td class="mono">MV101</td><td class="mono">DeltaT_Limitation</td><td>W</td><td class="hl">Delta T manager: 1 Disabled (factory), 2 on, 3 with scaling</td></tr>
+      <tr><td class="mono">BV99</td><td class="mono">BusTermination</td><td>R</td><td class="hl">Whether the 120 &Omega; terminator is on</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Belimo's document does not say which of T1 and T2 is supply and which is return &mdash; that depends on where the valve and the remote sensor are mounted, so check it on site. After a power failure the valve takes up to 190 seconds to initialise, and every value reads 0 in that time; do not let a BMS alarm on it. The complete list, with differential pressure, the sensor input on Y3 and the meter registers, is in Belimo's <strong>BACnet Interface Description, Energy Valve DN 15&hellip;50 (Version 4)</strong>.</p>
+  <figure style="margin:1.8rem auto 0;max-width:1130px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="belimo-energy-valve-bacnet-objects.png" width="1130" height="700" alt="BACManager BACnet tab: device EV-AHU1-CHW, device instance 1, with its Energy Valve objects listed by name, RelPos, SpAnalog, T1_UnitSel, T2_UnitSel, SpRel, AbsPos, RelFlow, SpAbsFlow_UnitSel, AbsFlow_UnitSel, DeltaT_UnitSel, RelPower, CoolingPower_UnitSel and CoolingEnergy_UnitSel, polled every second" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Discover, click the valve, and its objects come up by name with live values. Pictured: a simulated Energy Valve 4 built from Belimo's object list, still on SpSource Analog &mdash; closed</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="workspace">
+  <div class="sec-label">// free download</div>
+  <h2 class="sec-title">The Energy Valve workspace</h2>
+  <p class="sec-sub">One dashboard page for an Energy Valve 4 on a chilled-water AHU coil: flow and flow setpoint, position, both temperatures and delta T, cooling power and energy, control mode and error state &mdash; with SpRel written again every 10 seconds, Override, and the commissioning writes (SpSource, bus fail action, watchdog) kept apart.</p>
+  <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="belimo-energy-valve-dashboard.png" width="1300" height="770" alt="BACManager dashboard for a Belimo Energy Valve 4 on a chilled-water coil: setpoint source Bus, summary OK, flow 2525 l/h against a setpoint of 2520 l/h, position 69.6 percent, flow-body temperature 6.81 degrees C, remote 11.43 degrees C, delta T 4.62 K, cooling power 13.55 kW, control mode Flow, no error, SpRel at 70 percent, and a trend where position and relative flow step up" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">SpSource set to Bus, then SpRel written from the page, 40 &rarr; 70 %, repeated every 10 s (simulated valve and coil)</figcaption>
+  </figure>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">1</div><h3>Discover the valve</h3><p>On the BACnet tab open BACnet/IP on the PC's network card (or MS/TP on its RS-485 port at the trunk's baud rate) and press Discover. The valve appears with its instance &mdash; 1 if nobody has changed it.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Open the workspace</h3><p>Workspace &rarr; Open. The file reads device 1; if yours has another instance, BACManager asks which discovered device takes its place and moves every point over.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Run, then command once</h3><p>BACManager starts reading the valve by itself. On the Dashboard press Run, set SpSource to Bus once, then the setpoint &mdash; from then on SpRel is written again every 10 seconds. After BACManager restarts, write it once more.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:1.6rem">
+    <a href="/Belimo_Energy_Valve_BACnet.json" download class="btn-primary">Download workspace</a>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// when it does not work</div>
+  <h2 class="sec-title">Typical problems</h2>
+  <table class="compare-table">
+    <thead><tr><th>What you see</th><th>Why</th><th class="hl">What to do</th></tr></thead>
+    <tbody>
+      <tr><td>The valve does not answer Who-Is</td><td>Protocol None from the factory</td><td class="hl">Choose BACnet in Web View or the Belimo Assistant app</td></tr>
+      <tr><td>SpRel written, the valve does not move</td><td>SpSource still 1: Analog</td><td class="hl">Write MV122 = 2: Bus once</td></tr>
+      <tr><td>Valve goes to its fail position on a steady load; ErrorState bit 15</td><td>Neither SpRel nor Override written within the watchdog time</td><td class="hl">Write SpRel cyclically, faster than AV130 (Refresh 10 s in BACManager)</td></tr>
+      <tr><td>Valve resets when the BMS starts</td><td>The BMS writes ControlMode</td><td class="hl">Set ControlMode once at commissioning; take it out of the program</td></tr>
+      <tr><td>Two valves answer as instance 1</td><td>Factory instance</td><td class="hl">Set a unique instance on every valve</td></tr>
+      <tr><td>All values 0 after a power cut</td><td>Up to 190 s of initialisation</td><td class="hl">Delay alarms after power-up</td></tr>
+      <tr><td>Flow off by a factor of 1000 or 3600</td><td>Unit selector not what the BMS assumes</td><td class="hl">Read MV123&ndash;128 and scale to match</td></tr>
+      <tr><td>COV subscription refused</td><td>At most 6 active subscriptions</td><td class="hl">Poll the rest</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">Belimo Energy Valve BACnet &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Where is the Belimo Energy Valve BACnet points list?<span class="icon">+</span></div>
+      <div class="faq-a">In Belimo's BACnet Interface Description for the Energy Valve DN 15&hellip;50 (Version 4); generations 1 to 3 have a separate document. The table on this page lists the points a BMS uses most.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I enable BACnet on the Energy Valve 4?<span class="icon">+</span></div>
+      <div class="faq-a">The protocol is None from the factory. Choose BACnet/IP or BACnet MS/TP with the Belimo Assistant app over NFC, or in the valve's Web View, and set the instance, port or MAC and baud rate before connecting it to the BACnet network.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the Energy Valve's default BACnet device instance?<span class="icon">+</span></div>
+      <div class="faq-a">1. The MS/TP MAC is also 1 and the baud rate 38400; BACnet/IP uses UDP port 47808. Give every valve its own instance.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why doesn't the Energy Valve follow the BACnet setpoint?<span class="icon">+</span></div>
+      <div class="faq-a">SpRel (AO1) only acts when SpSource (MV122) is 2: Bus. From the factory it is 1: Analog, and the valve follows the 0.5&ndash;10 V signal on wire 3 instead.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the Energy Valve bus watchdog?<span class="icon">+</span></div>
+      <div class="faq-a">With a bus fail action set in MV130, the valve moves to that position if neither SpRel (AO1) nor Override (MV1) is written within BusWatchdog (AV130), 120 s from the factory, and sets bit 15 in ErrorState (AV140). The BMS has to write the setpoint again cyclically.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Which Energy Valve points may a BMS write cyclically?<span class="icon">+</span></div>
+      <div class="faq-a">SpRel (AO1) and Override (MV1). Belimo asks that persistent writable objects from instance 90 up &mdash; setpoint source, control mode, watchdog, limits and units &mdash; are not written on a regular basis.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// sources</div>
+  <h2 class="sec-title">Where this comes from</h2>
+  <p style="max-width:820px;margin:0 auto;color:var(--body);line-height:1.75">BELIMO Automation AG: <em>BACnet Interface Description, Energy Valve DN 15&hellip;50 (Version 4)</em>, edition 2025-11 / V4.2.2, with its PICS, and the earlier edition V4.2.0; Belimo Aircontrols (USA): <em>Belimo Energy Valve Operating Manual</em> (2/24); BTL listing BTL-30868. Get the documents from <a href="https://www.belimo.com/" rel="nofollow noopener" style="color:var(--amber-ink)">belimo.com</a> and check them against your valve's firmware before commissioning. Belimo and Energy Valve are trademarks of their owner; BACManager is not affiliated with Belimo. The pictures on this page are from BACManager connected to a simulated valve built from the published object list.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// more device guides</div>
+  <h2 class="sec-title">Other BACnet devices</h2>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem 2rem">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Chillers and rooftop units</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Daikin MicroTech III chiller</a></div>
+      <div style="margin:0.25rem 0"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Trane Symbio 700</a></div>
+      <div style="margin:0.25rem 0"><a href="/aaon-vccx2-bacnet.html" style="color:var(--amber-ink)">AAON VCCX2</a></div>
+      <div style="margin:0.25rem 0"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Lennox CORE</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Boilers</div>
+      <div style="margin:0.25rem 0"><a href="/lochinvar-crest-bacnet.html" style="color:var(--amber-ink)">Lochinvar Crest boiler</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">VRF and split systems</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-itm-bacnet.html" style="color:var(--amber-ink)">Daikin iTM (VRV)</a></div>
+      <div style="margin:0.25rem 0"><a href="/mitsubishi-ae200-bacnet.html" style="color:var(--amber-ink)">Mitsubishi AE-200</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Drives</div>
+      <div style="margin:0.25rem 0"><a href="/abb-ach580-bacnet.html" style="color:var(--amber-ink)">ABB ACH580</a></div>
+      <div style="margin:0.25rem 0"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Schneider ATV600</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Pumps and valves</div>
+      <div style="margin:0.25rem 0"><a href="/grundfos-cim-bacnet.html" style="color:var(--amber-ink)">Grundfos MAGNA3 (CIM)</a></div>
+      <div style="margin:0.25rem 0"><a href="/wilo-cif-bacnet.html" style="color:var(--amber-ink)">Wilo Stratos MAXO (CIF)</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Routers</div>
+      <div style="margin:0.25rem 0"><a href="/basrouter-bacnet-router.html" style="color:var(--amber-ink)">BASrouter (MS/TP to IP)</a></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:1.4rem"><a href="/bacnet-devices.html" style="color:var(--amber-ink)">All BACnet device guides &rarr;</a></p>
+</section>
+
+<div class="cta-strip">
+  <h2>Commission the Energy Valve from your laptop</h2>
+  <p>Download the free trial, discover the valve and open the Energy Valve workspace &mdash; every point by name, the setpoint kept alive for the bus watchdog. No credit card.</p>
+  <div class="ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+    <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    <a href="/bacnet-priority-array.html">Priority Array</a>
+    <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/manual.html">Manual</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://.
+   Each click is also counted in our own Google Sheet (Apps Script), cookie
+   consent or not: site, product, version, page, referrer, language, time
+   zone. No cookies, no IP address. The download never waits for it.
+   A workspace (.json or .zip on this site) is counted as product "Workspace" with
+   the file name as its version, a manual (.pdf) as product "Manual"; both
+   download as before. */
+function dlCount(product, version) {
+  try {
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbyx9RacY_l5KDK0RBBmLk41uKv3McyR_UJmCTWqnRqklh6fYgeXvYecddcQDGzRx5-F/exec', JSON.stringify({
+      site: location.hostname, product: product, version: version,
+      page: location.pathname, referrer: document.referrer, lang: navigator.language,
+      tz: (window.Intl && Intl.DateTimeFormat().resolvedOptions().timeZone) || ''
+    }));
+  } catch (err) {}
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var w = e.target.closest('a[href$=".json"], a[href$=".zip"]');
+  if (w) { dlCount('Workspace', (w.getAttribute('href').match(/([^\/]+)\.(?:json|zip)$/) || [])[1] || ''); return; }
+  var m = e.target.closest('a[href$=".pdf"]');
+  if (m) { dlCount('Manual', (m.getAttribute('href').match(/([^\/]+)\.pdf$/) || [])[1] || ''); return; }
+  var a = e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  var dl = a.getAttribute('data-dl');
+  dlCount(/bacmanager/i.test(dl) ? 'BACManager' : (/Pro\.Setup|pro-v/i.test(dl) ? 'ModbusManager Pro' : 'ModbusManager Standard'),
+    (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
+  window.location.href = 'https://' + dl;
+});
+</script>
+</body>
+</html>

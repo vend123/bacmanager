@@ -8,14 +8,14 @@
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="description" content="BACManager 1.4.5 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedules, EDE, simulator, Modbus, dashboards, gateway and MQTT.">
+<meta name="description" content="BACManager 1.4.6 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedules, EDE, simulator, Modbus, dashboards, gateway and MQTT.">
 <meta name="keywords" content="BACManager manual, BACnet explorer documentation, BACnet MS/TP how to, BACnet priority array write, BACnet schedule editor, BACnet EDE export, BACnet Modbus gateway setup, BACnet simulator">
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bacmanager.com/manual.html">
 <meta property="og:title" content="BACManager User Manual &amp; Documentation">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="The complete BACManager 1.4.5 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway with MQTT and Home Assistant, and Runtime.">
+<meta property="og:description" content="The complete BACManager 1.4.6 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway with MQTT and Home Assistant, and Runtime.">
 <meta property="og:url" content="https://bacmanager.com/manual.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
@@ -29,7 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 [
-{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.5: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway with MQTT and Home Assistant discovery, and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-10-26","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
+{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.6: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway with MQTT and Home Assistant discovery, and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-10-28","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Does BACManager work on MS/TP or only BACnet/IP?","acceptedAnswer":{"@type":"Answer","text":"Both. With a USB-RS485 adapter it joins an MS/TP trunk as a master node and does everything it does on BACnet/IP: discover, browse, write with priority, COV, schedules and EDE export."}},
 {"@type":"Question","name":"Which priority does BACManager write with?","acceptedAnswer":{"@type":"Answer","text":"The one you choose in Write priority. Tags, dashboard elements and gateway rows default to 8, Manual Operator. An empty value relinquishes the slot."}},
@@ -229,6 +229,7 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
     <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
     <li><a href="/bacnet-explorer-alternative.html">vs YABE</a></li>
     <li><a href="/manual.html" style="color:#9A6700;font-weight:600">Manual</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
     <li><a href="/#pricing">Pricing</a></li>
     <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
   </ul>
@@ -240,12 +241,12 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 </div>
 
 <header class="hero">
-  <div class="eyebrow">Documentation &mdash; BACManager v1.4.5 &middot; updated 26 October 2026</div>
+  <div class="eyebrow">Documentation &mdash; BACManager v1.4.6 &middot; updated 28 October 2026</div>
   <h1>BACManager <span class="accent">User Manual</span></h1>
   <p class="hero-desc">How to discover, browse, write and schedule BACnet/IP and MS/TP devices, read Modbus devices in the same window, and build dashboards, logs, alarms and a BACnet&ndash;Modbus gateway with BACManager on Windows. Jump to a topic, or download the manual as a PDF.</p>
   <div class="hero-ctas">
     <a href="/BACManager_UserManual.pdf" class="btn-primary">Download PDF manual</a>
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
   </div>
   <p class="hero-note">Free 14-day trial &bull; BACManager &#36;149 one-time &bull; Runtime &#36;39 per machine &bull; Windows 10 / 11</p>
 </header>
@@ -337,12 +338,13 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 <tr><td><code>192.168.10.25</code></td><td>a directed Who-Is to one address, e.g. across a router</td></tr>
 <tr><td><code>192.168.10.1-254</code> or <code>192.168.10.0/24</code></td><td>a sweep of up to 256 addresses, one directed Who-Is each</td></tr>
 </tbody></table>
-<p>Each I-Am adds the device to <b>Devices</b>: name (read after discovery), &ldquo;ID &hellip; &middot; address &middot; vendor &hellip;&rdquo;, sorted by device instance. The activity log shows every &ldquo;iAm &larr; device &hellip;&rdquo;. More on finding devices: <a class="inline-link" href="/bacnet-scanner.html">BACnet scanner</a>.</p>
+<p>Each I-Am adds the device to <b>Devices</b>: name (read after discovery), &ldquo;ID &hellip; &middot; address &middot; vendor &hellip;&rdquo;, sorted by device instance. The activity log shows every &ldquo;iAm &larr; device &hellip;&rdquo;.</p>
+<p><b>Devices behind a router.</b> A device that answers through a BACnet router &mdash; MS/TP controllers behind an IP-to-MS/TP router, or the indoor units a VRF controller such as a Daikin iTM presents on its own network &mdash; shows &ldquo;net N&rdquo; in its line. BACManager keeps the network and address the I-Am came from and sends every request for that device through the router, so it is browsed, polled and written like any other. More on finding devices: <a class="inline-link" href="/bacnet-scanner.html">BACnet scanner</a>.</p>
 </section>
 
 <section id="objects" class="doc-section">
 <h2>Objects &amp; polling</h2>
-<p>Click a device to read its object list. Objects are grouped by type (&ldquo;analog-input (3)&rdquo;) and sorted by instance. Each row shows the present value and, on the right:</p>
+<p>Click a device to read its object list. Objects are grouped by type (&ldquo;analog-input (3)&rdquo;) and sorted by instance. Each object&rsquo;s name is read after the list and shown in its row, so a points list can be read by its names. Each row shows the present value and, on the right:</p>
 <ul class="body-list">
 <li>click the row &mdash; read the present value now;</li>
 <li>&#9998; <b>Write value</b> &mdash; on commandable types (AO, AV, BO, BV, MSO, MSV);</li>
@@ -352,6 +354,7 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 <li>&#128269; <b>Browse / read / write all properties</b> &mdash; the property browser, or the grid editor for schedules and calendars.</li>
 </ul>
 <p>The bar above the list: <b>Interval</b> (ms, minimum 200) and <b>Poll</b> / <b>Stop</b> read the present value of every object with ReadPropertyMultiple; <b>Write priority</b> (&mdash; or 1&ndash;16) is used by &#9998; writes; <b>&#11015; CSV</b> and <b>&#11015; EDE</b> export the list. Selecting another device stops the poll.</p>
+<p><b>Gap</b> (ms per property) slows down every request to the selected device: after a request BACManager waits the gap times the number of properties it carried before it sends the next one &mdash; poll, writes, tag reads, Refresh and the object list alike. 0 (the default) sends at once. Use it for a device that asks for a minimum time between requests: a Mitsubishi AE-200 asks for 200 ms per property. The gap is kept per device, remembered for the next start and saved in the workspace.</p>
 <p><b>Activity &#9662;</b> opens the decoded activity log (Who-Is, I-Am, reads, writes, COV, exports) with a filter box, All/TX/RX/Err chips, Pause and Clear; it keeps the last 600 entries.</p>
 </section>
 
@@ -430,7 +433,8 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 <ul class="body-list">
 <li><b>BACnet</b> tag: Device ID, Object (AI, AO, AV, BI, BO, BV, MSI, MSO, MSV or Loop), Instance, <b>Property</b> (85 = present value; for a Loop 21, 108, 93, 49, 26) and the write <b>Priority</b> (8 by default). The list shows it as <code>BAC [1234 analog-value:0]</code>.</li>
 <li>&#127991; <b>Add as tag</b> in the object list creates a present-value tag in one click.</li>
-<li>A BACnet tag gets values while its device is polled or COV-subscribed &mdash; in the BACnet tab, by a gateway BACnet source, or automatically in a Runtime kiosk. Extra properties such as a Loop&rsquo;s 108 and 21 are read in the same poll.</li>
+<li>A BACnet tag is read on its own: every device a tag reads is polled while the client is open and the device has answered, so a workspace shows live values without pressing Poll. <b>Poll</b> in the BACnet tab takes over that device&rsquo;s poll and <b>Stop</b> hands it back. Extra properties such as a Loop&rsquo;s 108 and 21 are read in the same poll.</li>
+<li><b>Refresh (s)</b> writes the tag&rsquo;s last written value again every that many seconds (0 = off, 10 at the least) until it is relinquished &mdash; for controllers that drop a BMS value not written again in time, like a Lennox CORE&rsquo;s five-minute rule. It applies whoever wrote the value &mdash; a dashboard control, the gateway or MQTT; the list marks such a tag with &#8635;.</li>
 </ul>
 <p>The <b>Script Editor (Structured Text)</b> computes with tags: <code>:=</code>, arithmetic, comparisons, <code>AND OR NOT</code>, <code>IF/ELSIF/ELSE/END_IF</code>, <code>FOR &hellip; TO &hellip; DO &hellip; END_FOR</code> and <code>(* comments *)</code>, run once or as a loop (interval &ge; 100 ms). Writing a BACnet tag from a script writes the device with the tag&rsquo;s priority.</p>
 </section>
@@ -490,7 +494,8 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 
 <section id="workspaces" class="doc-section">
 <h2>Workspaces &amp; templates</h2>
-<p><b>&#128190; Workspace</b> saves one JSON file to Documents; the folder button opens one. It holds the Modbus poll windows and their settings, the dashboard, tags and script, the Historian&rsquo;s logged series, the slave blocks, the BACnet simulator configuration and BACnet panel state, and the gateway configuration (opening a workspace asks before applying it). Connection settings stay with each PC; alarm definitions and the S7 PLC list are kept by the application. ModbusManager Pro and BACManager open each other&rsquo;s workspaces. <b>Templates</b> load ready Modbus poll windows for common devices.</p>
+<p><b>&#128190; Workspace</b> saves one JSON file to Documents; the folder button opens one. It holds the Modbus poll windows and their settings, the dashboard, tags and script, the Historian&rsquo;s logged series, the slave blocks, the BACnet simulator configuration and BACnet panel state, the BACnet request gaps, and the gateway configuration (opening a workspace asks before applying it). Connection settings stay with each PC; alarm definitions and the S7 PLC list are kept by the application. ModbusManager Pro and BACManager open each other&rsquo;s workspaces. <b>Templates</b> load ready Modbus poll windows for common devices.</p>
+<p><b>Other device numbers.</b> A workspace names BACnet devices by instance. When it reads devices that are not in the BACnet tab&rsquo;s list, BACManager asks which discovered device takes each one&rsquo;s place (with its own <b>Discover</b> button) and moves every point over at once: tags, dashboard elements, the script, logged series, gateway rows and endpoints, PID loops and request gaps. <b>Keep</b> leaves a number as it is; two workspace devices cannot both go to one. The gateway&rsquo;s own BACnet device and the simulator keep their numbers, and a Runtime kiosk is never asked. With nothing discovered the workspace loads as before and a hint names its devices. The free workspaces on the <a class="inline-link" href="/bacnet-devices.html">device guides</a> open this way.</p>
 </section>
 
 <section id="licensing" class="doc-section">
@@ -506,7 +511,7 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 
 <section id="limits" class="doc-section">
 <h2>Not supported yet</h2>
-<p>So you know before you need it, BACManager 1.4.5 does <b>not</b>:</p>
+<p>So you know before you need it, BACManager 1.4.6 does <b>not</b>:</p>
 <ul class="body-list">
 <li>use BACnet/SC (secure connect) &mdash; only BACnet/IP and MS/TP;</li>
 <li>read Trend Log objects (they are listed, but ReadRange is not implemented);</li>
@@ -521,11 +526,12 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
 <h2>Troubleshooting</h2>
 <table class="doc-table"><thead><tr><th style="width:230px">Symptom</th><th>Check</th></tr></thead><tbody>
 <tr><td>Discover finds nothing</td><td>The client is open on the right interface; the devices are on the same subnet (otherwise a directed Target IP or a BBMD); Windows Firewall allows BACManager on UDP 47808; no other program holds the port.</td></tr>
-<tr><td>Devices behind a router</td><td>Register with the BBMD, or use Target IP with the device&rsquo;s address or a range.</td></tr>
+<tr><td>Devices behind a router</td><td>Register with the BBMD, or use Target IP with the device&rsquo;s address or a range. MS/TP devices behind an IP router answer for themselves and show &ldquo;net N&rdquo;.</td></tr>
+<tr><td>A device skips answers or reports it is busy</td><td>Set a <b>Gap</b> for it in the BACnet tab (the maker&rsquo;s minimum time between requests, per property).</td></tr>
 <tr><td>MS/TP: no devices</td><td>Baud matches the trunk, the MAC is unique and within the masters&rsquo; Max Master, A/B polarity and termination, the adapter&rsquo;s COM port.</td></tr>
 <tr><td>Every value shows &ldquo;error&rdquo; while polling</td><td>The device may not support ReadPropertyMultiple; read single values by clicking the rows.</td></tr>
 <tr><td>A write is refused</td><td>The object is not commandable, the value type is wrong (set the type in the property browser), or a higher priority holds the point &mdash; read property 87.</td></tr>
-<tr><td>A dashboard value stays empty</td><td>BACnet sources need the device polled or COV-subscribed (BACnet tab or gateway); dashboards write only in Runtime.</td></tr>
+<tr><td>A dashboard value stays empty</td><td>The BACnet client is open and the device has answered Who-Is; bind the element to a BACnet tag (read on its own) or poll the device on the BACnet tab. A workspace from another site may name other device numbers &mdash; open it again after Discover. Dashboards write only in Runtime.</td></tr>
 <tr><td>Gateway BACnet server not visible to the BMS</td><td>Expose mapping rows is ticked, the gateway is started, the device ID is unique on the network, rows have Dest &ldquo;BACnet obj&rdquo;, and the firewall allows UDP 47808.</td></tr>
 </tbody></table>
 </section>
@@ -548,7 +554,7 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
   <h2>Try it on your building</h2>
   <p>Download the 14-day trial, open the BACnet client and discover your devices &mdash; or start the simulator and follow this manual.</p>
   <div class="ctas">
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
     <a href="/BACManager_UserManual.pdf" class="btn-cta-outline">Download PDF manual</a>
   </div>
   <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
@@ -562,6 +568,8 @@ figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
     <a href="/bacnet-schedule-editor.html">Schedule</a>
     <a href="/bacnet-mstp-rs485.html">MS/TP</a>
     <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
     <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
     <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
     <a href="/bacnet-priority-array.html">Priority Array</a>

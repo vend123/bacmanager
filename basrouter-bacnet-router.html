@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BASrouter Setup: BACnet MS/TP to IP Router (BASRT-B)</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="Contemporary Controls BASrouter: MS/TP to BACnet/IP, factory IP, network numbers, instance 0, bias jumpers, router vs gateway. Free workspace.">
+<meta name="keywords" content="BASrouter, BASRT-B, BACnet router MS/TP to IP, BACnet MS/TP to IP router, BACnet router vs gateway, Contemporary Controls BASrouter setup, BASrouter default IP, BASrouterLX, BACnet router BBMD, BACnet routed devices not responding">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/basrouter-bacnet-router.html">
+<meta property="og:title" content="BASrouter Setup: BACnet MS/TP to IP Router (BASRT-B)">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="Read BACnet MS/TP devices over BACnet/IP through a Contemporary Controls BASrouter: the factory IP and settings, network numbers that must not repeat, the router's own instance 0, bias and termination jumpers, BBMD, router versus gateway, and why some clients find the devices but never read them. Free BACManager workspace.">
+<meta property="og:url" content="https://bacmanager.com/basrouter-bacnet-router.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bacmanager.com/og-basrouter.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BASrouter Setup: BACnet MS/TP to IP Router (BASRT-B)">
+<meta name="twitter:description" content="Read BACnet MS/TP devices over BACnet/IP through a Contemporary Controls BASrouter: the factory IP and settings, network numbers that must not repeat, the router's own instance 0, bias and termination jumpers, BBMD, router versus gateway, and why some clients find the devices but never read them. Free BACManager workspace.">
+<meta name="twitter:image" content="https://bacmanager.com/og-basrouter.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Contemporary Controls BASrouter: BACnet MS/TP to IP Router Setup",
+    "description": "Read BACnet MS/TP devices over BACnet/IP through a Contemporary Controls BASrouter: the factory IP and settings, network numbers that must not repeat, the router's own instance 0, bias and termination jumpers, BBMD, router versus gateway, and why some clients find the devices but never read them. Free BACManager workspace.",
+    "url": "https://bacmanager.com/basrouter-bacnet-router.html",
+    "image": "https://bacmanager.com/og-basrouter.png",
+    "datePublished": "2026-10-28",
+    "dateModified": "2026-10-28",
+    "author": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between a BACnet router and a gateway?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A router joins BACnet networks — MS/TP and BACnet/IP — and passes BACnet messages between them unchanged; the devices behind it keep their own objects. A gateway translates another protocol, such as Modbus, into BACnet objects of its own."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the BASrouter's default IP address?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "192.168.92.68 with a 24-bit mask and gateway 192.168.92.1, set as fixed. Give the PC an address such as 192.168.92.69 to reach its web page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What network numbers does the BASrouter use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "BACnet/IP network 1 and MS/TP network 2001 from the factory. Every MS/TP segment needs its own number across the whole internetwork, so a second router must get another MS/TP network number."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why can I see MS/TP devices through the router but not read them?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The client is reading them from the router's own address instead of routing to them. A request must carry the device's network number and MS/TP MAC; the router does not hold other devices' properties."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to set the BASrouter's device instance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. It is 0 from the factory, and every BACnet device in the internetwork needs a unique instance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should the BASrouter terminate the MS/TP bus?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Only at the end of a segment. It ships with bias and termination jumpers in; in the middle of a segment remove all three and terminate the far end with 120 &Omega;."
+        }
+      }
+    ]
+  }
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.pa-table{width:100%;border-collapse:collapse;font-size:0.86rem;max-width:640px;margin:0 auto}
+.pa-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.9rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.pa-table td{padding:0.5rem 0.9rem;border-bottom:1px solid var(--steel);font-family:'IBM Plex Mono',monospace;font-size:0.82rem}
+.pa-table tr.hl td{background:rgba(242,169,0,0.12);font-weight:600}
+.pa-table tr:last-child td{border-bottom:none}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+
+/* family slogan band, slim (2026-10-22) */
+.slogan-band.slim{background:var(--safety,#F2A900);border-bottom:2px solid var(--ink,#16181A);padding:0.5rem 1rem;text-align:center;color:var(--ink,#16181A);display:flex;gap:0.3rem 1rem;justify-content:center;align-items:baseline;flex-wrap:wrap}
+.slogan-band.slim .sb-main{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.3rem;line-height:1.1;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim .sb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim a{color:var(--ink,#16181A);font-weight:700}
+@media(max-width:768px){.slogan-band.slim .sb-main{font-size:1.05rem}.slogan-band.slim .sb-sub{display:none}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "BASrouter MS/TP to IP","item": "https://bacmanager.com/basrouter-bacnet-router.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-bbmd-foreign-device.html">BBMD</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+<div class="slogan-band slim">
+  <span class="sb-main">Every device. One tool. Pay once.</span>
+  <span class="sb-sub">Modbus &middot; BACnet &middot; Siemens S7 &middot; one-time licence &middot; also from us: <a href="https://modbusmanager.com">ModbusManager&nbsp;&#8599;</a></span>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">// contemporary controls &middot; basrouter &middot; basrt-b</div>
+  <h1>BASrouter<br><span class="accent">BACnet MS/TP to IP Setup</span></h1>
+  <p class="hero-desc">How to read MS/TP devices over BACnet/IP through a Contemporary Controls BASrouter: the factory IP and login, network numbers that must not repeat, the router's own device instance of 0, bias and termination inside the box &mdash; and why some BACnet clients find the devices behind it but never get a value from them. With a free BACManager workspace.</p>
+  <div class="hero-ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#workspace" class="btn-ghost">Free MS/TP plant workspace</a>
+  </div>
+  <p class="hero-note">Sources: Contemporary Controls UM-BASRTB00 (BASRT-B user manual), IS-BASRT001, TN-BASRT000, DS-BASRTB00, DS-BASRTBX0 and AG-BASRTB00</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// router or gateway</div>
+  <h2 class="sec-title">A router passes BACnet; it does not translate</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#8644;</div><h3>Router</h3><p>A BACnet router joins BACnet networks &mdash; BACnet/IP, BACnet Ethernet, MS/TP &mdash; at the network layer. Contemporary Controls puts it plainly: their routers only pass messages, with no knowledge of what they contain. The devices behind it keep their own device instances and objects.</p></div>
+    <div class="feat"><div class="feat-icon">&#9881;</div><h3>Gateway</h3><p>A gateway speaks one protocol on one side and another on the other &mdash; Modbus to BACnet, say &mdash; and builds new objects for what it reads. That is a different job; see <a href="/bacnet-modbus-gateway.html" style="color:var(--amber-ink)">Modbus to BACnet gateway</a>.</p></div>
+    <div class="feat"><div class="feat-icon">&#128269;</div><h3>Bring a client</h3><p>The router finds and manages nothing by itself: a BACnet client on the IP side discovers the MS/TP devices and reads them. Its own Device object is all it holds &mdash; it does not keep the other devices' properties.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// setup</div>
+  <h2 class="sec-title">BASRT-B: the web page at 192.168.92.68</h2>
+  <p class="sec-sub">Give the PC an address on the same subnet (192.168.92.69, say), open the router's page and log in; the user name and password are printed in the manual and should be changed. A reset button restores the IP address and login &mdash; not the BACnet settings.</p>
+  <table class="compare-table">
+    <thead><tr><th>Setting</th><th>Factory</th><th class="hl">Set to</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">Device Instance</td><td><strong>0</strong></td><td class="hl">A unique instance, 0&ndash;4194302. Every router leaves the factory as 0</td></tr>
+      <tr><td class="mono">Device Name</td><td>BASRT-B + last 6 of the MAC</td><td class="hl">Unique, up to 20 characters</td></tr>
+      <tr><td class="mono">BACnet/IP Network</td><td>1</td><td class="hl">1&ndash;65534, the same for every router on that IP network; not the MS/TP number</td></tr>
+      <tr><td class="mono">MS/TP Network</td><td><strong>2001</strong></td><td class="hl">Unique in the whole internetwork: a second router needs another one</td></tr>
+      <tr><td class="mono">BACnet/IP UDP Port</td><td>0xBAC0 (47808)</td><td class="hl">Leave</td></tr>
+      <tr><td class="mono">BACnet Ethernet Network</td><td>0 (off)</td><td class="hl">Leave at 0 unless BACnet Ethernet (ISO 8802-3) is used &mdash; and then on one router per subnet only</td></tr>
+      <tr><td class="mono">MS/TP MAC</td><td>0</td><td class="hl">Keep 0; number the other masters from 1 without gaps</td></tr>
+      <tr><td class="mono">Max Masters</td><td>127</td><td class="hl">Leave unless every device can take a lower value</td></tr>
+      <tr><td class="mono">Max Info Frames</td><td>100</td><td class="hl">1&ndash;100; 20&ndash;40 typical</td></tr>
+      <tr><td class="mono">MS/TP Baud Rate</td><td>38400</td><td class="hl">9600&ndash;76800, the trunk's rate; autobauding devices follow the router</td></tr>
+      <tr><td class="mono">MS/TP Tolerance</td><td>Strict</td><td class="hl">Lenient interoperates better with odd devices, a little less efficiently</td></tr>
+    </tbody>
+  </table>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">&#9889;</div><h3>Bias and termination inside</h3><p>The BASRT-B ships with bias (604 &Omega; up and down) and termination (130 &Omega;) applied by three jumpers under the cover. At the end of a segment leave them; in the middle remove all three and terminate the far end with 120 &Omega;. A segment takes 31 full-load devices.</p></div>
+    <div class="feat"><div class="feat-icon">&#9178;</div><h3>Connect SC</h3><p>The MS/TP port is isolated: its SC pin must go to the trunk's signal common, or communication fails. With non-isolated two-wire devices, SC goes to their supply common.</p></div>
+    <div class="feat"><div class="feat-icon">&#127760;</div><h3>Other subnets: BBMD</h3><p>On another IP subnet than the BMS, enable BBMD on the Advanced page and list every <em>other</em> BBMD in its table. Do not enable it when it is not needed &mdash; Contemporary Controls warns it impairs traffic. A BASrouter can take foreign-device registrations but cannot register as one. More: <a href="/bacnet-bbmd-foreign-device.html" style="color:var(--amber-ink)">BBMD and foreign device</a>.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the rule that bites</div>
+  <h2 class="sec-title">Found, but never answered</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128225;</div><h3>A routed I-Am</h3><p>When an MS/TP device answers Who-Is through the router, its I-Am comes from the router's IP address and carries the device's network (2001) and MS/TP MAC in the message's network header. That pair is its address now.</p></div>
+    <div class="feat"><div class="feat-icon">&#9888;</div><h3>Reading from the router</h3><p>Contemporary Controls' troubleshooting note describes clients that discover MS/TP devices via the router, then ignore the routing information and try to read the device's properties from the router itself &mdash; which holds only its own. The device shows up in the list and every read times out.</p></div>
+    <div class="feat"><div class="feat-icon">&#9989;</div><h3>Network and MAC on every request</h3><p>A request to a device behind a router has to carry its network and MAC as the destination. The router's status page gives it away otherwise: far more BACnet/IP packets than MS/TP ones means the client is not using the routing.</p></div>
+  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">BACManager reads devices behind a router from version 1.4.6: the device list shows them at the router's IP with <span class="mono">net 2001</span>, and every read and write carries the device's network and MAC. Tested against a simulated BASrouter with an ABB drive, a Belimo valve and a Lochinvar boiler on MS/TP network 2001: each answered with its own name and values, and the dashboard wrote to the drive and the valve through the router. Without the change, version 1.4.5 finds devices like these and times out on every read of them.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="points">
+  <div class="sec-label">// when it does not work</div>
+  <h2 class="sec-title">The router's status page tells you</h2>
+  <table class="compare-table">
+    <thead><tr><th>What you see</th><th>Why</th><th class="hl">What to do</th></tr></thead>
+    <tbody>
+      <tr><td>MNSM stays SoleMaster or PollForMaster; Next Station is the router's own MAC</td><td>The router hears no other master: baud rate, polarity, SC not connected, no termination, or only slaves</td><td class="hl">Check baud and wiring; the LEDs flash whatever the polarity or baud</td></tr>
+      <tr><td>Devices found, every read times out</td><td>The client reads from the router instead of through it</td><td class="hl">A client that uses the routing (BACManager 1.4.6 or later)</td></tr>
+      <tr><td>BIP packet count far above MS/TP count</td><td>Messages are not being routed</td><td class="hl">Same: the client is not using network numbers</td></tr>
+      <tr><td>Next Station keeps changing; devices drop in and out</td><td>Duplicate MACs, a neighbour leaving the token, Max Masters not matching</td><td class="hl">Unique MACs from 1 up; the same Max Masters everywhere</td></tr>
+      <tr><td>Many Invalid Long Frames</td><td>Bias or termination</td><td class="hl">Jumpers in at the end, out in the middle, 120 &Omega; at the far end</td></tr>
+      <tr><td>Two routers, devices vanish</td><td>Same MS/TP network number, or instance 0 on both</td><td class="hl">A unique MS/TP network and device instance on each</td></tr>
+      <tr><td>MS/TP slaves (MAC 128+) not found</td><td>BASRT-B talks to slaves but cannot discover them</td><td class="hl">Address them directly, or a BASrouterLX with slave proxy</td></tr>
+      <tr><td>Nothing from another subnet</td><td>No BBMD, or BDT entries missing on one side</td><td class="hl">One BBMD per subnet, each listing the others</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">The BASrouterLX adds 115200 baud, slave proxy and automatic slave discovery, an MS/TP backbone between IP networks, and a capture of MS/TP frames for Wireshark. Contemporary Controls' own free BACnet Discovery Tool works only on UDP port 0xBAC0; if it sees the MS/TP devices, the router is doing its job. Their manuals and notes are on <strong>ccontrols.com</strong>.</p>
+  <figure style="margin:1.8rem auto 0;max-width:1130px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="basrouter-bacnet-objects.png" width="1130" height="700" alt="BACManager BACnet tab: four devices found at one IP address: the router BASRT-B0079EE as device 50001, and behind it on MS/TP network 2001 the Belimo valve EV-AHU1-CHW (device 1), the ABB drive AHU-1 SF ACH580 (device 1021) and the Lochinvar boiler MTR-01 BACnet (device 610003), each marked net 2001; the drive's objects Output-Freq, Output-Current, Output-Power, Input-Reference-1, RUN-STOP-Monitor and RUN-STOP-Command with live values" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">The router and three MS/TP devices behind it at one IP address &mdash; the routed ones marked net 2001. Pictured: a simulated BASrouter and devices built from their makers' object lists</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="workspace">
+  <div class="sec-label">// free download</div>
+  <h2 class="sec-title">The MS/TP plant workspace</h2>
+  <p class="sec-sub">One dashboard page for three MS/TP devices read over BACnet/IP through the router: a supply-fan drive, a chilled-water valve and a boiler, with the drive's reference, the valve's setpoint and the boiler's enable to write.</p>
+  <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="basrouter-dashboard.png" width="1300" height="770" alt="BACManager dashboard for three MS/TP devices on network 2001 through a BASrouter: the ABB ACH580 supply fan running at 48.0 Hz, 5.6 kW, 16.2 A with its reference at 80 percent; the Belimo valve at 40 percent, 1039 litres per hour, 6.8 and 11.4 degrees C; the Lochinvar boiler with outlet 125.0 and inlet 110.1 degrees F, firing at 83 percent; and a trend of drive frequency, valve position and firing rate" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">The drive's reference written through the router, 50 &rarr; 80 % (simulated router and devices)</figcaption>
+  </figure>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">1</div><h3>Discover</h3><p>On the BACnet tab open BACnet/IP on the router's network and press Discover. The router and every MS/TP device behind it appear; the routed ones show their network.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Open the workspace</h3><p>Workspace &rarr; Open. The file reads devices 1021, 1 and 610003; BACManager asks which discovered devices take their places and moves every point over. For your own devices, add their points the same way.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Run</h3><p>BACManager starts reading the devices by itself, each through the router. On the Dashboard press Run; writes go through the router too.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:1.6rem">
+    <a href="/BASrouter_MSTP_Plant_BACnet.json" download class="btn-primary">Download workspace</a>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">BASrouter &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the difference between a BACnet router and a gateway?<span class="icon">+</span></div>
+      <div class="faq-a">A router joins BACnet networks &mdash; MS/TP and BACnet/IP &mdash; and passes BACnet messages between them unchanged; the devices behind it keep their own objects. A gateway translates another protocol, such as Modbus, into BACnet objects of its own.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the BASrouter's default IP address?<span class="icon">+</span></div>
+      <div class="faq-a">192.168.92.68 with a 24-bit mask and gateway 192.168.92.1, set as fixed. Give the PC an address such as 192.168.92.69 to reach its web page.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What network numbers does the BASrouter use?<span class="icon">+</span></div>
+      <div class="faq-a">BACnet/IP network 1 and MS/TP network 2001 from the factory. Every MS/TP segment needs its own number across the whole internetwork, so a second router must get another MS/TP network number.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why can I see MS/TP devices through the router but not read them?<span class="icon">+</span></div>
+      <div class="faq-a">The client is reading them from the router's own address instead of routing to them. A request must carry the device's network number and MS/TP MAC; the router does not hold other devices' properties.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Do I need to set the BASrouter's device instance?<span class="icon">+</span></div>
+      <div class="faq-a">Yes. It is 0 from the factory, and every BACnet device in the internetwork needs a unique instance.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Should the BASrouter terminate the MS/TP bus?<span class="icon">+</span></div>
+      <div class="faq-a">Only at the end of a segment. It ships with bias and termination jumpers in; in the middle of a segment remove all three and terminate the far end with 120 &Omega;.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// sources</div>
+  <h2 class="sec-title">Where this comes from</h2>
+  <p style="max-width:820px;margin:0 auto;color:var(--body);line-height:1.75">Contemporary Controls: <em>BASRT-B BACnet Multi-Network Router User Manual</em> UM-BASRTB00-AA1, <em>Successful Installation and Operation</em> IS-BASRT001, <em>Troubleshooting BACnet Networks</em> TN-BASRT000-AB1, data sheets DS-BASRTB00-AD2 (BASrouter) and DS-BASRTBX0-AC1 (BASrouterLX), and the application guide AG-BASRTB00-AE3. Get them from <a href="https://www.ccontrols.com/" rel="nofollow noopener" style="color:var(--amber-ink)">ccontrols.com</a> and check them against your router's firmware. Contemporary Controls and BASrouter are trademarks of their owner; BACManager is not affiliated with Contemporary Controls. The pictures on this page are from BACManager connected to a simulated router and devices.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// more device guides</div>
+  <h2 class="sec-title">Other BACnet devices</h2>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem 2rem">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Chillers and rooftop units</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Daikin MicroTech III chiller</a></div>
+      <div style="margin:0.25rem 0"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Trane Symbio 700</a></div>
+      <div style="margin:0.25rem 0"><a href="/aaon-vccx2-bacnet.html" style="color:var(--amber-ink)">AAON VCCX2</a></div>
+      <div style="margin:0.25rem 0"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Lennox CORE</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Boilers</div>
+      <div style="margin:0.25rem 0"><a href="/lochinvar-crest-bacnet.html" style="color:var(--amber-ink)">Lochinvar Crest boiler</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">VRF and split systems</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-itm-bacnet.html" style="color:var(--amber-ink)">Daikin iTM (VRV)</a></div>
+      <div style="margin:0.25rem 0"><a href="/mitsubishi-ae200-bacnet.html" style="color:var(--amber-ink)">Mitsubishi AE-200</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Drives</div>
+      <div style="margin:0.25rem 0"><a href="/abb-ach580-bacnet.html" style="color:var(--amber-ink)">ABB ACH580</a></div>
+      <div style="margin:0.25rem 0"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Schneider ATV600</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Pumps and valves</div>
+      <div style="margin:0.25rem 0"><a href="/grundfos-cim-bacnet.html" style="color:var(--amber-ink)">Grundfos MAGNA3 (CIM)</a></div>
+      <div style="margin:0.25rem 0"><a href="/wilo-cif-bacnet.html" style="color:var(--amber-ink)">Wilo Stratos MAXO (CIF)</a></div>
+      <div style="margin:0.25rem 0"><a href="/belimo-energy-valve-bacnet.html" style="color:var(--amber-ink)">Belimo Energy Valve</a></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:1.4rem"><a href="/bacnet-devices.html" style="color:var(--amber-ink)">All BACnet device guides &rarr;</a></p>
+</section>
+
+<div class="cta-strip">
+  <h2>Read MS/TP through the router from your laptop</h2>
+  <p>Download the free trial, discover the router and every MS/TP device behind it, and open the plant workspace &mdash; each device read by its network and MAC. No credit card.</p>
+  <div class="ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+    <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    <a href="/bacnet-priority-array.html">Priority Array</a>
+    <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/manual.html">Manual</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://.
+   Each click is also counted in our own Google Sheet (Apps Script), cookie
+   consent or not: site, product, version, page, referrer, language, time
+   zone. No cookies, no IP address. The download never waits for it.
+   A workspace (.json or .zip on this site) is counted as product "Workspace" with
+   the file name as its version, a manual (.pdf) as product "Manual"; both
+   download as before. */
+function dlCount(product, version) {
+  try {
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbyx9RacY_l5KDK0RBBmLk41uKv3McyR_UJmCTWqnRqklh6fYgeXvYecddcQDGzRx5-F/exec', JSON.stringify({
+      site: location.hostname, product: product, version: version,
+      page: location.pathname, referrer: document.referrer, lang: navigator.language,
+      tz: (window.Intl && Intl.DateTimeFormat().resolvedOptions().timeZone) || ''
+    }));
+  } catch (err) {}
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var w = e.target.closest('a[href$=".json"], a[href$=".zip"]');
+  if (w) { dlCount('Workspace', (w.getAttribute('href').match(/([^\/]+)\.(?:json|zip)$/) || [])[1] || ''); return; }
+  var m = e.target.closest('a[href$=".pdf"]');
+  if (m) { dlCount('Manual', (m.getAttribute('href').match(/([^\/]+)\.pdf$/) || [])[1] || ''); return; }
+  var a = e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  var dl = a.getAttribute('data-dl');
+  dlCount(/bacmanager/i.test(dl) ? 'BACManager' : (/Pro\.Setup|pro-v/i.test(dl) ? 'ModbusManager Pro' : 'ModbusManager Standard'),
+    (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
+  window.location.href = 'https://' + dl;
+});
+</script>
+</body>
+</html>

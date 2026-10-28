@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABB ACH580 BACnet Points List &amp; Setup (MS/TP, Group 58)</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="ABB ACH580 drive on BACnet MS/TP: group 58 setup, device ID 4194303, BV10/AV16 control, why it trips on 6681 EFB comm loss. Free workspace.">
+<meta name="keywords" content="ABB ACH580 BACnet points list, ACH580 BACnet, ACH580 BACnet setup, ACH580 BACnet parameters, ACH580 BACnet MSTP, ABB drive BACnet, ACH580 6681 EFB comm loss, ACH580 device object ID, ACH580 FBIP-21 BACnet IP, ABB ACH580 BMS integration">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/abb-ach580-bacnet.html">
+<meta property="og:title" content="ABB ACH580 BACnet Points List &amp; Setup (MS/TP, Group 58)">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="Bring an ABB ACH580 HVAC drive onto a BMS over BACnet MS/TP: the group 58 parameters, the device ID you must change, start/stop and speed over BACnet, and the comm-loss default that trips a drive whose BMS only reads. Free BACManager workspace.">
+<meta property="og:url" content="https://bacmanager.com/abb-ach580-bacnet.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bacmanager.com/og-abb-ach580.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ABB ACH580 BACnet Points List &amp; Setup (MS/TP, Group 58)">
+<meta name="twitter:description" content="Bring an ABB ACH580 HVAC drive onto a BMS over BACnet MS/TP: the group 58 parameters, the device ID you must change, start/stop and speed over BACnet, and the comm-loss default that trips a drive whose BMS only reads. Free BACManager workspace.">
+<meta name="twitter:image" content="https://bacmanager.com/og-abb-ach580.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ABB ACH580 BACnet Points List and Setup over MS/TP",
+    "description": "Bring an ABB ACH580 HVAC drive onto a BMS over BACnet MS/TP: the group 58 parameters, the device ID you must change, start/stop and speed over BACnet, and the comm-loss default that trips a drive whose BMS only reads. Free BACManager workspace.",
+    "url": "https://bacmanager.com/abb-ach580-bacnet.html",
+    "image": "https://bacmanager.com/og-abb-ach580.png",
+    "datePublished": "2026-10-27",
+    "dateModified": "2026-10-27",
+    "author": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where is the ABB ACH580 BACnet points list?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In ABB's BACnet Protocol Implementation Conformance Statement for the ACH580, document 3AXD10000387059, in the ABB library. The table on this page lists the points a BMS uses most."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I enable BACnet on an ACH580?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Set 58.01 Protocol enable to BACnet MS/TP, the node address in 58.03, the baud rate in 58.04 and a unique device ID in 58.40, then 58.06 = Refresh settings and save the parameters with 96.07. The Primary settings menu does the same under Communication → Embedded fieldbus."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does my ACH580 fault with 6681 EFB comm loss?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "By default the drive faults when no command or reference has been written for 30 seconds (58.14 Fault, 58.15 Cw / Ref1 / Ref2, 58.16 30 s) — reads don't count. Write the commands again regularly, or set 58.15 to Any message."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the ACH580's default BACnet device instance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "4194303, which BACnet treats as invalid; it has to be set in 58.40 Device object ID. It does not follow the MS/TP address."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I set the ACH580's speed over BACnet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Set 28.11 Ext1 frequency ref1 to EFB ref1 and write a percentage to AV16 Input-Reference-1; 100 % equals 46.02 Frequency scaling. Start and stop with BV10 RUN-STOP-Command after setting 20.01 Ext1 commands to Embedded fieldbus."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the ACH580 support BACnet/IP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not on the drive itself: the embedded interface is BACnet MS/TP. BACnet/IP needs the FBIP-21 adapter module, or a BACnet router in front of the MS/TP trunk."
+        }
+      }
+    ]
+  }
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.pa-table{width:100%;border-collapse:collapse;font-size:0.86rem;max-width:640px;margin:0 auto}
+.pa-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.9rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.pa-table td{padding:0.5rem 0.9rem;border-bottom:1px solid var(--steel);font-family:'IBM Plex Mono',monospace;font-size:0.82rem}
+.pa-table tr.hl td{background:rgba(242,169,0,0.12);font-weight:600}
+.pa-table tr:last-child td{border-bottom:none}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+
+/* family slogan band, slim (2026-10-22) */
+.slogan-band.slim{background:var(--safety,#F2A900);border-bottom:2px solid var(--ink,#16181A);padding:0.5rem 1rem;text-align:center;color:var(--ink,#16181A);display:flex;gap:0.3rem 1rem;justify-content:center;align-items:baseline;flex-wrap:wrap}
+.slogan-band.slim .sb-main{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.3rem;line-height:1.1;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim .sb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim a{color:var(--ink,#16181A);font-weight:700}
+@media(max-width:768px){.slogan-band.slim .sb-main{font-size:1.05rem}.slogan-band.slim .sb-sub{display:none}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "ABB ACH580 BACnet","item": "https://bacmanager.com/abb-ach580-bacnet.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-bbmd-foreign-device.html">BBMD</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+<div class="slogan-band slim">
+  <span class="sb-main">Every device. One tool. Pay once.</span>
+  <span class="sb-sub">Modbus &middot; BACnet &middot; Siemens S7 &middot; one-time licence &middot; also from us: <a href="https://modbusmanager.com">ModbusManager&nbsp;&#8599;</a></span>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">// abb &middot; ach580 hvac drive &middot; bacnet ms/tp</div>
+  <h1>ABB ACH580<br><span class="accent">BACnet Points List &amp; Setup</span></h1>
+  <p class="hero-desc">How to put an ABB ACH580 HVAC drive on BACnet MS/TP: the group 58 parameters, the device ID you have to change, the two parameters that hand start/stop and speed to BACnet &mdash; and the communication-loss default that trips a drive whose BMS writes once and then only reads. With a free BACManager workspace that keeps the commands alive.</p>
+  <div class="hero-ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#workspace" class="btn-ghost">Free ACH580 workspace</a>
+  </div>
+  <p class="hero-note">Sources: ABB 3AXD10000387059 (ACH580 BACnet PICS, Rev 16, 2024) and 3AXD50000027537 (ACH580 HVAC control program firmware manual)</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// before you start</div>
+  <h2 class="sec-title">BACnet MS/TP is built in</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128268;</div><h3>Terminals X5</h3><p>The embedded fieldbus is on the control unit: 29 B+, 30 A&minus;, 31 DGND. Switch S4 TERM on at both ends of the trunk, and S5 BIAS on at one device, preferably at an end. For BACnet/IP the drive needs the FBIP-21 option module; otherwise go through a router or read MS/TP from a PC &mdash; see <a href="/bacnet-mstp-rs485.html" style="color:var(--amber-ink)">BACnet MS/TP over RS-485</a>.</p></div>
+    <div class="feat"><div class="feat-icon">&#9881;</div><h3>From the panel</h3><p><span class="mono">Menu &rarr; Primary settings &rarr; Communication &rarr; Embedded fieldbus &rarr; Communication setup</span>: EFB selection = BACnet MS/TP, Save, set the rows below, then <em>Apply settings to embedded fieldbus</em>. The same parameters are in group 58.</p></div>
+    <div class="feat"><div class="feat-icon">&#128203;</div><h3>What the drive serves</h3><p>Per ABB's PICS: ReadPropertyMultiple and WritePropertyMultiple, COV with up to 5 subscriptions, max APDU 480, <strong>no segmentation</strong>. MS/TP master or slave, 9.6&ndash;115.2 kbps.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// setup</div>
+  <h2 class="sec-title">Group 58: the BACnet parameters</h2>
+  <table class="compare-table">
+    <thead><tr><th>Parameter</th><th>Default</th><th class="hl">Set to</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">58.01 Protocol enable</td><td>None</td><td class="hl">BACnet MS/TP (2)</td></tr>
+      <tr><td class="mono">58.03 Node address</td><td>1</td><td class="hl">The drive's MS/TP MAC, unique on the trunk; 1&ndash;127 for a master</td></tr>
+      <tr><td class="mono">58.04 Baud rate</td><td>Autodetect (for BACnet)</td><td class="hl">The trunk's rate: 9.6, 19.2, 38.4, 76.8 or 115.2 kbps. Autodetect needs the parity in 58.05 right</td></tr>
+      <tr><td class="mono">58.05 Parity</td><td>8 EVEN 1</td><td class="hl">8 NONE 1, which is what MS/TP uses</td></tr>
+      <tr><td class="mono">58.40 Device object ID</td><td>4194303</td><td class="hl"><strong>Must be changed</strong> &mdash; 4194303 is not a valid instance. Unique in the whole building</td></tr>
+      <tr><td class="mono">58.41 / 58.42</td><td>127 / 1</td><td class="hl">Max master / max info frames; usually leave</td></tr>
+      <tr><td class="mono">58.06 Communication control</td><td>Enabled</td><td class="hl">Refresh settings &mdash; group 58 changes take effect only after this or a control-unit reboot</td></tr>
+      <tr><td class="mono">96.07 Parameter save manually</td><td>&mdash;</td><td class="hl">Save</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">The device instance does not follow the MAC address: it is whatever 58.40 says. A drive that still answers as 4194303 was never commissioned for BACnet. Diagnostics are in 58.07&ndash;58.13: 58.07 has bits for wiring error (A/B swapped), parity and baud errors, no bus activity and comm loss; 58.13 counts the tokens the drive received. Defaults on this page are from ABB's firmware manual; check them against your drive's firmware version.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// control</div>
+  <h2 class="sec-title">Hand start/stop and speed to BACnet</h2>
+  <p class="sec-sub">BACnet reads everything out of the box. To command the drive, point the control sources at the embedded fieldbus (EFB). Leave the rest at the factory defaults.</p>
+  <table class="compare-table">
+    <thead><tr><th>Parameter</th><th>Value</th><th class="hl">Then the BMS writes</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">20.01 Ext1 commands</td><td>Embedded fieldbus</td><td class="hl">BV10 RUN-STOP-Command (Run / Stop)</td></tr>
+      <tr><td class="mono">28.11 Ext1 frequency ref1</td><td>EFB ref1</td><td class="hl">AV16 Input-Reference-1, in % of 46.02 Frequency scaling (scalar control, the ACH580 default)</td></tr>
+      <tr><td class="mono">22.11 Ext1 speed ref1</td><td>EFB ref1</td><td class="hl">AV16 in % of 46.01 Speed scaling, if 99.04 is set to vector control</td></tr>
+      <tr><td class="mono">20.21 Direction</td><td>Request</td><td class="hl">BV11 Direction-Command, if needed</td></tr>
+      <tr><td class="mono">20.40 Run permissive</td><td>Embedded fieldbus</td><td class="hl">BV12 Run-Permissive-Command, if the BMS gives the permissive</td></tr>
+      <tr><td class="mono">19.11 Ext1/Ext2 selection</td><td>EFB MCW bit 11</td><td class="hl">BV13 EXT1-EXT2-Command; Ext2 uses 20.07 and 28.15 (AV17)</td></tr>
+      <tr><td class="mono">&mdash;</td><td>&mdash;</td><td class="hl">BV14 Fault-Reset-Command works without any setting</td></tr>
+    </tbody>
+  </table>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">%</div><h3>AV16 is a percentage</h3><p>Input-Reference-1 runs from &minus;150 to 150 %, and 100 % is the value in 46.02. With 46.02 = 60 Hz, 50 % is 30 Hz. Write 45 meaning hertz and the fan runs at 27 Hz.</p></div>
+    <div class="feat"><div class="feat-icon">&#9758;</div><h3>Control override</h3><p>BV18 Control-Override-Command puts the drive under BACnet control from whatever its normal source is, without changing 20.01; BV19 shows it is active. The panel's HAND still beats it.</p></div>
+    <div class="feat"><div class="feat-icon">&#128268;</div><h3>Relays, AOs and PID</h3><p>BO0&ndash;BO5 drive RO1&ndash;RO5 and DO1 once their sources are the RO/DIO control word (10.99). AO0/AO1 need 13.12/13.22 = AO1/AO2 data storage. AV42 LOOP-Setpoint needs 40.16 = Setpoint data storage.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the rule that bites</div>
+  <h2 class="sec-title">Writing once is not enough: 6681 EFB comm loss</h2>
+  <p class="sec-sub">ABB notes that BACnet has no timeout of its own, so the drive keeps one. Its defaults:</p>
+  <table class="compare-table">
+    <thead><tr><th>Parameter</th><th>Default</th><th class="hl">Means</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">58.14 Communication loss action</td><td>Fault</td><td class="hl">Trip on 6681 EFB comm loss when start/stop or the reference comes from the EFB</td></tr>
+      <tr><td class="mono">58.15 Communication loss mode</td><td>Cw / Ref1 / Ref2</td><td class="hl">Only a write of the control word or a reference resets the timer &mdash; reading does not</td></tr>
+      <tr><td class="mono">58.16 Communication loss time</td><td>30 s</td><td class="hl">0&ndash;6000 s</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">So a BMS that writes Run and a speed once and then only polls the drive lets the timer run out, and 30 seconds later the drive trips. There are three ways out. Write the commands again well inside 58.16 &mdash; in BACManager a BACnet tag has <strong>Refresh (s)</strong>, which writes the last value again every that many seconds until it is relinquished, and the free workspace sets 10&nbsp;s on BV10 and AV16. Or set 58.15 to <em>Any message</em>, as ABB's own setup example does, so that polling keeps the link alive. Or choose <em>Last speed</em> or <em>Speed ref safe</em> (28.41) in 58.14 &mdash; with ABB's warning to make sure it is safe to keep running when communication breaks. After any change in group 58, Refresh settings in 58.06.</p>
+  <p style="max-width:820px;margin:1rem auto 0;color:var(--body);line-height:1.75">Tested against the simulated ACH580 with the comm-loss time shortened to 20&nbsp;s: with Refresh 10&nbsp;s the drive ran without a fault for the whole run; without it, MSV1 Active-Fault-1 went to Comm-Error about 20&nbsp;s after the last write.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="points">
+  <div class="sec-label">// points list</div>
+  <h2 class="sec-title">The ACH580 points a BMS uses</h2>
+  <p class="sec-sub">Object names as the drive reports them. C = commandable (priority array and relinquish default), W = writable, R = read only.</p>
+  <table class="compare-table">
+    <thead><tr><th>Object</th><th>Object name</th><th>Access</th><th class="hl">What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">BV10</td><td class="mono">RUN-STOP-Command</td><td>C</td><td class="hl">Run / Stop, with 20.01 = Embedded fieldbus</td></tr>
+      <tr><td class="mono">AV16 / AV17</td><td class="mono">Input-Reference-1 / -2</td><td>C</td><td class="hl">Speed or frequency reference, %, &minus;150&ndash;150</td></tr>
+      <tr><td class="mono">BV11 / BV12 / BV13</td><td class="mono">Direction- / Run-Permissive- / EXT1-EXT2-Command</td><td>C</td><td class="hl">Direction, run permissive, control location</td></tr>
+      <tr><td class="mono">BV14</td><td class="mono">Fault-Reset-Command</td><td>W</td><td class="hl">Write Reset to clear a fault</td></tr>
+      <tr><td class="mono">BV18 / BV19</td><td class="mono">Control-Override-Command / -Monitor</td><td>C / R</td><td class="hl">BACnet takes control from the normal source</td></tr>
+      <tr><td class="mono">BV0 / BV24</td><td class="mono">RUN-STOP-Monitor / Started-Monitor</td><td>R</td><td class="hl">Running / start given</td></tr>
+      <tr><td class="mono">BV2 / BV5</td><td class="mono">OK-FAULT-Monitor / Warning-Monitor</td><td>R</td><td class="hl">Fault, warning</td></tr>
+      <tr><td class="mono">BV4 / MSV0</td><td class="mono">HAND-AUTO-Monitor / HAND-AUTO-Reference</td><td>R</td><td class="hl">Hand or Auto; MSV0 also Off and Override</td></tr>
+      <tr><td class="mono">BV7 / BV8 / BV9</td><td class="mono">Ready- / At-Setpoint- / Enabled-Monitor</td><td>R</td><td class="hl">Ready, at speed, run enabled</td></tr>
+      <tr><td class="mono">AV1 / AV0 / AV31</td><td class="mono">Output-Freq / Output-RPM / Output-Speed</td><td>R</td><td class="hl">Hz, rpm, % of synchronous speed</td></tr>
+      <tr><td class="mono">AV4 / AV6 / AV5</td><td class="mono">Output-Current / Output-Power / Output-Torque</td><td>R</td><td class="hl">A, kW, % of nominal torque</td></tr>
+      <tr><td class="mono">AV2 / AV7</td><td class="mono">DC-Voltage / Operating-Temp-Range</td><td>R</td><td class="hl">DC bus V; heatsink temperature in % of the fault limit</td></tr>
+      <tr><td class="mono">AV9 / AV8</td><td class="mono">Kilowatt-Hour-Meter-NR / -R</td><td>R / W</td><td class="hl">Energy, kWh; NR cannot be reset, R can</td></tr>
+      <tr><td class="mono">AV14</td><td class="mono">Running-Hours</td><td>R</td><td class="hl">Run time, h; reset by writing 0</td></tr>
+      <tr><td class="mono">AV18 / MSV1</td><td class="mono">Active-Fault / Active-Fault-1</td><td>R</td><td class="hl">The active fault as a code, and as text (None, Comm-Error, Overcurrent&hellip;)</td></tr>
+      <tr><td class="mono">AV23 / AV24</td><td class="mono">Accel-1-Seconds / Decel-1-Seconds</td><td>W</td><td class="hl">Ramp times</td></tr>
+      <tr><td class="mono">AV42 / AV43</td><td class="mono">LOOP-Setpoint / LOOP-Feedback</td><td>C / W</td><td class="hl">PID setpoint and feedback from the BMS</td></tr>
+      <tr><td class="mono">BI6&ndash;BI11 / AI0&ndash;AI1</td><td class="mono">DI1-Monitor&hellip; / AI1-Monitor, AI2-Monitor</td><td>R</td><td class="hl">The drive's own inputs</td></tr>
+      <tr><td class="mono">BO0&ndash;BO5 / AO0&ndash;AO1</td><td class="mono">RO1-Command&hellip; / AO1-Command, AO2-Command</td><td>C</td><td class="hl">The drive's outputs, once sourced from the EFB</td></tr>
+      <tr><td class="mono">BV39</td><td class="mono">Parameter-Save-Command</td><td>W</td><td class="hl">Save BACnet-written settings to flash now</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">The full list &mdash; PID set 2, the external PID, Data-IO objects AV120&ndash;129, hourly and daily kWh, the mailbox for reading any parameter, warnings MSV4&ndash;6 &mdash; is in ABB's PICS <strong>3AXD10000387059</strong>. One more thing from its appendix: persistent properties written over BACnet (relinquish defaults, COV increments and the like) are saved to flash once an hour. Write BV39 Parameter-Save-Command after commissioning, or a power cut within the hour loses them.</p>
+  <figure style="margin:1.8rem auto 0;max-width:1130px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="abb-ach580-bacnet-objects.png" width="1130" height="700" alt="BACManager BACnet tab: device AHU-1 SF ACH580, device instance 1021, with its ACH580 objects listed by name, Output-RPM, Output-Freq, DC-Voltage, Output-Current, Output-Power, Operating-Temp-Range, Kilowatt-Hour-Meter-NR, Running-Hours, Input-Reference-1, Active-Fault, Accel-1-Seconds and Decel-1-Seconds, polled every second" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Discover, click the drive, and its objects come up by name with live values. Pictured: a simulated ACH580 built from ABB's PICS, stopped</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="workspace">
+  <div class="sec-label">// free download</div>
+  <h2 class="sec-title">The ACH580 workspace</h2>
+  <p class="sec-sub">One dashboard page for an ACH580 on an AHU supply fan: hand/auto and the active fault as text, frequency, speed, current, power, DC bus, heatsink, energy and running hours &mdash; with Run/Stop and the speed reference written again every 10 seconds, and a fault reset button.</p>
+  <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="abb-ach580-dashboard.png" width="1300" height="770" alt="BACManager dashboard for an ABB ACH580 drive on an AHU supply fan: Auto, no active fault, running at setpoint, output frequency 48.0 Hz, 1416 rpm, 18.1 A, 7.9 kW, DC bus 647 V, heatsink 38 percent of limit, Run command and Input-Reference-1 at 80 percent, and a trend where the frequency ramps to 36 Hz, then 48 Hz" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Run and Input-Reference-1 written from the page, 60 &rarr; 80 % (36 &rarr; 48 Hz with 46.02 = 60 Hz), repeated every 10 s so the drive never sees a comm loss (simulated drive)</figcaption>
+  </figure>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">1</div><h3>Discover the drive</h3><p>On the BACnet tab open MS/TP on the PC's RS-485 port at the trunk's baud rate (or BACnet/IP behind a router or an FBIP-21) and press Discover. The drive appears with the instance from 58.40.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Open the workspace</h3><p>Workspace &rarr; Open. The file reads device 1021; if yours has another instance, BACManager asks which discovered device takes its place and moves every point over.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Run, then command once</h3><p>BACManager starts reading the drive by itself. On the Dashboard press Run, choose Run and set the reference &mdash; from then on both are written again every 10 seconds. After BACManager restarts, command them once more.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:1.6rem">
+    <a href="/ABB_ACH580_Drive_BACnet.json" download class="btn-primary">Download workspace</a>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// when it does not work</div>
+  <h2 class="sec-title">Typical problems</h2>
+  <table class="compare-table">
+    <thead><tr><th>What you see</th><th>Why</th><th class="hl">What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Drive trips on 6681 about 30 s after the BMS started it</td><td>Commands written once; reads don't reset the timer (58.15 default)</td><td class="hl">Write BV10/AV16 every 10 s (Refresh 10 s), or 58.15 = Any message</td></tr>
+      <tr><td>Device found as 4194303, or not at all</td><td>58.40 never set</td><td class="hl">Set a unique device ID, then 58.06 = Refresh settings</td></tr>
+      <tr><td>Changes in group 58 do nothing</td><td>Not taken in use</td><td class="hl">58.06 = Refresh settings, or reboot the control unit</td></tr>
+      <tr><td>Writes accepted, motor doesn't start</td><td>20.01 still on I/O, or the panel is in HAND</td><td class="hl">20.01 = Embedded fieldbus; check BV4 / MSV0. Or use BV18 override</td></tr>
+      <tr><td>Speed is wrong by a factor</td><td>AV16 is % of 46.02, not Hz</td><td class="hl">With 46.02 = 60 Hz, 30 Hz is 50 %</td></tr>
+      <tr><td>No communication; 58.07 shows wiring or parity error</td><td>A/B swapped, wrong parity or baud</td><td class="hl">Check 29 B+ / 30 A&minus;, 58.05 = 8 NONE 1, 58.04</td></tr>
+      <tr><td>Reads abort on a big request</td><td>No segmentation, max APDU 480</td><td class="hl">Fewer objects per ReadPropertyMultiple</td></tr>
+      <tr><td>Settings written over BACnet gone after a power cut</td><td>Saved to flash only hourly</td><td class="hl">Write BV39 Parameter-Save-Command</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">ABB ACH580 BACnet &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Where is the ABB ACH580 BACnet points list?<span class="icon">+</span></div>
+      <div class="faq-a">In ABB's BACnet Protocol Implementation Conformance Statement for the ACH580, document 3AXD10000387059, in the ABB library. The table on this page lists the points a BMS uses most.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I enable BACnet on an ACH580?<span class="icon">+</span></div>
+      <div class="faq-a">Set 58.01 Protocol enable to BACnet MS/TP, the node address in 58.03, the baud rate in 58.04 and a unique device ID in 58.40, then 58.06 = Refresh settings and save the parameters with 96.07. The Primary settings menu does the same under Communication &rarr; Embedded fieldbus.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why does my ACH580 fault with 6681 EFB comm loss?<span class="icon">+</span></div>
+      <div class="faq-a">By default the drive faults when no command or reference has been written for 30 seconds (58.14 Fault, 58.15 Cw / Ref1 / Ref2, 58.16 30 s) &mdash; reads don't count. Write the commands again regularly, or set 58.15 to Any message.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the ACH580's default BACnet device instance?<span class="icon">+</span></div>
+      <div class="faq-a">4194303, which BACnet treats as invalid; it has to be set in 58.40 Device object ID. It does not follow the MS/TP address.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I set the ACH580's speed over BACnet?<span class="icon">+</span></div>
+      <div class="faq-a">Set 28.11 Ext1 frequency ref1 to EFB ref1 and write a percentage to AV16 Input-Reference-1; 100 % equals 46.02 Frequency scaling. Start and stop with BV10 RUN-STOP-Command after setting 20.01 Ext1 commands to Embedded fieldbus.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does the ACH580 support BACnet/IP?<span class="icon">+</span></div>
+      <div class="faq-a">Not on the drive itself: the embedded interface is BACnet MS/TP. BACnet/IP needs the FBIP-21 adapter module, or a BACnet router in front of the MS/TP trunk.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// sources</div>
+  <h2 class="sec-title">Where this comes from</h2>
+  <p style="max-width:820px;margin:0 auto;color:var(--body);line-height:1.75">ABB: <em>ACH580 BACnet Protocol Implementation Conformance Statement</em>, 3AXD10000387059 Rev 16 (2024), and <em>ACH580 HVAC control program firmware manual</em>, 3AXD50000027537, chapter on BACnet MS/TP control through the embedded fieldbus interface, both in the ABB library on <a href="https://new.abb.com/drives" rel="nofollow noopener" style="color:var(--amber-ink)">abb.com</a>. Check the manual for your drive's firmware before commissioning. ABB and ACH580 are trademarks of their owner; BACManager is not affiliated with ABB. The pictures on this page are from BACManager connected to a simulated drive built from the published PICS.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// more device guides</div>
+  <h2 class="sec-title">Other BACnet devices</h2>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem 2rem">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Chillers and rooftop units</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Daikin MicroTech III chiller</a></div>
+      <div style="margin:0.25rem 0"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Trane Symbio 700</a></div>
+      <div style="margin:0.25rem 0"><a href="/aaon-vccx2-bacnet.html" style="color:var(--amber-ink)">AAON VCCX2</a></div>
+      <div style="margin:0.25rem 0"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Lennox CORE</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Boilers</div>
+      <div style="margin:0.25rem 0"><a href="/lochinvar-crest-bacnet.html" style="color:var(--amber-ink)">Lochinvar Crest boiler</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">VRF and split systems</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-itm-bacnet.html" style="color:var(--amber-ink)">Daikin iTM (VRV)</a></div>
+      <div style="margin:0.25rem 0"><a href="/mitsubishi-ae200-bacnet.html" style="color:var(--amber-ink)">Mitsubishi AE-200</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Drives</div>
+      <div style="margin:0.25rem 0"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Schneider ATV600</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Pumps and valves</div>
+      <div style="margin:0.25rem 0"><a href="/grundfos-cim-bacnet.html" style="color:var(--amber-ink)">Grundfos MAGNA3 (CIM)</a></div>
+      <div style="margin:0.25rem 0"><a href="/wilo-cif-bacnet.html" style="color:var(--amber-ink)">Wilo Stratos MAXO (CIF)</a></div>
+      <div style="margin:0.25rem 0"><a href="/belimo-energy-valve-bacnet.html" style="color:var(--amber-ink)">Belimo Energy Valve</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Routers</div>
+      <div style="margin:0.25rem 0"><a href="/basrouter-bacnet-router.html" style="color:var(--amber-ink)">BASrouter (MS/TP to IP)</a></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:1.4rem"><a href="/bacnet-devices.html" style="color:var(--amber-ink)">All BACnet device guides &rarr;</a></p>
+</section>
+
+<div class="cta-strip">
+  <h2>Commission the ACH580 from your laptop</h2>
+  <p>Download the free trial, discover the drive and open the ACH580 workspace &mdash; every point by name, faults as text, commands kept alive. No credit card.</p>
+  <div class="ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+    <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    <a href="/bacnet-priority-array.html">Priority Array</a>
+    <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/manual.html">Manual</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://.
+   Each click is also counted in our own Google Sheet (Apps Script), cookie
+   consent or not: site, product, version, page, referrer, language, time
+   zone. No cookies, no IP address. The download never waits for it.
+   A workspace (.json or .zip on this site) is counted as product "Workspace" with
+   the file name as its version, a manual (.pdf) as product "Manual"; both
+   download as before. */
+function dlCount(product, version) {
+  try {
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbyx9RacY_l5KDK0RBBmLk41uKv3McyR_UJmCTWqnRqklh6fYgeXvYecddcQDGzRx5-F/exec', JSON.stringify({
+      site: location.hostname, product: product, version: version,
+      page: location.pathname, referrer: document.referrer, lang: navigator.language,
+      tz: (window.Intl && Intl.DateTimeFormat().resolvedOptions().timeZone) || ''
+    }));
+  } catch (err) {}
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var w = e.target.closest('a[href$=".json"], a[href$=".zip"]');
+  if (w) { dlCount('Workspace', (w.getAttribute('href').match(/([^\/]+)\.(?:json|zip)$/) || [])[1] || ''); return; }
+  var m = e.target.closest('a[href$=".pdf"]');
+  if (m) { dlCount('Manual', (m.getAttribute('href').match(/([^\/]+)\.pdf$/) || [])[1] || ''); return; }
+  var a = e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  var dl = a.getAttribute('data-dl');
+  dlCount(/bacmanager/i.test(dl) ? 'BACManager' : (/Pro\.Setup|pro-v/i.test(dl) ? 'ModbusManager Pro' : 'ModbusManager Standard'),
+    (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
+  window.location.href = 'https://' + dl;
+});
+</script>
+</body>
+</html>

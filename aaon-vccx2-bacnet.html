@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AAON VCCX2 BACnet Points List &amp; Integration (Rooftop Units)</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="AAON VCCX2 on BACnet MS/TP: LCD setup, the BACnet port vs the 485 loop, key points, overrides released by 65535, the damper trap. Free workspace.">
+<meta name="keywords" content="AAON BACnet points list, AAON VCCX2 BACnet points list, AAON BACnet integration, AAON BACnet card, AAON BACnet IP, AAON RTU BACnet points, VCCX2 BACnet, AAON VCCX2 BACnet MSTP, AAON BACnet controller, VCCX-IP BACnet">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/aaon-vccx2-bacnet.html">
+<meta property="og:title" content="AAON VCCX2 BACnet Points List &amp; Integration (Rooftop Units)">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="Bring an AAON rooftop unit with a VCCX2 controller onto a BMS over BACnet MS/TP: LCD settings, the right RS-485 port, the points a BMS uses, overrides and the economizer override that locks out the compressors. Free BACManager workspace.">
+<meta property="og:url" content="https://bacmanager.com/aaon-vccx2-bacnet.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bacmanager.com/og-aaon-vccx2.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AAON VCCX2 BACnet Points List &amp; Integration (Rooftop Units)">
+<meta name="twitter:description" content="Bring an AAON rooftop unit with a VCCX2 controller onto a BMS over BACnet MS/TP: LCD settings, the right RS-485 port, the points a BMS uses, overrides and the economizer override that locks out the compressors. Free BACManager workspace.">
+<meta name="twitter:image" content="https://bacmanager.com/og-aaon-vccx2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AAON VCCX2 BACnet Points List and Integration for Rooftop Units",
+    "description": "Bring an AAON rooftop unit with a VCCX2 controller onto a BMS over BACnet MS/TP: LCD settings, the right RS-485 port, the points a BMS uses, overrides and the economizer override that locks out the compressors. Free BACManager workspace.",
+    "url": "https://bacmanager.com/aaon-vccx2-bacnet.html",
+    "image": "https://bacmanager.com/og-aaon-vccx2.png",
+    "datePublished": "2026-10-27",
+    "dateModified": "2026-10-27",
+    "author": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where is the AAON BACnet points list?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For units with the VCCX2 controller it is Appendix C, BACnet Guide, of AAON's VCCX2 Controller Technical Guide on aaon.com. The table on this page lists the points a BMS uses most."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need an AAON BACnet card?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The VCCX2 has an on-board BACnet MS/TP port. For BACnet/IP, AAON's VCCX-IP controller has an Ethernet port, or the MS/TP trunk can go through a BACnet router."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the VCCX2's default BACnet settings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MAC address 1 and 38400 baud. The device ID is entered on the LCD; AAON's guide gives no default, so set one per unit."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why are the HVAC mode and occupancy analog inputs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "That is how the VCCX2 reports them: AI:4 HVAC Mode, AI:3 Control Status and AI:2 Control Mode carry a number for each state, listed in the guide's enumeration tables (for example HVAC Mode 2 = Cooling)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I release a VCCX2 override from BACnet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Write Auto: 65535 to the fan VFD, OA damper and relief fan overrides, 0 to Schedule Force, HVAC Mode Override and the supply setpoint override."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the VCCX2 support COV?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not according to its published PICS (software 1.90 and earlier), which lists ReadProperty, ReadPropertyMultiple, WriteProperty and device management only, and no segmentation No. Its PICS lists ReadProperty, ReadPropertyMultiple, WriteProperty and device management only, and no segmentation, so a BMS polls it in small requests.mdash; so a BMS polls it in small requests."
+        }
+      }
+    ]
+  }
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.pa-table{width:100%;border-collapse:collapse;font-size:0.86rem;max-width:640px;margin:0 auto}
+.pa-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.9rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.pa-table td{padding:0.5rem 0.9rem;border-bottom:1px solid var(--steel);font-family:'IBM Plex Mono',monospace;font-size:0.82rem}
+.pa-table tr.hl td{background:rgba(242,169,0,0.12);font-weight:600}
+.pa-table tr:last-child td{border-bottom:none}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+
+/* family slogan band, slim (2026-10-22) */
+.slogan-band.slim{background:var(--safety,#F2A900);border-bottom:2px solid var(--ink,#16181A);padding:0.5rem 1rem;text-align:center;color:var(--ink,#16181A);display:flex;gap:0.3rem 1rem;justify-content:center;align-items:baseline;flex-wrap:wrap}
+.slogan-band.slim .sb-main{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.3rem;line-height:1.1;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim .sb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim a{color:var(--ink,#16181A);font-weight:700}
+@media(max-width:768px){.slogan-band.slim .sb-main{font-size:1.05rem}.slogan-band.slim .sb-sub{display:none}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "AAON VCCX2 BACnet","item": "https://bacmanager.com/aaon-vccx2-bacnet.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-bbmd-foreign-device.html">BBMD</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+<div class="slogan-band slim">
+  <span class="sb-main">Every device. One tool. Pay once.</span>
+  <span class="sb-sub">Modbus &middot; BACnet &middot; Siemens S7 &middot; one-time licence &middot; also from us: <a href="https://modbusmanager.com">ModbusManager&nbsp;&#8599;</a></span>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">// aaon &middot; vccx2 rooftop controller &middot; bacnet ms/tp</div>
+  <h1>AAON VCCX2<br><span class="accent">BACnet Points List &amp; Integration</span></h1>
+  <p class="hero-desc">How to bring an AAON rooftop unit with a VCCX2 controller onto a BMS over BACnet MS/TP: the three LCD settings, which RS-485 port is BACnet and which is not, the points a BMS uses &mdash; including why HVAC mode is an analog input &mdash; and the economizer override that quietly locks out the compressors. With a free BACManager workspace for the unit.</p>
+  <div class="hero-ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#workspace" class="btn-ghost">Free VCCX2 workspace</a>
+  </div>
+  <p class="hero-note">Source: AAON VCCX2 Controller Technical Guide (G115820 Rev. AA, 2025), Appendix C &middot; BTL listed</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// before you start</div>
+  <h2 class="sec-title">No BACnet card, but two RS-485 networks</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128268;</div><h3>BACnet is on board</h3><p>The VCCX2 has its own BACnet MS/TP port &mdash; there is no AAON BACnet card to order. It is BTL listed as a B-ASC. For BACnet/IP there is the VCCX-IP controller, which has an Ethernet port as well as MS/TP terminals.</p></div>
+    <div class="feat"><div class="feat-icon">&#9888;</div><h3>Not the &ldquo;485&rdquo; loop</h3><p>The VCCX2 also has AAON's own communication loop (Unit ID 1&ndash;59, for Prism 2, MiniLink and CommLink). That loop is not BACnet. Wire the BMS to the BACnet port; a BACnet tool sees nothing on the other one.</p></div>
+    <div class="feat"><div class="feat-icon">&#128290;</div><h3>Set on the LCD</h3><p>The controller's 2&times;8 display and four buttons hold the BACnet settings: MAC address, device ID and baud rate, in the Settings screens.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// setup</div>
+  <h2 class="sec-title">VCCX2 BACnet settings</h2>
+  <table class="compare-table">
+    <thead><tr><th>LCD screen</th><th>Range</th><th class="hl">Default and notes</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">MAC Addr</td><td>0&ndash;127</td><td class="hl">1 &mdash; change it, or every new AAON unit on the trunk collides</td></tr>
+      <tr><td class="mono">DeviceID</td><td>up to 7 digits</td><td class="hl">Entered digit by digit; AAON does not give a default, so set one per unit and keep a list</td></tr>
+      <tr><td class="mono">MSTPBaud</td><td>9600, 19200, 38400, 57600, 76800</td><td class="hl">38400 &mdash; match the trunk</td></tr>
+      <tr><td class="mono">Unit ID#</td><td>1&ndash;59</td><td class="hl">AAON's own comm loop address, not BACnet</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Use 18-gauge shielded twisted pair, plenum rated where required (AAON names Belden 82760), daisy-chained with a termination at each end of the trunk. The VCCX2 does not support segmentation, so a tool or BMS must keep its ReadPropertyMultiple requests small enough to fit one MS/TP frame &mdash; BACManager reads in chunks of ten objects. If the trunk misbehaves, see the <a href="/bacnet-mstp-rs485.html" style="color:var(--amber-ink)">MS/TP troubleshooting guide</a>.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="points">
+  <div class="sec-label">// points list</div>
+  <h2 class="sec-title">The VCCX2 points a BMS uses</h2>
+  <p class="sec-sub">AAON's rule is short: AI objects are read-only, AV objects are read/write. Three AIs carry numbers that stand for states &mdash; Control Mode, Control Status and HVAC Mode &mdash; so map them to text in the BMS. Names below are the guide's parameter names.</p>
+  <table class="compare-table">
+    <thead><tr><th>Object</th><th>Parameter</th><th>Access</th><th class="hl">What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">AI:2</td><td>Control Mode</td><td>R</td><td class="hl">Configured application: 0 Supply Air Cooling Only, 1 Supply Air Tempering, 2 Outdoor Temperature Control, 3 Return Air CV, 4 Space Temp CV, 5 Space Temp w/ High OA, 6 Single Zone VAV</td></tr>
+      <tr><td class="mono">AI:3</td><td>Control Status</td><td>R</td><td class="hl">0 Unoccupied, 1 Occupied, 2 Override, 3/4 Holiday Unocc/Occ, 5 Forced Occupied, 6 Forced Unoccupied, 7 Remote Contact Occupied, 11 OA Damper Calibration</td></tr>
+      <tr><td class="mono">AI:4</td><td>HVAC Mode</td><td>R</td><td class="hl">0 Off, 1 Vent, 2 Cooling, 3 Heating, 4&ndash;6 Vent/Cooling/Heating RH, 7 Warm Up, 8 Purge, 9 Defrost, 10 Cool Down</td></tr>
+      <tr><td class="mono">AI:5</td><td>Control Temperature</td><td>R</td><td class="hl">The temperature the unit controls to (space, return or outdoor, by Control Mode)</td></tr>
+      <tr><td class="mono">AI:6 / AI:7</td><td>Mode Cooling / Heating Setpoint</td><td>R</td><td class="hl">Cooling and heating enable setpoints in force, after slide adjust and night setback</td></tr>
+      <tr><td class="mono">AI:9 / AI:10</td><td>Supply Air Temperature / Supply Air Setpoint</td><td>R</td><td class="hl">Supply air, and the supply air setpoint in force (after reset)</td></tr>
+      <tr><td class="mono">AI:12, AI:14, AI:16</td><td>Space / Return Air / Outdoor Air Temperature</td><td>R</td><td class="hl">Sensors</td></tr>
+      <tr><td class="mono">AI:21 / AI:22</td><td>Duct Static Pressure / Duct Static Control Signal</td><td>R</td><td class="hl">Duct static, and the signal to the supply fan VFD</td></tr>
+      <tr><td class="mono">AI:29</td><td>Carbon Dioxide</td><td>R</td><td class="hl">Indoor CO<sub>2</sub></td></tr>
+      <tr><td class="mono">AI:30</td><td>Desired Economizer Position</td><td>R</td><td class="hl">Signal to the economizer damper</td></tr>
+      <tr><td class="mono">AI:144</td><td>Alarm Status</td><td>R</td><td class="hl">0 no alarms, 1 alarm(s) present &mdash; the BIs say which</td></tr>
+      <tr><td class="mono">AV:1 / AV:2</td><td>Occupied Cooling / Heating Setpoint</td><td>W</td><td class="hl">Mode enable setpoints</td></tr>
+      <tr><td class="mono">AV:10 / AV:11</td><td>Supply Air Cooling / Heating Setpoint</td><td>W</td><td class="hl">Supply air setpoints</td></tr>
+      <tr><td class="mono">AV:49</td><td>Minimum Economizer Position</td><td>W</td><td class="hl">Minimum outdoor air &mdash; the safe way to set the damper (see below)</td></tr>
+      <tr><td class="mono">AV:67</td><td>Schedule Force</td><td>W</td><td class="hl">0 Auto (own schedule), 1 Forced Occupied, 2 Forced Unoccupied</td></tr>
+      <tr><td class="mono">AV:68</td><td>HVAC Mode Override</td><td>W</td><td class="hl">0 Auto, 1 Vent, 2 Cool, 3 Heat, 4&ndash;6 Vent/Cool/Heat Dehum</td></tr>
+      <tr><td class="mono">AV:69 / AV:70</td><td>Fan VFD Override / Outdoor Air Damper Override</td><td>W</td><td class="hl">0&ndash;100 %; <strong>65535 = Auto</strong> releases the override</td></tr>
+      <tr><td class="mono">AV:71</td><td>Supply Setpoint Override</td><td>W</td><td class="hl">Supply air setpoint override, 0 = no override</td></tr>
+      <tr><td class="mono">AV:72, AV:78</td><td>Space / Outdoor Air Temperature Value</td><td>W</td><td class="hl">Sensor values from the BMS &mdash; only if the controller is configured to take them (also AV:73, 76&ndash;79)</td></tr>
+      <tr><td class="mono">AV:98</td><td>Emergency Compressor Lockout</td><td>W</td><td class="hl">1 locks out the compressors</td></tr>
+      <tr><td class="mono">BI:1 / BI:3</td><td>Cooling / Economizer Enabled Status</td><td>R</td><td class="hl">Cooling allowed by its lockout; economizer enabled by its setpoint</td></tr>
+      <tr><td class="mono">BI:6 / BI:47</td><td>Fan Proof of Airflow Status / On Board Relay 1 Main Fan</td><td>R</td><td class="hl">Airflow proven; supply fan relay</td></tr>
+      <tr><td class="mono">BI:24, BI:25, BI:26</td><td>Fan Proving / Dirty Filter / Emergency Shutdown Alarm</td><td>R</td><td class="hl">Alarms (BI:12&ndash;35 cover sensors, cooling, heating and economizer faults)</td></tr>
+      <tr><td class="mono">BI:77, BI:78</td><td>A1 / A2 Compressor Enable</td><td>R</td><td class="hl">Compressor outputs; BI:79/80 their alarms</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">The complete list &mdash; per-compressor suction and head pressure, superheat and EEV position, airflows, Title 24 economizer faults, preheat and the RSMZ modules &mdash; is Appendix C of AAON's <strong>VCCX2 Controller Technical Guide</strong>.</p>
+  <figure style="margin:1.8rem auto 0;max-width:1130px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="aaon-vccx2-bacnet-objects.png" width="1130" height="700" alt="BACManager BACnet tab: device VCCX2 RTU-3, device ID 1001, with its objects listed by name, Control Mode, Control Status, HVAC Mode, Supply Air Temperature, Space Temperature and more, polled every second" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Discover, click the unit, and its objects come up by name with live values. Pictured: a simulated VCCX2 built from AAON's points list</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// writing to the unit</div>
+  <h2 class="sec-title">Last write wins, and Auto is 65535</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">=</div><h3>No priority array</h3><p>The VCCX2's AVs are plain read/write values: a write replaces the value, whatever priority it was sent at, and stays after the BMS is gone. Two systems writing the same AV simply overwrite each other.</p></div>
+    <div class="feat"><div class="feat-icon">&#8634;</div><h3>Release overrides with Auto</h3><p>An override stays until you write Auto back: <strong>65535</strong> for the fan VFD, the OA damper and the relief fan, <strong>0</strong> for Schedule Force, HVAC Mode Override and the supply setpoint override.</p></div>
+    <div class="feat"><div class="feat-icon">&#10052;</div><h3>The damper trap</h3><p>Writing anything <em>between</em> 0 and 100&nbsp;% to the OA Damper Override (AV:70) makes the controller treat the economizer as running short of 100&nbsp;% &mdash; and it locks the compressors out. Set a minimum with <span class="mono">Minimum Economizer Position</span> (AV:49) instead.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="workspace">
+  <div class="sec-label">// free download</div>
+  <h2 class="sec-title">The VCCX2 rooftop workspace</h2>
+  <p class="sec-sub">One dashboard page for the unit: outdoor, supply and space temperature, economizer, filter, DX coil, supply fan, two compressors, duct static, CO<sub>2</sub>, control status and HVAC mode shown by name, cooling lockout and alarm status &mdash; with the occupied cooling and supply air setpoints, schedule force, HVAC mode override, minimum economizer position and compressor lockout writable.</p>
+  <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="aaon-vccx2-dashboard.png" width="1300" height="770" alt="BACManager dashboard for an AAON rooftop unit with a VCCX2 controller: air path from outdoor air through economizer, filter, DX coil and supply fan, compressors A1 and A2, duct static pressure, space temperature, control status and HVAC mode by name, BACnet commands and a trend of space, supply air and its setpoint" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">The supply air cooling setpoint written from the page; the unit stages compressors A1 and A2 to follow (simulated controller)</figcaption>
+  </figure>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">1</div><h3>Discover the unit</h3><p>Connect the PC's RS-485 adapter to the BACnet trunk, open MS/TP on the BACnet tab at the trunk's baud rate and press Discover &mdash; or reach it through a BACnet router over IP.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Open the workspace</h3><p>Workspace &rarr; Open. The file reads device 1001; with your unit's device ID different, BACManager asks which discovered device takes its place and moves every point over.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Run</h3><p>BACManager starts reading the unit by itself. On the Dashboard press Run: the controls write only in Run mode, and only after the unit has answered.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:1.6rem">
+    <a href="/AAON_VCCX2_RTU_BACnet.json" download class="btn-primary">Download workspace</a>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// when it does not work</div>
+  <h2 class="sec-title">Typical problems</h2>
+  <table class="compare-table">
+    <thead><tr><th>What you see</th><th>Why</th><th class="hl">What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Compressors never start, cooling called</td><td>An OA damper override between 0 and 100&nbsp;%, or Emergency Compressor Lockout = 1</td><td class="hl">Write 65535 to AV:70 (use AV:49 for a minimum); write 0 to AV:98</td></tr>
+      <tr><td>Unit stuck in one mode or occupancy</td><td>An override left in place by a BMS that is gone</td><td class="hl">Write Auto: 0 to AV:67, AV:68 and AV:71, 65535 to AV:69 and AV:70</td></tr>
+      <tr><td>A written space temperature has no effect</td><td>The controller is not configured to take that sensor value from the network</td><td class="hl">Configure it at the unit; only AV:72, 73 and 76&ndash;79 accept sensor values</td></tr>
+      <tr><td>New unit not found, another one drops off</td><td>MAC address left at 1 on more than one unit</td><td class="hl">Give each unit its own MAC on the LCD</td></tr>
+      <tr><td>Nothing answers at all</td><td>Wired to the AAON comm loop, not the BACnet port</td><td class="hl">Move the BMS pair to the BACnet MS/TP terminals</td></tr>
+      <tr><td>Reads fail with an abort, single reads work</td><td>A request too large for one frame &mdash; the VCCX2 cannot segment</td><td class="hl">Fewer objects per ReadPropertyMultiple</td></tr>
+      <tr><td>HVAC mode shows 2</td><td>The VCCX2 reports its states as numbers on AIs</td><td class="hl">Map them to text in the BMS (2 = Cooling)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">AAON VCCX2 BACnet &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Where is the AAON BACnet points list?<span class="icon">+</span></div>
+      <div class="faq-a">For units with the VCCX2 controller it is Appendix C, BACnet Guide, of AAON's VCCX2 Controller Technical Guide on aaon.com. The table on this page lists the points a BMS uses most.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Do I need an AAON BACnet card?<span class="icon">+</span></div>
+      <div class="faq-a">No. The VCCX2 has an on-board BACnet MS/TP port. For BACnet/IP, AAON's VCCX-IP controller has an Ethernet port, or the MS/TP trunk can go through a BACnet router.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What are the VCCX2's default BACnet settings?<span class="icon">+</span></div>
+      <div class="faq-a">MAC address 1 and 38400 baud. The device ID is entered on the LCD; AAON's guide gives no default, so set one per unit.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why are the HVAC mode and occupancy analog inputs?<span class="icon">+</span></div>
+      <div class="faq-a">That is how the VCCX2 reports them: AI:4 HVAC Mode, AI:3 Control Status and AI:2 Control Mode carry a number for each state, listed in the guide's enumeration tables (for example HVAC Mode 2 = Cooling).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I release a VCCX2 override from BACnet?<span class="icon">+</span></div>
+      <div class="faq-a">Write Auto: 65535 to the fan VFD, OA damper and relief fan overrides, 0 to Schedule Force, HVAC Mode Override and the supply setpoint override.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does the VCCX2 support COV?<span class="icon">+</span></div>
+      <div class="faq-a">Not according to its published PICS (software 1.90 and earlier), which lists ReadProperty, ReadPropertyMultiple, WriteProperty and device management only, and no segmentation No. Its PICS lists ReadProperty, ReadPropertyMultiple, WriteProperty and device management only, and no segmentation, so a BMS polls it in small requests.mdash; so a BMS polls it in small requests.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// sources</div>
+  <h2 class="sec-title">Where this comes from</h2>
+  <p style="max-width:820px;margin:0 auto;color:var(--body);line-height:1.75">AAON: <em>VCCX2 Controller Technical Guide</em>, G115820 Rev. AA (January 2025), with Appendix C <em>BACnet Guide</em> and the PICS, on <a href="https://www.aaon.com/" rel="nofollow noopener" style="color:var(--amber-ink)">aaon.com</a>; BACnet International's BTL listings for the VCCX2. Check the guide for your controller's software version before commissioning. AAON and VCCX2 are trademarks of AAON, Inc.; BACManager is not affiliated with AAON. The pictures on this page are from BACManager connected to a simulated controller built from the published points list.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// more device guides</div>
+  <h2 class="sec-title">Other BACnet devices</h2>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem 2rem">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Chillers and rooftop units</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Daikin MicroTech III chiller</a></div>
+      <div style="margin:0.25rem 0"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Trane Symbio 700</a></div>
+      <div style="margin:0.25rem 0"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Lennox CORE</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Boilers</div>
+      <div style="margin:0.25rem 0"><a href="/lochinvar-crest-bacnet.html" style="color:var(--amber-ink)">Lochinvar Crest boiler</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">VRF and split systems</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-itm-bacnet.html" style="color:var(--amber-ink)">Daikin iTM (VRV)</a></div>
+      <div style="margin:0.25rem 0"><a href="/mitsubishi-ae200-bacnet.html" style="color:var(--amber-ink)">Mitsubishi AE-200</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Drives</div>
+      <div style="margin:0.25rem 0"><a href="/abb-ach580-bacnet.html" style="color:var(--amber-ink)">ABB ACH580</a></div>
+      <div style="margin:0.25rem 0"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Schneider ATV600</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Pumps and valves</div>
+      <div style="margin:0.25rem 0"><a href="/grundfos-cim-bacnet.html" style="color:var(--amber-ink)">Grundfos MAGNA3 (CIM)</a></div>
+      <div style="margin:0.25rem 0"><a href="/wilo-cif-bacnet.html" style="color:var(--amber-ink)">Wilo Stratos MAXO (CIF)</a></div>
+      <div style="margin:0.25rem 0"><a href="/belimo-energy-valve-bacnet.html" style="color:var(--amber-ink)">Belimo Energy Valve</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Routers</div>
+      <div style="margin:0.25rem 0"><a href="/basrouter-bacnet-router.html" style="color:var(--amber-ink)">BASrouter (MS/TP to IP)</a></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:1.4rem"><a href="/bacnet-devices.html" style="color:var(--amber-ink)">All BACnet device guides &rarr;</a></p>
+</section>
+
+<div class="cta-strip">
+  <h2>Commission the AAON unit from your laptop</h2>
+  <p>Download the free trial, discover the unit and open the VCCX2 workspace &mdash; every point by name, states shown as text. No credit card.</p>
+  <div class="ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+    <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    <a href="/bacnet-priority-array.html">Priority Array</a>
+    <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/manual.html">Manual</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://.
+   Each click is also counted in our own Google Sheet (Apps Script), cookie
+   consent or not: site, product, version, page, referrer, language, time
+   zone. No cookies, no IP address. The download never waits for it.
+   A workspace (.json or .zip on this site) is counted as product "Workspace" with
+   the file name as its version, a manual (.pdf) as product "Manual"; both
+   download as before. */
+function dlCount(product, version) {
+  try {
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbyx9RacY_l5KDK0RBBmLk41uKv3McyR_UJmCTWqnRqklh6fYgeXvYecddcQDGzRx5-F/exec', JSON.stringify({
+      site: location.hostname, product: product, version: version,
+      page: location.pathname, referrer: document.referrer, lang: navigator.language,
+      tz: (window.Intl && Intl.DateTimeFormat().resolvedOptions().timeZone) || ''
+    }));
+  } catch (err) {}
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var w = e.target.closest('a[href$=".json"], a[href$=".zip"]');
+  if (w) { dlCount('Workspace', (w.getAttribute('href').match(/([^\/]+)\.(?:json|zip)$/) || [])[1] || ''); return; }
+  var m = e.target.closest('a[href$=".pdf"]');
+  if (m) { dlCount('Manual', (m.getAttribute('href').match(/([^\/]+)\.pdf$/) || [])[1] || ''); return; }
+  var a = e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  var dl = a.getAttribute('data-dl');
+  dlCount(/bacmanager/i.test(dl) ? 'BACManager' : (/Pro\.Setup|pro-v/i.test(dl) ? 'ModbusManager Pro' : 'ModbusManager Standard'),
+    (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
+  window.location.href = 'https://' + dl;
+});
+</script>
+</body>
+</html>

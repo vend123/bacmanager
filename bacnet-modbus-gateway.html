@@ -166,6 +166,7 @@ footer a:hover{color:#fff}
     <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
     <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
     <li><a href="/bacnet-modbus-gateway.html" style="color:#9A6700;font-weight:600">Gateway</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
     <li><a href="/#pricing">Pricing</a></li>
     <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
   </ul>
@@ -181,7 +182,7 @@ footer a:hover{color:#fff}
   <h1>A software gateway,<br><span class="accent">both directions</span></h1>
   <p class="hero-desc">Most protocol-converter boxes on the market do exactly one thing: bridge BACnet and Modbus, in one fixed direction, for one price per unit. BACManager's Gateway does both directions from a single Windows PC &mdash; read a BACnet controller into a Modbus map a PLC can poll, or read Modbus meters and drives into a real BACnet/IP device a BMS can discover. The same rows can also go <strong>BACnet to MQTT</strong> &mdash; Home Assistant finds them by itself &mdash; or into a Siemens S7 data block. No protocol-converter appliance to buy, mount and wire.</p>
   <div class="hero-ctas">
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
     <a href="/#pricing" class="btn-ghost">See pricing</a>
   </div>
   <p class="hero-note">Windows 10/11 &middot; runs in the background &middot; 14-day trial</p>
@@ -226,7 +227,7 @@ footer a:hover{color:#fff}
     <div class="feat"><div class="feat-icon">&#128268;</div><h3>No appliance to mount</h3><p>Runs on a Windows PC you already have on site — no DIN-rail converter, no separate power supply, no extra IP address to firewall.</p></div>
     <div class="feat"><div class="feat-icon">&#128274;</div><h3>Priority-aware writes</h3><p>A write forwarded into a BACnet device uses the real 16-level priority array (default priority 8, Manual Operator) — not a blind overwrite that fights schedules and controllers.</p></div>
     <div class="feat"><div class="feat-icon">&#128266;</div><h3>Runs unattended</h3><p>Minimizes to the system tray and can auto-start with Windows — it behaves like a background service, not an app someone has to remember to reopen.</p></div>
-    <div class="feat"><div class="feat-icon">&#128225;</div><h3>BACnet to MQTT</h3><p>Rows with MQTT as destination are published to any broker &mdash; Mosquitto, Home Assistant, Node-RED &mdash; with TLS, user and password and an online/offline status topic. Home Assistant discovery turns each row into an entity with its unit, no YAML.</p></div>
+    <div class="feat"><div class="feat-icon">&#128225;</div><h3>BACnet to MQTT</h3><p>Rows with MQTT as destination are published to any broker &mdash; Mosquitto, Home Assistant, Node-RED &mdash; with TLS, user and password and an online/offline status topic. Home Assistant discovery turns each row into an entity with its unit, no YAML. <a href="/bacnet-to-mqtt-home-assistant.html" style="color:var(--amber-ink)">BACnet to MQTT guide &rarr;</a></p></div>
     <div class="feat"><div class="feat-icon">&#128208;</div><h3>Type and scale conversion</h3><p>Each row has its own source and destination data type, scale and offset, applied on the way in and reversed on the way back &mdash; a meter's 123 reaches the BMS as 12.3, a BMS setpoint reaches the meter as 123.</p></div>
     <div class="feat"><div class="feat-icon">&#128203;</div><h3>CSV import and export</h3><p>Build hundreds of rows in a spreadsheet, BACnet endpoints included, and import them; export a working gateway to reuse on the next site. The whole gateway also travels inside a saved workspace.</p></div>
   </div>
@@ -277,7 +278,7 @@ footer a:hover{color:#fff}
   <h2>Try it against your own site</h2>
   <p>Download the free trial and bridge a real BACnet device or Modbus meter &mdash; no credit card, no cloud.</p>
   <div class="ctas">
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
     <a href="/#pricing" class="btn-cta-outline">See pricing</a>
   </div>
   <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
@@ -291,6 +292,8 @@ footer a:hover{color:#fff}
     <a href="/bacnet-schedule-editor.html">Schedule</a>
     <a href="/bacnet-mstp-rs485.html">MS/TP</a>
     <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
     <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
     <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
     <a href="/bacnet-priority-array.html">Priority Array</a>

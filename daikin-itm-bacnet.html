@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daikin iTM BACnet Points List &amp; Setup (DCM014A51)</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="Daikin iTM BACnet Server Gateway: activation, the CSV, device instances 53PGGG, network 100, Occupancy Mode as on/off, EEPROM limits. Free workspace.">
+<meta name="keywords" content="Daikin iTM BACnet points list, Daikin iTM BACnet, DCM014A51, iTM BACnet server gateway, Daikin VRV BACnet, Daikin intelligent touch manager BACnet, iTM BACnet setup, Daikin VRV BACnet points list, iTM BACnet device instance, Daikin iTM BACnet CSV">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/daikin-itm-bacnet.html">
+<meta property="og:title" content="Daikin iTM BACnet Points List &amp; Setup (DCM014A51)">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="Bring Daikin VRV indoor units onto a BMS through the iTM BACnet Server Gateway DCM014A51: the activation key, the configuration CSV, empty device instances and Daikin's 53PGGG numbers, the virtual router on network 100, Occupancy Mode as the on/off switch and the EEPROM write limit. Points list and a free BACManager workspace.">
+<meta property="og:url" content="https://bacmanager.com/daikin-itm-bacnet.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bacmanager.com/og-daikin-itm.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Daikin iTM BACnet Points List &amp; Setup (DCM014A51)">
+<meta name="twitter:description" content="Bring Daikin VRV indoor units onto a BMS through the iTM BACnet Server Gateway DCM014A51: the activation key, the configuration CSV, empty device instances and Daikin's 53PGGG numbers, the virtual router on network 100, Occupancy Mode as the on/off switch and the EEPROM write limit. Points list and a free BACManager workspace.">
+<meta name="twitter:image" content="https://bacmanager.com/og-daikin-itm.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Daikin iTM BACnet Server Gateway Points List and Setup",
+    "description": "Bring Daikin VRV indoor units onto a BMS through the iTM BACnet Server Gateway DCM014A51: the activation key, the configuration CSV, empty device instances and Daikin's 53PGGG numbers, the virtual router on network 100, Occupancy Mode as the on/off switch and the EEPROM write limit. Points list and a free BACManager workspace.",
+    "url": "https://bacmanager.com/daikin-itm-bacnet.html",
+    "image": "https://bacmanager.com/og-daikin-itm.png",
+    "datePublished": "2026-10-28",
+    "dateModified": "2026-10-28",
+    "author": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where is the Daikin iTM BACnet points list?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In Daikin's intelligent Touch Manager DCM014A51 Design Guide, which lists every indoor unit, outdoor unit and System Control object. The table on this page lists the points a BMS uses per indoor unit."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I enable BACnet on the Daikin iTM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Activate the BACnet Server Gateway option DCM014A51 with its key in the iTM's Service Settings, export the configuration CSV to a USB stick, fill in the device instances and the points, and import it again; the iTM reboots."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What device instance does a Daikin iTM indoor unit have?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "None from the factory: Device_Instance is empty in the CSV. Daikin recommends 53PGGG — 53 for Daikin, the DIII port and the group address — so group 1-00 on the iTM's own port is 531100, and 530000 for the System Control device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why can my BMS see the iTM indoor units but not read them?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The iTM is a BACnet router: each indoor unit is a virtual device on network 100 by default. A client must address it by that network number and the device's MAC, not by the iTM's IP alone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I turn a Daikin indoor unit on and off over BACnet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "With Occupancy Mode, multi-state output 1 on the indoor unit's device: 2 Occ turns it on, 1 Unocc off, 3 Standby on with the set point shifted by 2 &deg;C."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How often may a BMS write to a Daikin indoor unit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Daikin asks to keep changes to 70,000&ndash;80,000 a year, fewer than 200 a day for each item, because the indoor unit stores each setting in EEPROM. Resending the same value is not counted as a change."
+        }
+      }
+    ]
+  }
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.pa-table{width:100%;border-collapse:collapse;font-size:0.86rem;max-width:640px;margin:0 auto}
+.pa-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.9rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.pa-table td{padding:0.5rem 0.9rem;border-bottom:1px solid var(--steel);font-family:'IBM Plex Mono',monospace;font-size:0.82rem}
+.pa-table tr.hl td{background:rgba(242,169,0,0.12);font-weight:600}
+.pa-table tr:last-child td{border-bottom:none}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+
+/* family slogan band, slim (2026-10-22) */
+.slogan-band.slim{background:var(--safety,#F2A900);border-bottom:2px solid var(--ink,#16181A);padding:0.5rem 1rem;text-align:center;color:var(--ink,#16181A);display:flex;gap:0.3rem 1rem;justify-content:center;align-items:baseline;flex-wrap:wrap}
+.slogan-band.slim .sb-main{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.3rem;line-height:1.1;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim .sb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim a{color:var(--ink,#16181A);font-weight:700}
+@media(max-width:768px){.slogan-band.slim .sb-main{font-size:1.05rem}.slogan-band.slim .sb-sub{display:none}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Daikin iTM BACnet","item": "https://bacmanager.com/daikin-itm-bacnet.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-bbmd-foreign-device.html">BBMD</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+<div class="slogan-band slim">
+  <span class="sb-main">Every device. One tool. Pay once.</span>
+  <span class="sb-sub">Modbus &middot; BACnet &middot; Siemens S7 &middot; one-time licence &middot; also from us: <a href="https://modbusmanager.com">ModbusManager&nbsp;&#8599;</a></span>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">// daikin &middot; intelligent touch manager &middot; dcm014a51</div>
+  <h1>Daikin iTM<br><span class="accent">BACnet Points List &amp; Setup</span></h1>
+  <p class="hero-desc">How to bring Daikin VRV indoor units onto a BMS through the iTM BACnet Server Gateway: an activation key, a CSV file on a USB stick, device instances that are empty until you fill them &mdash; and a virtual router that puts every indoor unit on a BACnet network of its own, which a BMS has to reach by network number. With a free BACManager workspace.</p>
+  <div class="hero-ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#workspace" class="btn-ghost">Free iTM workspace</a>
+  </div>
+  <p class="hero-note">Sources: Daikin &ldquo;intelligent Touch Manager (iTM) DCM014A51 Design Guide&rdquo; DG_DCM014A51_02-19 and Daikin's BACnet Gateways Overview</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// before you start</div>
+  <h2 class="sec-title">An option on the iTM, not a box</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128273;</div><h3>Activate DCM014A51</h3><p>The BACnet Server Gateway is a licensed option of the iTM (DCM601A71). In the iTM's Service Settings open Activation, press Add and enter the activation key; the BACnet Server/Gateway button appears only after that.</p></div>
+    <div class="feat"><div class="feat-icon">&#127760;</div><h3>BACnet/IP, one port</h3><p>BACnet/IP only, on the iTM's Ethernet port, which it shares with web access. Factory IP 192.168.0.1/24, UDP port 47808. On another subnet than the BMS, register the iTM as a foreign device with a BBMD. Up to 128 indoor-unit groups and outdoor units, or up to 4000 points.</p></div>
+    <div class="feat"><div class="feat-icon">&#128203;</div><h3>What the iTM serves</h3><p>Per Daikin's PICS: protocol revision 4, ReadProperty(Multiple), WriteProperty(Multiple), COV, time synchronisation, router configuration; Max APDU 1024, segmentation both ways, vendor ID 53. No schedule, trend or alarm objects. Daikin's overview lists it as not BTL certified.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the router inside</div>
+  <h2 class="sec-title">Every indoor unit is a device on network 100</h2>
+  <p class="sec-sub">The iTM is a BACnet router. Each indoor-unit management point is a <strong>virtual BACnet device</strong> on a virtual network behind the iTM's IP; the System Control settings are one more. A BMS reaches them by that network number and each device's MAC on it &mdash; not by IP alone.</p>
+  <table class="compare-table">
+    <thead><tr><th>Item</th><th>Factory</th><th class="hl">Daikin's recommendation</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">BACnet network number</td><td>100</td><td class="hl">Unique on the site's BACnet network, 1&ndash;65534</td></tr>
+      <tr><td class="mono">System Control device</td><td><strong>empty</strong></td><td class="hl">530000 (53 = Daikin's vendor ID)</td></tr>
+      <tr><td class="mono">Indoor unit device</td><td><strong>empty</strong></td><td class="hl">53PGGG: P = DIII port (1 iTM, 2&ndash;8 iTM Plus Adaptor), GGG = group address. 1-00 on port 1 = <strong>531100</strong></td></tr>
+      <tr><td class="mono">Outdoor unit device</td><td><strong>empty</strong></td><td class="hl">53PN: port and outdoor unit number. CU-1 on port 1 = 5311</td></tr>
+      <tr><td class="mono">Virtual MAC</td><td>&mdash;</td><td class="hl">The device instance in 4 bytes and two zero bytes: 531100 = 00:08:1A:9C:00:00</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">A client that keeps only the IP finds the indoor units on Who-Is, but every read goes to the iTM itself and is never answered by the unit. BACManager reaches devices behind a router from version 1.4.6: the device list shows them as <span class="mono">192.168.0.1 &middot; net 100</span>, and every request carries the network and the device's MAC. Tested against a simulated iTM with System Control and three indoor units: each answered with its own name, values and writes, and no request went out without its network.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// setup</div>
+  <h2 class="sec-title">The CSV file does the configuration</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">1</div><h3>Set up the iTM first</h3><p>Before exporting, have every indoor unit recognised and named, unoccupied set points and set point limits enabled, and auto-changeover configured in the iTM. Then Service Settings &rarr; BACnet Server/Gateway &rarr; Export Configuration Data to a USB stick.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Fill in the instances</h3><p>The CSV has COMMONSETTING (port, network, BBMD) and PNTSETTING, one row per indoor unit. <strong>Device_Instance is empty from the factory</strong> &mdash; give every unit and the System Control device a unique number; duplicates are refused on import. Leave the name, address and ID columns the iTM fills in alone.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Tick the points, import</h3><p>Each point is 1 (enabled) or 0. Import Configuration Data from the stick, keeping the file name; &ldquo;No error&rdquo; means it was read, not that it is right. Close, and the iTM reboots. Keep the CSV for the handover.</p></div>
+  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Enabled from the factory are members 1&ndash;13 (occupancy, status, alarm, mode, room temperature and the set points) and the three remote-controller prohibits, 20&ndash;22. <strong>Off</strong> are fan speed, airflow direction, filter sign, communication status, thermo-on, compressor status and the rest &mdash; tick them in the CSV if the BMS needs them. If a BMS cannot discover the points, Daikin's answer is to enter them by hand from the design guide.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the rules that bite</div>
+  <h2 class="sec-title">On/off is Occupancy Mode, and the unit remembers</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#9211;</div><h3>Occupancy Mode is the switch</h3><p>There is no separate on/off output. Occupancy Mode (MO1): Occ sends On, Unocc sends Off and allows the timer extension, Standby sends On and shifts the set point by 2&nbsp;&deg;C (up in cool, down in heat) without showing it. It reads Unocc after the iTM starts, and its relinquish default is Unocc.</p></div>
+    <div class="feat"><div class="feat-icon">&#128190;</div><h3>EEPROM: under 200 a day</h3><p>Every change is sent to the indoor unit, which stores it in EEPROM. Daikin asks for 70,000&ndash;80,000 changes a year at most, as a rule of thumb fewer than 200 a day per item. Resending the same value does not count &mdash; but Occupancy Mode sends its command again on every write.</p></div>
+    <div class="feat"><div class="feat-icon">&#8634;</div><h3>A refused write reverts</h3><p>The iTM takes a written value at once and waits for the indoor unit. If the unit does not take it &mdash; a set point beyond the limits, a mode change on a unit that is not the changeover master &mdash; the value goes back after 10 minutes. Set points outside 16&ndash;32&nbsp;&deg;C are corrected to the limit.</p></div>
+  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">So write on change, not cyclically: the free workspace has no Refresh on any point. Unit On_Off Status stays On while the unit is in error &mdash; watch Alarm Status, whose Description carries the error code (&ldquo;00&rdquo; when normal). COV on temperatures fires only at 1&nbsp;&deg;C steps, so poll them. The indoor unit has no priority of its own: the last change wins, from the BMS, the iTM screen or the remote controller.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="points">
+  <div class="sec-label">// points list</div>
+  <h2 class="sec-title">The iTM points a BMS uses, per indoor unit</h2>
+  <p class="sec-sub">On each indoor-unit device, the object instance is Daikin's member number. Temperatures follow the iTM's locale, &deg;C or &deg;F.</p>
+  <table class="compare-table">
+    <thead><tr><th>Object</th><th>Object name</th><th class="hl">Values</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">MO1</td><td class="mono">Occupancy Mode</td><td class="hl">1 Unocc (off), 2 Occ (on), 3 Standby (on, +/&minus;2 &deg;C)</td></tr>
+      <tr><td class="mono">BI2 / BI3</td><td class="mono">Unit On_Off Status / Alarm Status</td><td class="hl">Off/On; Normal/Alarm, error code in Description</td></tr>
+      <tr><td class="mono">MV4</td><td class="mono">Operation Mode</td><td class="hl">1 Cool, 2 Heat, 3 Fan, 4 Dry</td></tr>
+      <tr><td class="mono">AI5</td><td class="mono">Room Temperature</td><td class="hl">One decimal; 0.0 if the unit has no sensor</td></tr>
+      <tr><td class="mono">AV6 / AV7</td><td class="mono">Occ Cooling / Heating Setpoint</td><td class="hl">16&ndash;32 &deg;C, relinquish default 22.2 &deg;C</td></tr>
+      <tr><td class="mono">AV8 / AV9</td><td class="mono">Unocc Cooling / Heating Setpoint</td><td class="hl">Setback set points</td></tr>
+      <tr><td class="mono">AV10&ndash;13</td><td class="mono">Max/Min Cooling, Max/Min Heating Setpoint</td><td class="hl">The range a remote controller may adjust</td></tr>
+      <tr><td class="mono">MV16</td><td class="mono">Fan Speed</td><td class="hl">1 Low, 3 Medium, 5 High, 8 Auto (2-speed units: 1 and 5)</td></tr>
+      <tr><td class="mono">MV17</td><td class="mono">Airflow Direction</td><td class="hl">P0&ndash;P4, P7</td></tr>
+      <tr><td class="mono">MV20 / BV21 / BV22</td><td class="mono">Remote Controller Prohibit (On_Off / Operation Mode / Setpoint)</td><td class="hl">Permit, Prohibit (On_Off also Stop Only)</td></tr>
+      <tr><td class="mono">BI23 / BV24</td><td class="mono">Filter Sign Status / Filter Sign Reset</td><td class="hl">Filter due; reset it</td></tr>
+      <tr><td class="mono">BI26 / BI27</td><td class="mono">Communication Status / Thermo-on Status</td><td class="hl">Normal/Alarm; the unit is heating or cooling</td></tr>
+      <tr><td class="mono">AI32&ndash;36</td><td class="mono">Return Air, Discharge Air, Liquid Pipe, Gas Pipe Temperature, EV Position</td><td class="hl">Service values</td></tr>
+      <tr><td class="mono">530000: BO1 / BO2 / MV3 / BO4</td><td class="mono">Enable iTM Schedule, Enable iTM Auto-Changeover, Timed Override Minutes, System Forced Off</td><td class="hl">On the System Control device</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Outdoor-unit devices bring operation mode, alarm, defrost, oil return, a calculated power and current, outdoor temperature and refrigerant data. System Forced Off stops every indoor unit, and remote controllers cannot restart them until it is released. The complete lists are in Daikin's <strong>DCM014A51 Design Guide</strong>.</p>
+  <figure style="margin:1.8rem auto 0;max-width:1130px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="daikin-itm-bacnet-objects.png" width="1130" height="700" alt="BACManager BACnet tab: four Daikin devices found at one IP, each marked net 100: System Control 530000 and indoor units Room 101, Room 102 and Room 103 as devices 531100, 531101 and 531102; Room 101's objects listed by name, Occupancy Mode, Unit On_Off Status, Alarm Status, Operation Mode, Room Temperature, Occ and Unocc set points, Fan Speed and the remote controller prohibits, polled every second" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Four devices behind one IP, each on network 100: click an indoor unit and its objects come up by name. Pictured: a simulated iTM built from Daikin's object list; device names as entered for this simulation</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="workspace">
+  <div class="sec-label">// free download</div>
+  <h2 class="sec-title">The iTM workspace</h2>
+  <p class="sec-sub">One dashboard page for three indoor units: on/off, alarm, room temperature, thermo-on, fan speed and mode for each, the occupied set points and Occupancy Mode to write, System Forced Off, and the room temperatures on one trend.</p>
+  <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="daikin-itm-dashboard.png" width="1300" height="770" alt="BACManager dashboard for three Daikin VRV indoor units behind an iTM: Room 101 switched from Unocc to Occ and now cooling, Room 102 and Room 103 on, room temperatures, occupied cooling and heating set points, fan speeds, System Forced Off inactive, and a trend of the three room temperatures" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Room 101's Occupancy Mode written from the page, Unocc &rarr; Occ (simulated iTM and rooms)</figcaption>
+  </figure>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">1</div><h3>Discover the iTM</h3><p>On the BACnet tab open BACnet/IP on the network card on the iTM's network and press Discover. Every indoor unit and the System Control device appear, all at the iTM's IP and marked with their network.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Open the workspace</h3><p>Workspace &rarr; Open. The file reads devices 530000 and 531100&ndash;531102, Daikin's recommended numbers for port 1, groups 1-00 to 1-02; if yours differ, BACManager asks which discovered device takes each one's place.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Run</h3><p>BACManager starts reading the units by itself. On the Dashboard press Run; Occupancy Mode, mode, fan speed and set points are written when you change them, and never repeated.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:1.6rem">
+    <a href="/Daikin_iTM_VRV_BACnet.json" download class="btn-primary">Download workspace</a>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// when it does not work</div>
+  <h2 class="sec-title">Typical problems</h2>
+  <table class="compare-table">
+    <thead><tr><th>What you see</th><th>Why</th><th class="hl">What to do</th></tr></thead>
+    <tbody>
+      <tr><td>No BACnet Server/Gateway button on the iTM</td><td>Option not activated</td><td class="hl">Service Settings &rarr; Activation &rarr; Add, enter the key</td></tr>
+      <tr><td>Import ends in &ldquo;Duplicate Device_Instance&rdquo;</td><td>Two rows, or a unit and System Control, share an instance</td><td class="hl">Give each a unique number; the error names row and column</td></tr>
+      <tr><td>Indoor units found, but no values</td><td>The client sends to the iTM's IP without the network number</td><td class="hl">A client that reads routed devices (BACManager 1.4.6 or later)</td></tr>
+      <tr><td>Unit switched on from the BMS, off again later</td><td>Occupancy Mode relinquished or the iTM restarted: Unocc</td><td class="hl">Keep a command in Occupancy Mode; write it after an iTM restart</td></tr>
+      <tr><td>A written value comes back after 10 minutes</td><td>The indoor unit did not take it</td><td class="hl">Check the set point limits, the changeover master, the mode</td></tr>
+      <tr><td>Unit reads On but does not run</td><td>It is in error; On_Off Status stays On</td><td class="hl">Read Alarm Status and its Description</td></tr>
+      <tr><td>Room temperature COV arrives rarely</td><td>COV_Increment is fixed at 1.0</td><td class="hl">Poll the temperature</td></tr>
+      <tr><td>A point the BMS needs does not exist</td><td>Disabled in the CSV (most are, beyond 1&ndash;13 and 20&ndash;22)</td><td class="hl">Enable it in PNTSETTING and import again</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">Daikin iTM BACnet &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Where is the Daikin iTM BACnet points list?<span class="icon">+</span></div>
+      <div class="faq-a">In Daikin's intelligent Touch Manager DCM014A51 Design Guide, which lists every indoor unit, outdoor unit and System Control object. The table on this page lists the points a BMS uses per indoor unit.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I enable BACnet on the Daikin iTM?<span class="icon">+</span></div>
+      <div class="faq-a">Activate the BACnet Server Gateway option DCM014A51 with its key in the iTM's Service Settings, export the configuration CSV to a USB stick, fill in the device instances and the points, and import it again; the iTM reboots.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What device instance does a Daikin iTM indoor unit have?<span class="icon">+</span></div>
+      <div class="faq-a">None from the factory: Device_Instance is empty in the CSV. Daikin recommends 53PGGG &mdash; 53 for Daikin, the DIII port and the group address &mdash; so group 1-00 on the iTM's own port is 531100, and 530000 for the System Control device.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why can my BMS see the iTM indoor units but not read them?<span class="icon">+</span></div>
+      <div class="faq-a">The iTM is a BACnet router: each indoor unit is a virtual device on network 100 by default. A client must address it by that network number and the device's MAC, not by the iTM's IP alone.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I turn a Daikin indoor unit on and off over BACnet?<span class="icon">+</span></div>
+      <div class="faq-a">With Occupancy Mode, multi-state output 1 on the indoor unit's device: 2 Occ turns it on, 1 Unocc off, 3 Standby on with the set point shifted by 2 &deg;C.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How often may a BMS write to a Daikin indoor unit?<span class="icon">+</span></div>
+      <div class="faq-a">Daikin asks to keep changes to 70,000&ndash;80,000 a year, fewer than 200 a day for each item, because the indoor unit stores each setting in EEPROM. Resending the same value is not counted as a change.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// sources</div>
+  <h2 class="sec-title">Where this comes from</h2>
+  <p style="max-width:820px;margin:0 auto;color:var(--body);line-height:1.75">Daikin: <em>intelligent Touch Manager (iTM) DCM014A51 Design Guide</em>, DG_DCM014A51_02-19, with its PICS for the iTM DCM601A71, and <em>BACnet Gateways Overview</em> (Daikin North America). Get them and the activation key through your Daikin representative or <a href="https://www.daikincomfort.com/" rel="nofollow noopener" style="color:var(--amber-ink)">daikincomfort.com</a>, and check them against your iTM's software before commissioning. Daikin, VRV and intelligent Touch Manager are trademarks of their owner; BACManager is not affiliated with Daikin. The pictures on this page are from BACManager connected to a simulated iTM built from the published object list.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// more device guides</div>
+  <h2 class="sec-title">Other BACnet devices</h2>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem 2rem">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Chillers and rooftop units</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Daikin MicroTech III chiller</a></div>
+      <div style="margin:0.25rem 0"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Trane Symbio 700</a></div>
+      <div style="margin:0.25rem 0"><a href="/aaon-vccx2-bacnet.html" style="color:var(--amber-ink)">AAON VCCX2</a></div>
+      <div style="margin:0.25rem 0"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Lennox CORE</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Boilers</div>
+      <div style="margin:0.25rem 0"><a href="/lochinvar-crest-bacnet.html" style="color:var(--amber-ink)">Lochinvar Crest boiler</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">VRF and split systems</div>
+      <div style="margin:0.25rem 0"><a href="/mitsubishi-ae200-bacnet.html" style="color:var(--amber-ink)">Mitsubishi AE-200</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Drives</div>
+      <div style="margin:0.25rem 0"><a href="/abb-ach580-bacnet.html" style="color:var(--amber-ink)">ABB ACH580</a></div>
+      <div style="margin:0.25rem 0"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Schneider ATV600</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Pumps and valves</div>
+      <div style="margin:0.25rem 0"><a href="/grundfos-cim-bacnet.html" style="color:var(--amber-ink)">Grundfos MAGNA3 (CIM)</a></div>
+      <div style="margin:0.25rem 0"><a href="/wilo-cif-bacnet.html" style="color:var(--amber-ink)">Wilo Stratos MAXO (CIF)</a></div>
+      <div style="margin:0.25rem 0"><a href="/belimo-energy-valve-bacnet.html" style="color:var(--amber-ink)">Belimo Energy Valve</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Routers</div>
+      <div style="margin:0.25rem 0"><a href="/basrouter-bacnet-router.html" style="color:var(--amber-ink)">BASrouter (MS/TP to IP)</a></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:1.4rem"><a href="/bacnet-devices.html" style="color:var(--amber-ink)">All BACnet device guides &rarr;</a></p>
+</section>
+
+<div class="cta-strip">
+  <h2>Commission the iTM from your laptop</h2>
+  <p>Download the free trial, discover the iTM's indoor units behind its virtual router and open the iTM workspace &mdash; every unit by name, on network 100. No credit card.</p>
+  <div class="ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+    <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    <a href="/bacnet-priority-array.html">Priority Array</a>
+    <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/manual.html">Manual</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://.
+   Each click is also counted in our own Google Sheet (Apps Script), cookie
+   consent or not: site, product, version, page, referrer, language, time
+   zone. No cookies, no IP address. The download never waits for it.
+   A workspace (.json or .zip on this site) is counted as product "Workspace" with
+   the file name as its version, a manual (.pdf) as product "Manual"; both
+   download as before. */
+function dlCount(product, version) {
+  try {
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbyx9RacY_l5KDK0RBBmLk41uKv3McyR_UJmCTWqnRqklh6fYgeXvYecddcQDGzRx5-F/exec', JSON.stringify({
+      site: location.hostname, product: product, version: version,
+      page: location.pathname, referrer: document.referrer, lang: navigator.language,
+      tz: (window.Intl && Intl.DateTimeFormat().resolvedOptions().timeZone) || ''
+    }));
+  } catch (err) {}
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var w = e.target.closest('a[href$=".json"], a[href$=".zip"]');
+  if (w) { dlCount('Workspace', (w.getAttribute('href').match(/([^\/]+)\.(?:json|zip)$/) || [])[1] || ''); return; }
+  var m = e.target.closest('a[href$=".pdf"]');
+  if (m) { dlCount('Manual', (m.getAttribute('href').match(/([^\/]+)\.pdf$/) || [])[1] || ''); return; }
+  var a = e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  var dl = a.getAttribute('data-dl');
+  dlCount(/bacmanager/i.test(dl) ? 'BACManager' : (/Pro\.Setup|pro-v/i.test(dl) ? 'ModbusManager Pro' : 'ModbusManager Standard'),
+    (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
+  window.location.href = 'https://' + dl;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wilo CIF BACnet Points List &amp; Setup (Stratos MAXO)</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="Wilo-Stratos MAXO on BACnet with a CIF-Module: MS/TP or IP, no ReadPropertyMultiple on MS/TP, values on change only, bus command timer. Free workspace.">
+<meta name="keywords" content="Wilo BACnet points list, Wilo CIF module BACnet, Stratos MAXO BACnet, Wilo Stratos MAXO BACnet points list, Wilo CIF BACnet MS/TP, Wilo BACnet IP, Stratos GIGA2.0 BACnet, Wilo bus command timer, Wilo EDE BACnet, Yonos GIGA2.0 BACnet">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/wilo-cif-bacnet.html">
+<meta property="og:title" content="Wilo CIF BACnet Points List &amp; Setup (Stratos MAXO)">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="Put a Wilo-Stratos MAXO, Stratos GIGA2.0 or Yonos GIGA2.0 on BACnet with a CIF-Module: MS/TP or BACnet/IP, an MS/TP module without ReadPropertyMultiple, a pump that takes a value only when it changes, and the bus command timer that wants SET again. Points list and a free BACManager workspace.">
+<meta property="og:url" content="https://bacmanager.com/wilo-cif-bacnet.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bacmanager.com/og-wilo-cif.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wilo CIF BACnet Points List &amp; Setup (Stratos MAXO)">
+<meta name="twitter:description" content="Put a Wilo-Stratos MAXO, Stratos GIGA2.0 or Yonos GIGA2.0 on BACnet with a CIF-Module: MS/TP or BACnet/IP, an MS/TP module without ReadPropertyMultiple, a pump that takes a value only when it changes, and the bus command timer that wants SET again. Points list and a free BACManager workspace.">
+<meta name="twitter:image" content="https://bacmanager.com/og-wilo-cif.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Wilo CIF-Module BACnet Points List and Setup for Stratos MAXO",
+    "description": "Put a Wilo-Stratos MAXO, Stratos GIGA2.0 or Yonos GIGA2.0 on BACnet with a CIF-Module: MS/TP or BACnet/IP, an MS/TP module without ReadPropertyMultiple, a pump that takes a value only when it changes, and the bus command timer that wants SET again. Points list and a free BACManager workspace.",
+    "url": "https://bacmanager.com/wilo-cif-bacnet.html",
+    "image": "https://bacmanager.com/og-wilo-cif.png",
+    "datePublished": "2026-10-28",
+    "dateModified": "2026-10-28",
+    "author": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where is the Wilo Stratos MAXO BACnet points list?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In Wilo's EDE lists for the CIF-Module BACnet, one per pump family, and in the functional description of the CIF-Module. The table on this page lists the points a BMS uses most."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which Wilo module do I need for BACnet/IP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The CIF-Module Ethernet Multiprotocol (2211408), which does BACnet/IP or Modbus TCP. For BACnet MS/TP it is the CIF-Module BACnet MS/TP (2190367)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why doesn't my Wilo pump take the BACnet setpoint?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Values are passed to the pump only when they change, and the last change from any source wins. Check also that the setpoint source (MO3) is IF-Module and the parameter set (MO34) is norm."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Wilo bus command timer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MO1 busCmd.TimerInp,Act. Written SET it locks the pump's local operation for the timeout in AO8, 300 s by default; SET must be written again before that runs out, or the pump goes to local operation and blocks writes. MANUAL allows local and remote operation together."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why can't my BMS find the Wilo pump on MS/TP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A MAC of 128 or more makes the module an MS/TP subordinate, which does not answer Who-Is. Use 0&ndash;127, the same baud rate as the trunk, and activate the module after the settings are made."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the Wilo CIF BACnet MS/TP module support ReadPropertyMultiple or COV?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The MS/TP module serves ReadProperty and WriteProperty only. The Ethernet module for BACnet/IP adds ReadPropertyMultiple, WritePropertyMultiple and COV."
+        }
+      }
+    ]
+  }
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.pa-table{width:100%;border-collapse:collapse;font-size:0.86rem;max-width:640px;margin:0 auto}
+.pa-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.9rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.pa-table td{padding:0.5rem 0.9rem;border-bottom:1px solid var(--steel);font-family:'IBM Plex Mono',monospace;font-size:0.82rem}
+.pa-table tr.hl td{background:rgba(242,169,0,0.12);font-weight:600}
+.pa-table tr:last-child td{border-bottom:none}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+
+/* family slogan band, slim (2026-10-22) */
+.slogan-band.slim{background:var(--safety,#F2A900);border-bottom:2px solid var(--ink,#16181A);padding:0.5rem 1rem;text-align:center;color:var(--ink,#16181A);display:flex;gap:0.3rem 1rem;justify-content:center;align-items:baseline;flex-wrap:wrap}
+.slogan-band.slim .sb-main{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.3rem;line-height:1.1;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim .sb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim a{color:var(--ink,#16181A);font-weight:700}
+@media(max-width:768px){.slogan-band.slim .sb-main{font-size:1.05rem}.slogan-band.slim .sb-sub{display:none}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Wilo CIF BACnet","item": "https://bacmanager.com/wilo-cif-bacnet.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-bbmd-foreign-device.html">BBMD</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+<div class="slogan-band slim">
+  <span class="sb-main">Every device. One tool. Pay once.</span>
+  <span class="sb-sub">Modbus &middot; BACnet &middot; Siemens S7 &middot; one-time licence &middot; also from us: <a href="https://modbusmanager.com">ModbusManager&nbsp;&#8599;</a></span>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">// wilo &middot; stratos maxo &middot; cif-module</div>
+  <h1>Wilo CIF BACnet<br><span class="accent">Points List &amp; Setup</span></h1>
+  <p class="hero-desc">How to put a Wilo-Stratos MAXO, Stratos GIGA2.0 or Yonos GIGA2.0 on BACnet with a CIF-Module: MS/TP or BACnet/IP, an MS/TP module that answers one property at a time, a pump that takes a value only when it changes &mdash; and the bus command timer, which wants its SET again before it runs out. With a free BACManager workspace.</p>
+  <div class="hero-ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#workspace" class="btn-ghost">Free Stratos MAXO workspace</a>
+  </div>
+  <p class="hero-note">Sources: Wilo &ldquo;Wilo BACnet &mdash; CIF-Modul, Installation and operation instructions with functional description&rdquo; and Wilo's EDE lists for the CIF-Module BACnet</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// before you start</div>
+  <h2 class="sec-title">Two CIF-Modules for BACnet</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128268;</div><h3>MS/TP or IP</h3><p>The <strong>CIF-Module BACnet MS/TP</strong> (2190367) for RS-485, and the <strong>CIF-Module Ethernet Multiprotocol</strong> (2211408), which does BACnet/IP or Modbus TCP. Both go into the pump. Wilo publishes EDE lists for Stratos MAXO, Stratos GIGA2.0, Yonos GIGA2.0, Helix2.0-VE, Medana CH3-LE, SiFresh and Isar MODH1-E.</p></div>
+    <div class="feat"><div class="feat-icon">&#9881;</div><h3>Pump firmware first</h3><p>The pump needs a minimum software: a Stratos MAXO 01002500 for the MS/TP module and 01042500 for the Ethernet module (updated with the Wilo-Assistant app). On a twin pump the module goes in the main pump, and only the system's data is on BACnet.</p></div>
+    <div class="feat"><div class="feat-icon">&#128203;</div><h3>Not the same BACnet</h3><p>The MS/TP module (PICS revision 4) has <strong>no ReadPropertyMultiple, no COV and no segmentation</strong>: B-SA and B-SS, ReadProperty and WriteProperty only. The Ethernet module (revision 16) is a B-ASC with ReadPropertyMultiple, WritePropertyMultiple and COV.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// setup</div>
+  <h2 class="sec-title">Settings at the pump, then the module</h2>
+  <table class="compare-table">
+    <thead><tr><th>Setting</th><th>Range</th><th class="hl">Note</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">MS/TP MAC (bus address)</td><td>0&ndash;127, 128&ndash;254, OFF</td><td class="hl">0&ndash;127 is an MS/TP master. <strong>128 and up makes it a subordinate</strong>, which does not answer Who-Is. OFF switches the interface off</td></tr>
+      <tr><td class="mono">Baud rate</td><td>9600&ndash;115200</td><td class="hl">9600, 19200, 38400, 76800 or 115200; the same on the whole trunk</td></tr>
+      <tr><td class="mono">Device instance</td><td>0&ndash;4194302</td><td class="hl">Set at the pump; give every pump its own</td></tr>
+      <tr><td class="mono">Max Master</td><td>Device object</td><td class="hl">Writable: Wilo advises the highest MAC in use plus a few, MACs from 0 without gaps</td></tr>
+      <tr><td class="mono">Termination</td><td>120 &Omega; on the module</td><td class="hl">On only at the two ends; no stubs or stars</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Wilo's instruction is plain: activate the CIF-Module only after all settings are complete and checked. The MS/TP module is 1/8 unit load and isolated. RS-485 A and B: Wilo notes that some manufacturers mark them the other way round. On the Ethernet module the basic settings are made at the pump and extended ones in its web page; its two RJ45 ports chain on to the next pump only while the pump has power.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// control</div>
+  <h2 class="sec-title">A value reaches the pump only when it changes</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#8644;</div><h3>Last write wins</h3><p>The pump can be set from the BMS, its own button and display, or a remote: the last change wins. So the module passes a value on <strong>only when it changes</strong>. Writing the same setpoint again does nothing &mdash; if someone changed it at the pump, the BMS's unchanged value will not undo it.</p></div>
+    <div class="feat"><div class="feat-icon">&#10003;</div><h3>Forcing a value</h3><p>Wilo's recipe: read the value the pump uses, write that back, then write the one you want &mdash; or simply another value and then the wanted one. It also warns about gateways that write on a timer: repeating a value is not the way to hold it.</p></div>
+    <div class="feat"><div class="feat-icon">1&rarr;7</div><h3>Wilo's order</h3><p>Parameter set (MO34) norm; bus command timer (MO1) OFF or MANUAL; control function (MO0); setpoint source (MO3) IF-Module; setpoint (AO0); the overrides (BO1&ndash;BO3) inactive; then pump on (BO0). Check each on its input twin: MI2034, MI2, MI0, MI3, AI34, BI0.</p></div>
+  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">The outputs are commandable, but some have a floating default: Wilo realises it as a write at priority 16, so after every slot of the priority array is relinquished the Present_Value is not the Relinquish_Default. Inside the pump the commands rank: the external off input, then override off, override max, override min, override on.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the rule that bites</div>
+  <h2 class="sec-title">The bus command timer wants SET again</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128274;</div><h3>Who may operate the pump</h3><p>MO1 busCmd.TimerInp,Act decides. <strong>MANUAL</strong>: the pump's own menu and the BMS both, last write wins. <strong>SET</strong>: the BMS locks the local menu for the bus command timer, AO8 &mdash; 300 s, at least 20 s. <strong>OFF</strong>: the timer is off and the local menu stays locked.</p></div>
+    <div class="feat"><div class="feat-icon">&#9203;</div><h3>Before it runs out</h3><p>SET has to be written again within the timeout &mdash; Wilo's words are to repeat writing SET. If the BMS stops, the timer runs out (MI2 RESET): the pump can be operated locally, writes over the interface are blocked, and the pump shows an error. With SET_PRESET instead of SET it also loads fallback values (AO100, BO100, MO100/101).</p></div>
+    <div class="feat"><div class="feat-icon">?</div><h3>Factory state</h3><p>Wilo's text says the module locks the local menu and input IN2 from the factory, which is the OFF state; its EDE list gives MANUAL as the default value. Read MI2 to see which yours is in. The activation is stored and survives a power cycle.</p></div>
+  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">In BACManager a BACnet tag has <strong>Refresh (s)</strong>: the last value written to it is written again every that many seconds until it is relinquished. The free workspace sets 60&nbsp;s on MO1 only &mdash; well inside the 300-second timer &mdash; and on nothing else, since the pump ignores a repeated setpoint anyway. Tested against the simulated Stratos MAXO with a 30-second timeout and SET written once: with Refresh the timer stayed ACTIVE for the whole 90-second run; without it, it went to RESET after 30&nbsp;s and stayed there. MS/TP module without ReadPropertyMultiple: BACManager notices the refusal and reads it one property at a time by itself.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="points">
+  <div class="sec-label">// points list</div>
+  <h2 class="sec-title">The Stratos MAXO points a BMS uses</h2>
+  <p class="sec-sub">Object names as in Wilo's EDE list. Inputs (AI, BI, MI) read, outputs (AO, BO, MO) write; most outputs have an input twin that shows what the pump took.</p>
+  <table class="compare-table">
+    <thead><tr><th>Object</th><th>Object name</th><th class="hl">What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">BO0 / BI0</td><td class="mono">device/functionOnInp / device/functionOnAct</td><td class="hl">Pump on command; what the pump took</td></tr>
+      <tr><td class="mono">AO0 / AI34</td><td class="mono">dutyPointRelInp / dutyPointRelAct</td><td class="hl">Setpoint in % of the maximum (default 100)</td></tr>
+      <tr><td class="mono">MO0 / MI0</td><td class="mono">controlFunctionInp / controlFunctionAct</td><td class="hl">Control function: Gen_Spd (speed), Gen_PHdConst, Gen_PHdVar and the application modes</td></tr>
+      <tr><td class="mono">MO1 / MI2</td><td class="mono">busCmd.TimerInp,Act / busCmd.TimerAct</td><td class="hl">1 OFF, 2 SET, 3 ACTIVE, 4 RESET, 5 MANUAL, 6&ndash;9 the PRESET variants</td></tr>
+      <tr><td class="mono">AO8 / AI35</td><td class="mono">busCmd.TimerTimeoutInp,Act / busCmd.TimerTimeRemain.Out</td><td class="hl">Timeout (300 s, min. 20 s); time left</td></tr>
+      <tr><td class="mono">MO3 / MI3</td><td class="mono">setpointSignalSourceInp / setpointSignalSourceAct</td><td class="hl">1 IF-Module (the bus), 0&ndash;10 V, 2&ndash;10 V, 0&ndash;20 mA, 4&ndash;20 mA, internal</td></tr>
+      <tr><td class="mono">BO1 / BO2 / BO3 / BO17</td><td class="mono">overrideOffInp / overrideMaxInp / overrideMinInp / overrideOnInp</td><td class="hl">Overrides: off (0 %), max, min, on</td></tr>
+      <tr><td class="mono">AI0 / AI1</td><td class="mono">dutyPointRelOut / speedP01Out</td><td class="hl">Duty point %; speed rpm</td></tr>
+      <tr><td class="mono">AI2 / AI3</td><td class="mono">flowOut / pressureOut</td><td class="hl">m&sup3;/h (calculated); bar (estimated without a sensor)</td></tr>
+      <tr><td class="mono">AI4 / AI7</td><td class="mono">powerInputOut / energyConsumptionOut</td><td class="hl">W; kWh</td></tr>
+      <tr><td class="mono">AI5 / AI16 / AI17</td><td class="mono">temperatureFluid@DeviceOut / temperat.FluidFwdOut / temperat.FluidRetOut</td><td class="hl">&deg;C at the pump, forward, return</td></tr>
+      <tr><td class="mono">AI20 / AI21, AI26 / AI27</td><td class="mono">powerHeatingOut / powerRefrigerationOut, energyHeat.TotalOut / energyRefrig.TotalOut</td><td class="hl">Heat and cold power and energy</td></tr>
+      <tr><td class="mono">BI12 / BI13 / MI1</td><td class="mono">warningPresentOut / errorPresentOut / warning/errorMessageOut</td><td class="hl">Warning, error, Wilo's message code</td></tr>
+      <tr><td class="mono">BI15</td><td class="mono">localOperationOut</td><td class="hl">Not controlled from the CIF-Module</td></tr>
+      <tr><td class="mono">MO34 / MI2034</td><td class="mono">parameterSetSelectorInp / parameterSetSelectorSel</td><td class="hl">norm, aux, preset: which set of inputs is in use</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Wilo's EDE lists give each object with the module software it needs, per pump family; the functional description explains every one. The device instance and name in the pictures are the simulation's.</p>
+  <figure style="margin:1.8rem auto 0;max-width:1130px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="wilo-cif-bacnet-objects.png" width="1130" height="700" alt="BACManager BACnet tab: device Stratos MAXO, device instance 4001, with its objects listed by Wilo's names, dutyPointRelOut, speedP01Out, flowOut, pressureOut, powerInputOut, temperatureFluid@DeviceOut, operationTimeOut, energyConsumptionOut, pressureMinPHdConstAct, pressureMaxPHdConstAct, dutyPointRelAct, busCmd.TimerTimeRemain.Out, dutyPointRelInp and busCmd.TimerTimeoutInp,Act, polled every second" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Discover, click the pump, and its objects come up by name with live values &mdash; read one by one, as the MS/TP module has no ReadPropertyMultiple. Pictured: a simulated Stratos MAXO built from Wilo's EDE list</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="workspace">
+  <div class="sec-label">// free download</div>
+  <h2 class="sec-title">The Stratos MAXO workspace</h2>
+  <p class="sec-sub">One dashboard page for a Stratos MAXO on a chilled-water circuit: bus command timer state and time left, who operates the pump, pressure, flow, speed, duty point, power and energy, control function, warning and error &mdash; with the timer's SET written again every 60 seconds and the duty point set once.</p>
+  <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="wilo-cif-dashboard.png" width="1300" height="770" alt="BACManager dashboard for a Wilo-Stratos MAXO with the CIF-Module BACnet MS/TP: bus command timer ACTIVE with 252 s left, operated from the BMS, pressure 0.46 bar, flow 5.01 cubic metres per hour, 3714 rpm, duty point 86.4 percent, power input 122 W, control function Gen_PHdConst, no warning, no error, duty point in use 75 percent, and a trend where the setpoint steps from 40 to 75 percent" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">SET, Gen_PHdConst, 40 % and pump on written from the page; then the duty point raised to 75 % (simulated pump)</figcaption>
+  </figure>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">1</div><h3>Discover the pump</h3><p>On the BACnet tab open MS/TP on the PC's RS-485 port at the pump's baud rate, or BACnet/IP for the Ethernet module, and press Discover. A pump with a MAC of 128 or more will not answer.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Open the workspace</h3><p>Workspace &rarr; Open. The file reads device 4001; BACManager asks which discovered device takes its place and moves every point over.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Timer, then duty point</h3><p>On the Dashboard press Run. Write SET (or MANUAL), the control function, the setpoint, then pump on. From then on SET is written again every 60 seconds. After BACManager restarts, write it once more.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:1.6rem">
+    <a href="/Wilo_Stratos_MAXO_CIF_BACnet.json" download class="btn-primary">Download workspace</a>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// when it does not work</div>
+  <h2 class="sec-title">Typical problems</h2>
+  <table class="compare-table">
+    <thead><tr><th>What you see</th><th>Why</th><th class="hl">What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Pump not found on Discover</td><td>MAC 128 or more (subordinate), interface OFF, or module not activated</td><td class="hl">MAC 0&ndash;127; activate the module after the settings</td></tr>
+      <tr><td>A written value is not taken</td><td>The same value as before: passed on only on a change</td><td class="hl">Write another value, then the wanted one</td></tr>
+      <tr><td>Someone changed the setpoint at the pump and it stays</td><td>Last write wins; the BMS's value did not change</td><td class="hl">Write the pump's value back, then the BMS's</td></tr>
+      <tr><td>Writes blocked, pump on local, error on the display</td><td>Bus command timer ran out (RESET)</td><td class="hl">Write SET again within the timeout (Refresh 60 s in BACManager)</td></tr>
+      <tr><td>Setpoint ignored</td><td>Setpoint source not IF-Module, or parameter set not norm</td><td class="hl">MO3 = IF-Module, MO34 = norm</td></tr>
+      <tr><td>&ldquo;Error&rdquo; on every row of a BMS</td><td>The MS/TP module has no ReadPropertyMultiple</td><td class="hl">Read with ReadProperty (BACManager does this by itself)</td></tr>
+      <tr><td>Relinquished output does not return to its default</td><td>Floating default as a write at priority 16</td><td class="hl">Write the value wanted instead of relinquishing</td></tr>
+      <tr><td>Pump update fails or the module misbehaves after one</td><td>Module active during a pump firmware update</td><td class="hl">Deactivate the CIF-Module first; reactivate after</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">Wilo CIF BACnet &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Where is the Wilo Stratos MAXO BACnet points list?<span class="icon">+</span></div>
+      <div class="faq-a">In Wilo's EDE lists for the CIF-Module BACnet, one per pump family, and in the functional description of the CIF-Module. The table on this page lists the points a BMS uses most.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Which Wilo module do I need for BACnet/IP?<span class="icon">+</span></div>
+      <div class="faq-a">The CIF-Module Ethernet Multiprotocol (2211408), which does BACnet/IP or Modbus TCP. For BACnet MS/TP it is the CIF-Module BACnet MS/TP (2190367).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why doesn't my Wilo pump take the BACnet setpoint?<span class="icon">+</span></div>
+      <div class="faq-a">Values are passed to the pump only when they change, and the last change from any source wins. Check also that the setpoint source (MO3) is IF-Module and the parameter set (MO34) is norm.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the Wilo bus command timer?<span class="icon">+</span></div>
+      <div class="faq-a">MO1 busCmd.TimerInp,Act. Written SET it locks the pump's local operation for the timeout in AO8, 300 s by default; SET must be written again before that runs out, or the pump goes to local operation and blocks writes. MANUAL allows local and remote operation together.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why can't my BMS find the Wilo pump on MS/TP?<span class="icon">+</span></div>
+      <div class="faq-a">A MAC of 128 or more makes the module an MS/TP subordinate, which does not answer Who-Is. Use 0&ndash;127, the same baud rate as the trunk, and activate the module after the settings are made.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does the Wilo CIF BACnet MS/TP module support ReadPropertyMultiple or COV?<span class="icon">+</span></div>
+      <div class="faq-a">No. The MS/TP module serves ReadProperty and WriteProperty only. The Ethernet module for BACnet/IP adds ReadPropertyMultiple, WritePropertyMultiple and COV.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// sources</div>
+  <h2 class="sec-title">Where this comes from</h2>
+  <p style="max-width:820px;margin:0 auto;color:var(--body);line-height:1.75">Wilo SE: <em>Wilo BACnet &mdash; CIF-Modul, Installation and operation instructions with functional description</em>, with the PICS for the MS/TP module (revision 4) and the Ethernet Multiprotocol module (revision 16); the EDE lists &ldquo;Wilo CIF-Module BACnet MS/TP 1.00&hellip;6.01&rdquo;. Get them from <a href="https://wilo.com/" rel="nofollow noopener" style="color:var(--amber-ink)">wilo.com</a> and check them against your pump and module software before commissioning. Wilo, Stratos MAXO, Stratos GIGA and Yonos GIGA are trademarks of their owner; BACManager is not affiliated with Wilo. The pictures on this page are from BACManager connected to a simulated pump built from the published object list.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// more device guides</div>
+  <h2 class="sec-title">Other BACnet devices</h2>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem 2rem">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Chillers and rooftop units</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Daikin MicroTech III chiller</a></div>
+      <div style="margin:0.25rem 0"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Trane Symbio 700</a></div>
+      <div style="margin:0.25rem 0"><a href="/aaon-vccx2-bacnet.html" style="color:var(--amber-ink)">AAON VCCX2</a></div>
+      <div style="margin:0.25rem 0"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Lennox CORE</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Boilers</div>
+      <div style="margin:0.25rem 0"><a href="/lochinvar-crest-bacnet.html" style="color:var(--amber-ink)">Lochinvar Crest boiler</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">VRF and split systems</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-itm-bacnet.html" style="color:var(--amber-ink)">Daikin iTM (VRV)</a></div>
+      <div style="margin:0.25rem 0"><a href="/mitsubishi-ae200-bacnet.html" style="color:var(--amber-ink)">Mitsubishi AE-200</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Drives</div>
+      <div style="margin:0.25rem 0"><a href="/abb-ach580-bacnet.html" style="color:var(--amber-ink)">ABB ACH580</a></div>
+      <div style="margin:0.25rem 0"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Schneider ATV600</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Pumps and valves</div>
+      <div style="margin:0.25rem 0"><a href="/grundfos-cim-bacnet.html" style="color:var(--amber-ink)">Grundfos MAGNA3 (CIM)</a></div>
+      <div style="margin:0.25rem 0"><a href="/belimo-energy-valve-bacnet.html" style="color:var(--amber-ink)">Belimo Energy Valve</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Routers</div>
+      <div style="margin:0.25rem 0"><a href="/basrouter-bacnet-router.html" style="color:var(--amber-ink)">BASrouter (MS/TP to IP)</a></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:1.4rem"><a href="/bacnet-devices.html" style="color:var(--amber-ink)">All BACnet device guides &rarr;</a></p>
+</section>
+
+<div class="cta-strip">
+  <h2>Commission the Stratos MAXO from your laptop</h2>
+  <p>Download the free trial, discover the pump and open the Stratos MAXO workspace &mdash; every point by Wilo's name, the bus command timer kept set. No credit card.</p>
+  <div class="ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+    <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    <a href="/bacnet-priority-array.html">Priority Array</a>
+    <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/manual.html">Manual</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://.
+   Each click is also counted in our own Google Sheet (Apps Script), cookie
+   consent or not: site, product, version, page, referrer, language, time
+   zone. No cookies, no IP address. The download never waits for it.
+   A workspace (.json or .zip on this site) is counted as product "Workspace" with
+   the file name as its version, a manual (.pdf) as product "Manual"; both
+   download as before. */
+function dlCount(product, version) {
+  try {
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbyx9RacY_l5KDK0RBBmLk41uKv3McyR_UJmCTWqnRqklh6fYgeXvYecddcQDGzRx5-F/exec', JSON.stringify({
+      site: location.hostname, product: product, version: version,
+      page: location.pathname, referrer: document.referrer, lang: navigator.language,
+      tz: (window.Intl && Intl.DateTimeFormat().resolvedOptions().timeZone) || ''
+    }));
+  } catch (err) {}
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var w = e.target.closest('a[href$=".json"], a[href$=".zip"]');
+  if (w) { dlCount('Workspace', (w.getAttribute('href').match(/([^\/]+)\.(?:json|zip)$/) || [])[1] || ''); return; }
+  var m = e.target.closest('a[href$=".pdf"]');
+  if (m) { dlCount('Manual', (m.getAttribute('href').match(/([^\/]+)\.pdf$/) || [])[1] || ''); return; }
+  var a = e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  var dl = a.getAttribute('data-dl');
+  dlCount(/bacmanager/i.test(dl) ? 'BACManager' : (/Pro\.Setup|pro-v/i.test(dl) ? 'ModbusManager Pro' : 'ModbusManager Standard'),
+    (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
+  window.location.href = 'https://' + dl;
+});
+</script>
+</body>
+</html>

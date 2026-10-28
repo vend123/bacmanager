@@ -188,9 +188,11 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
       <span class="nav-drop-label">Guides &#9662;</span>
       <div class="nav-drop-menu">
         <a href="/bacnet-scanner.html" style="color:#9A6700;font-weight:600">&#128269; BACnet Scanner</a>
+        <a href="/bacnet-devices.html" style="color:#9A6700;font-weight:600">&#128295; Device guides</a>
         <a href="/bacnet-schedule-editor.html">&#128197; Schedule Editor</a>
         <a href="/bacnet-mstp-rs485.html">MS/TP &amp; RS-485</a>
         <a href="/bacnet-modbus-gateway.html">BACnet &harr; Modbus Gateway</a>
+        <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
         <a href="/bacnet-hmi-runtime.html">BACnet HMI Runtime (OEM)</a>
         <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
         <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
@@ -227,7 +229,7 @@ nav .nav-links.open .nav-drop-menu a{padding:0.35rem 0;font-size:0.8rem}
       </div>
       <div class="hero-btns">
         <a href="#" class="btn-primary" onclick="openBuyModal();return false">Get BACManager &mdash; $149</a>
-        <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-primary" style="background:var(--plate);color:var(--ink);border:2px solid var(--ink)" onclick="trackDownload()">Download trial</a>
+        <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" style="background:var(--plate);color:var(--ink);border:2px solid var(--ink)" onclick="trackDownload()">Download trial</a>
       </div>
       <div class="os-tags">
         <span class="os-tag">Windows 10/11</span>
@@ -354,7 +356,7 @@ document.addEventListener('keydown', function(e){
     <div class="feat">
       <div class="feat-icon">&#128268;</div>
       <h3>BACnet &harr; Modbus gateway</h3>
-      <p>Bridge either direction from one PC &mdash; expose Modbus meters as a BACnet device for a BMS, or a BACnet device as a Modbus map for a PLC. Publishes to <strong>MQTT and Home Assistant</strong> too. Priority-aware writes, runs unattended in the background. <a href="/bacnet-modbus-gateway.html" style="color:var(--amber-ink)">Gateway guide &rarr;</a></p>
+      <p>Bridge either direction from one PC &mdash; expose Modbus meters as a BACnet device for a BMS, or a BACnet device as a Modbus map for a PLC. Publishes to <a href="/bacnet-to-mqtt-home-assistant.html" style="color:var(--amber-ink)"><strong>MQTT and Home Assistant</strong></a> too. Priority-aware writes, runs unattended in the background. <a href="/bacnet-modbus-gateway.html" style="color:var(--amber-ink)">Gateway guide &rarr;</a></p>
     </div>
   </div>
 </section>
@@ -395,6 +397,42 @@ document.addEventListener('keydown', function(e){
     <img src="bac-simulator.png" alt="BACManager's built-in BACnet device simulator with the option to include Schedule and Calendar demo objects, and a live object value table" loading="lazy" style="display:block;width:100%;height:auto" onerror="this.closest('figure').style.display='none'">
     <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">The built-in simulator can include demo Schedule &amp; Calendar objects for testing</figcaption>
   </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="devices">
+  <div class="sec-label">// device guides</div>
+  <h2 class="sec-title">Step-by-step guides for real equipment</h2>
+  <p class="sec-sub">Points lists, factory settings and the rule that bites &mdash; for 13 devices, each with a free workspace to download.</p>
+  <div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem 2rem">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Chillers and rooftop units</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Daikin MicroTech III chiller</a></div>
+      <div style="margin:0.25rem 0"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Trane Symbio 700</a></div>
+      <div style="margin:0.25rem 0"><a href="/aaon-vccx2-bacnet.html" style="color:var(--amber-ink)">AAON VCCX2</a></div>
+      <div style="margin:0.25rem 0"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Lennox CORE</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Boilers</div>
+      <div style="margin:0.25rem 0"><a href="/lochinvar-crest-bacnet.html" style="color:var(--amber-ink)">Lochinvar Crest boiler</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">VRF and split systems</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-itm-bacnet.html" style="color:var(--amber-ink)">Daikin iTM (VRV)</a></div>
+      <div style="margin:0.25rem 0"><a href="/mitsubishi-ae200-bacnet.html" style="color:var(--amber-ink)">Mitsubishi AE-200</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Drives</div>
+      <div style="margin:0.25rem 0"><a href="/abb-ach580-bacnet.html" style="color:var(--amber-ink)">ABB ACH580</a></div>
+      <div style="margin:0.25rem 0"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Schneider ATV600</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Pumps and valves</div>
+      <div style="margin:0.25rem 0"><a href="/grundfos-cim-bacnet.html" style="color:var(--amber-ink)">Grundfos MAGNA3 (CIM)</a></div>
+      <div style="margin:0.25rem 0"><a href="/wilo-cif-bacnet.html" style="color:var(--amber-ink)">Wilo Stratos MAXO (CIF)</a></div>
+      <div style="margin:0.25rem 0"><a href="/belimo-energy-valve-bacnet.html" style="color:var(--amber-ink)">Belimo Energy Valve</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Routers</div>
+      <div style="margin:0.25rem 0"><a href="/basrouter-bacnet-router.html" style="color:var(--amber-ink)">BASrouter (MS/TP to IP)</a></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:1.4rem"><a href="/bacnet-devices.html" style="color:var(--amber-ink);font-family:'IBM Plex Mono',monospace;font-size:0.82rem">All device guides &rarr;</a></p>
 </section>
 
 <div class="divider-line"></div>
@@ -481,7 +519,7 @@ document.addEventListener('keydown', function(e){
         <li>Built-in device simulator</li>
         <li>No account required</li>
       </ul>
-      <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-buy btn-buy-ghost" onclick="trackDownload()">Download trial</a>
+      <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-buy btn-buy-ghost" onclick="trackDownload()">Download trial</a>
     </div>
   </div>
   <p style="text-align:center;margin-top:1.6rem;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;color:var(--muted)">Shipping equipment with a BACnet panel? <a href="/bacnet-hmi-runtime.html" style="color:var(--amber-ink,#9A6700)">BACManager Runtime &mdash; $39 per machine &rarr;</a></p>
@@ -495,7 +533,7 @@ document.addEventListener('keydown', function(e){
   <p class="sec-sub" style="margin-left:auto;margin-right:auto;max-width:560px">Download the free trial and test against your own devices, or buy a license &mdash; your key is emailed instantly after checkout.</p>
   <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
     <a href="#" class="btn-buy btn-buy-green" style="padding:0.8rem 1.6rem" onclick="openBuyModal();return false">Get BACManager &mdash; $149</a>
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.5/BACManager.Setup.1.4.5.exe" class="btn-buy btn-buy-ghost" style="padding:0.8rem 1.6rem" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-buy btn-buy-ghost" style="padding:0.8rem 1.6rem" onclick="trackDownload()">Download free trial</a>
   </div>
 </section>
 
@@ -507,6 +545,8 @@ document.addEventListener('keydown', function(e){
     <a href="/bacnet-schedule-editor.html" style="color:var(--muted)">Schedule Editor</a>
     <a href="/bacnet-mstp-rs485.html" style="color:var(--muted)">MS/TP</a>
     <a href="/bacnet-modbus-gateway.html" style="color:var(--muted)">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html" style="color:var(--muted)">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html" style="color:var(--muted)">Device guides</a>
     <a href="/bacnet-explorer-alternative.html" style="color:var(--muted)">Alternative to YABE</a>
     <a href="/cas-bacnet-explorer-alternative.html" style="color:var(--muted)">Alternative to CAS</a>
     <a href="/bacnet-priority-array.html" style="color:var(--muted)">Priority Array</a>

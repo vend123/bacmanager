@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mitsubishi AE-200 BACnet Points List &amp; Setup</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="Mitsubishi AE-200 / EW-50 on BACnet/IP: licence, Setting Tool, LAN2, Device No. 3, instance numbers per group, 200 ms per property. Free workspace.">
+<meta name="keywords" content="Mitsubishi AE-200 BACnet points list, AE-200 BACnet, AE-200 BACnet setup, EW-50 BACnet, AE-50 BACnet, Mitsubishi BACnet setting tool, CITY MULTI BACnet, AE-200 BACnet instance number, Mitsubishi centralized controller BACnet, AE-200E BACnet object list">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/mitsubishi-ae200-bacnet.html">
+<meta property="og:title" content="Mitsubishi AE-200 BACnet Points List &amp; Setup">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="Bring CITY MULTI groups onto a BMS through the Mitsubishi AE-200's own BACnet/IP: the BACnet connection licence and Setting Tool, LAN1 and LAN2, Device No. 3, ticking objects, the group instance numbers and the 200 ms per property request interval. Points list and a free BACManager workspace.">
+<meta property="og:url" content="https://bacmanager.com/mitsubishi-ae200-bacnet.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bacmanager.com/og-mitsubishi-ae200.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mitsubishi AE-200 BACnet Points List &amp; Setup">
+<meta name="twitter:description" content="Bring CITY MULTI groups onto a BMS through the Mitsubishi AE-200's own BACnet/IP: the BACnet connection licence and Setting Tool, LAN1 and LAN2, Device No. 3, ticking objects, the group instance numbers and the 200 ms per property request interval. Points list and a free BACManager workspace.">
+<meta name="twitter:image" content="https://bacmanager.com/og-mitsubishi-ae200.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Mitsubishi Electric AE-200 BACnet Points List and Setup",
+    "description": "Bring CITY MULTI groups onto a BMS through the Mitsubishi AE-200's own BACnet/IP: the BACnet connection licence and Setting Tool, LAN1 and LAN2, Device No. 3, ticking objects, the group instance numbers and the 200 ms per property request interval. Points list and a free BACManager workspace.",
+    "url": "https://bacmanager.com/mitsubishi-ae200-bacnet.html",
+    "image": "https://bacmanager.com/og-mitsubishi-ae200.png",
+    "datePublished": "2026-10-28",
+    "dateModified": "2026-10-28",
+    "author": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where is the Mitsubishi AE-200 BACnet points list?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In section 5-2 of Mitsubishi Electric's AE-200/AE-50/EW-50 Instruction Book (BACnet function), WT07919X08. The table on this page lists the points a BMS uses per group."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the AE-200 need a BACnet gateway?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The AE-200, AE-50 and EW-50 serve BACnet/IP on their LAN2 port. Each one needs a &ldquo;BACnet connection&rdquo; licence and is configured with Mitsubishi's BACnet Setting Tool."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the AE-200's default BACnet device instance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Device No. 3. LAN2, the BACnet port, is 192.168.2.1 from the factory and LAN1 192.168.1.1. Give every controller its own Device No."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How are AE-200 BACnet instance numbers built?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Six digits: object class (0 for a group), a fixed 1, the group number 01&ndash;50 and the member number. Group 5's Room Temp is 010509, which a BMS shows as analog-input 10509."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast can a BMS poll the AE-200?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Mitsubishi asks for at least 200 ms per property between requests — after a ReadPropertyMultiple of 10 properties, wait 2 seconds. That is about five properties a second for the whole controller."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why can't I see an AE-200 object over BACnet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Only objects ticked &ldquo;Use&rdquo; on the BACnet Setting Tool's Object tab exist, and only those the group's units support. Tick it, send the settings while Offline, and switch back to Online."
+        }
+      }
+    ]
+  }
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.pa-table{width:100%;border-collapse:collapse;font-size:0.86rem;max-width:640px;margin:0 auto}
+.pa-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.9rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.pa-table td{padding:0.5rem 0.9rem;border-bottom:1px solid var(--steel);font-family:'IBM Plex Mono',monospace;font-size:0.82rem}
+.pa-table tr.hl td{background:rgba(242,169,0,0.12);font-weight:600}
+.pa-table tr:last-child td{border-bottom:none}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+
+/* family slogan band, slim (2026-10-22) */
+.slogan-band.slim{background:var(--safety,#F2A900);border-bottom:2px solid var(--ink,#16181A);padding:0.5rem 1rem;text-align:center;color:var(--ink,#16181A);display:flex;gap:0.3rem 1rem;justify-content:center;align-items:baseline;flex-wrap:wrap}
+.slogan-band.slim .sb-main{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.3rem;line-height:1.1;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim .sb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim a{color:var(--ink,#16181A);font-weight:700}
+@media(max-width:768px){.slogan-band.slim .sb-main{font-size:1.05rem}.slogan-band.slim .sb-sub{display:none}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Mitsubishi AE-200 BACnet","item": "https://bacmanager.com/mitsubishi-ae200-bacnet.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-bbmd-foreign-device.html">BBMD</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+<div class="slogan-band slim">
+  <span class="sb-main">Every device. One tool. Pay once.</span>
+  <span class="sb-sub">Modbus &middot; BACnet &middot; Siemens S7 &middot; one-time licence &middot; also from us: <a href="https://modbusmanager.com">ModbusManager&nbsp;&#8599;</a></span>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">// mitsubishi electric &middot; ae-200 &middot; ae-50 &middot; ew-50</div>
+  <h1>Mitsubishi AE-200<br><span class="accent">BACnet Points List &amp; Setup</span></h1>
+  <p class="hero-desc">How to bring CITY MULTI and Mr.&nbsp;Slim groups onto a BMS through the AE-200 centralized controller's own BACnet/IP: the licence and the Setting Tool, the two LAN ports, a device number that leaves the factory as 3, objects that do not exist until you tick them &mdash; and the 200&nbsp;ms per property that a fast BMS poll breaks. With a free BACManager workspace.</p>
+  <div class="hero-ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#workspace" class="btn-ghost">Free AE-200 workspace</a>
+  </div>
+  <p class="hero-note">Sources: Mitsubishi Electric WT07919X08 (AE-200/AE-50/EW-50 Instruction Book, BACnet function) and WT07921X06 (BACnet Setting Tool)</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// before you start</div>
+  <h2 class="sec-title">No gateway, but a licence and a tool</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128273;</div><h3>&ldquo;BACnet connection&rdquo; licence</h3><p>The AE-200, AE-50 and EW-50 speak BACnet/IP themselves &mdash; no separate interface. Each controller that connects to BACnet needs its own &ldquo;BACnet connection&rdquo; licence; apportioned energy objects need the &ldquo;Charge&rdquo; licence as well. All controllers on BACnet must run the same software version.</p></div>
+    <div class="feat"><div class="feat-icon">&#128295;</div><h3>The Setting Tool must match</h3><p>BACnet is configured with Mitsubishi's BACnet Setting Tool on a PC, and its version has to match the controller's: Ver. 7.3x&ndash;7.4x takes tool 3.0, 7.50&ndash;7.70 tool 3.1, 7.71&ndash;7.85 tool 3.2, 7.9 and later tool 3.3. Otherwise sending settings ends in &ldquo;Version Mismatch Error&rdquo;.</p></div>
+    <div class="feat"><div class="feat-icon">&#128203;</div><h3>What the controller serves</h3><p>Per WT07919X08: BACnet/IP to ANSI/ASHRAE 135-2010, APDU up to 1024 octets, segmentation both ways, vendor ID 99. ReadProperty(Multiple), ReadRange, WriteProperty(Multiple), SubscribeCOV, events and time synchronisation. No Schedule or Calendar objects, no DeviceCommunicationControl or ReinitializeDevice.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// setup</div>
+  <h2 class="sec-title">Two ports, and BACnet on LAN2</h2>
+  <p class="sec-sub">LAN1 carries the air-conditioning system and the web browser, LAN2 carries BACnet. They must be on different networks and on different switches. One default gateway, set on the LAN2 page, serves both.</p>
+  <table class="compare-table">
+    <thead><tr><th>Setting (BACnet Setting Tool)</th><th>Factory</th><th class="hl">Set to</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">LAN1 IP address</td><td>192.168.1.1</td><td class="hl">The AC system / web network; also where the Setting Tool connects</td></tr>
+      <tr><td class="mono">LAN2 IP address</td><td>192.168.2.1 / 24</td><td class="hl">An address on the BACnet network, not LAN1's network</td></tr>
+      <tr><td class="mono">BACnet Port No.</td><td>47808</td><td class="hl">Shown only</td></tr>
+      <tr><td class="mono">Device No.</td><td><strong>3</strong></td><td class="hl">A unique device instance, 0&ndash;4194302. Every AE-200, AE-50 and EW-50 leaves the factory as 3</td></tr>
+      <tr><td class="mono">Device Name</td><td>&mdash;</td><td class="hl">1&ndash;32 characters: letters, digits, - _ and space</td></tr>
+      <tr><td class="mono">Use Remote BBMD</td><td>Off</td><td class="hl">On to register as a foreign device; Time To Live in minutes, 0 = no limit</td></tr>
+      <tr><td class="mono">APDU Timeout / Retries</td><td>6000 ms / 3</td><td class="hl">Leave</td></tr>
+      <tr><td class="mono">Use Dry Mode, Use Fan Speed Mid1/Mid2</td><td>Off</td><td class="hl">On only if the BMS should offer Dry, or Mid1/Mid2</td></tr>
+    </tbody>
+  </table>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">&#9745;</div><h3>Tick every object you need</h3><p>On the Object tab each object has a <strong>Use</strong> box. Only ticked objects exist on BACnet, and the controller only creates those the group's units support. COV and event notification are off per object until you switch them on.</p></div>
+    <div class="feat"><div class="feat-icon">&#8644;</div><h3>Offline to send, Online to run</h3><p>Settings are sent only while the controller is Offline &mdash; and Offline stops its BACnet. Switching back to Online restarts the controller. It will not go Online without a valid licence, and with many groups it takes up to about ten minutes. Changing groups in the Initial Setting Tool drops it back to Offline.</p></div>
+    <div class="feat"><div class="feat-icon">&#128268;</div><h3>Then unplug the PC</h3><p>Mitsubishi's system drawings have the setting PC disconnected from the controller once the settings are made. An AE-200 controls up to 50 units itself and up to three AE-50 or EW-50 below it; each of those is a BACnet device of its own, with its own licence and Device No.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// instance numbers</div>
+  <h2 class="sec-title">The number tells you the group</h2>
+  <p class="sec-sub">Objects are per <strong>group</strong> &mdash; the indoor units that share a remote controller &mdash; not per indoor unit. The instance is six digits: object class, a fixed 1, the group 01&ndash;50, and the member number.</p>
+  <table class="compare-table">
+    <thead><tr><th>Digits</th><th>Meaning</th><th class="hl">Example</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">C</td><td>Object class: 0 group, 4 PI controller, 6 interlocked unit, 7 chiller system, 9 chiller unit</td><td class="hl">0</td></tr>
+      <tr><td class="mono">1</td><td>Fixed</td><td class="hl">1</td></tr>
+      <tr><td class="mono">GG</td><td>Group 01&ndash;50 (99 = all groups)</td><td class="hl">05</td></tr>
+      <tr><td class="mono">MM</td><td>Member: what the object is</td><td class="hl">09 = Room Temp</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">So group 5's room temperature is <span class="mono">010509</span> &mdash; analog-input <strong>10509</strong>, because a BMS drops the leading zero. Group 12's on/off command is binary-output 11201; the collective System Forced Off for all groups is binary-value 19921.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the rules that bite</div>
+  <h2 class="sec-title">200 ms per property</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">200 ms</div><h3>The request interval</h3><p>Mitsubishi asks the BMS to leave at least 200&nbsp;ms per property between requests: after a ReadPropertyMultiple of 10 properties, wait 2000&nbsp;ms before the next request. That is five properties a second, for the whole controller &mdash; 50 groups with ten points each take 100 seconds to read once.</p></div>
+    <div class="feat"><div class="feat-icon">&#127777;</div><h3>The right set point object</h3><p>Groups whose units all support dual set points in Auto use Set Temp Cool and Set Temp Heat (xx24, xx25) &mdash; or Set Temp Auto (xx26) in single-set-point Auto. Groups with older units, or with Old Model Compatibility Mode on, use Set Temp (xx10). A dual-set-point object written to a group without dual set points is answered with an error.</p></div>
+    <div class="feat"><div class="feat-icon">&#9888;</div><h3>External input on level</h3><p>If the controller's External Input Setting is ON/OFF (Level signal), do not use On Off Setup, Prohibition On Off or System Forced Off from the BMS. And during Night Purge the fan speed and ventilation mode read from BACnet are not what the unit is doing.</p></div>
+  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">In BACManager a BACnet device can have a <strong>Gap</strong>, in ms per property, next to the Interval on the BACnet tab (version 1.4.6): every request to the device &mdash; poll, write, Refresh &mdash; waits until the one before it has had its properties &times; the gap. Set 200 for an AE-200; the free workspace brings it along for its controller. Measured against the simulated AE-200 reading the workspace's 31 points every second: without the gap BACManager asked for 31 properties a second and sent requests 2000&nbsp;ms too soon after a full one; with it, about 5 a second and no request early by more than a millisecond.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="points">
+  <div class="sec-label">// points list</div>
+  <h2 class="sec-title">The AE-200 points a BMS uses, per group</h2>
+  <p class="sec-sub">Instance <span class="mono">01xx..</span> with xx = group 01&ndash;50. Multi-state values start at 1. Which objects a group has depends on its units.</p>
+  <table class="compare-table">
+    <thead><tr><th>Object</th><th>Name</th><th class="hl">Values</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">BO 01xx01 / BI 01xx02</td><td class="mono">On Off Setup / On Off State</td><td class="hl">0 Stop, 1 Run</td></tr>
+      <tr><td class="mono">MO 01xx05 / MI 01xx06</td><td class="mono">Operational Mode Setup / State</td><td class="hl">1 Cool, 2 Heat, 3 Fan, 4 Auto, 5 Dry, 6 Setback</td></tr>
+      <tr><td class="mono">MO 01xx07 / MI 01xx08</td><td class="mono">Fan Speed Setup / State</td><td class="hl">1 Low, 2 High, 3 Mid 2, 4 Mid 1, 5 Auto</td></tr>
+      <tr><td class="mono">AI 01xx09</td><td class="mono">Room Temp [Water Temp]</td><td class="hl">&deg;C or &deg;F, as set in the Setting Tool</td></tr>
+      <tr><td class="mono">AV 01xx10</td><td class="mono">Set Temp [Set Water Temp]</td><td class="hl">Groups without dual set points</td></tr>
+      <tr><td class="mono">AV 01xx24 / 25 / 26</td><td class="mono">Set Temp Cool / Heat / Auto</td><td class="hl">Groups with dual set points</td></tr>
+      <tr><td class="mono">BI 01xx03 / MI 01xx04 / AI 01xx49</td><td class="mono">Alarm Signal / Error Code / Error Code Detail</td><td class="hl">Normal/Error; 1 Normal &hellip; 9 System error; the 4-digit code</td></tr>
+      <tr><td class="mono">BI 01xx11 / BV 01xx12</td><td class="mono">Filter Sign / Filter Sign Reset</td><td class="hl">Filter due; reset it</td></tr>
+      <tr><td class="mono">BV 01xx13&ndash;17</td><td class="mono">Prohibition On Off, Mode, Filter Sign Reset, Set Temperature, Fan Speed</td><td class="hl">0 Permit, 1 Prohibit &mdash; lock out the local remote controller</td></tr>
+      <tr><td class="mono">BI 01xx20</td><td class="mono">M-NET Communication State</td><td class="hl">Normal / Error</td></tr>
+      <tr><td class="mono">BV 01xx21 / BV 019921</td><td class="mono">System Forced Off (individual / collective)</td><td class="hl">Stop and prohibit on/off at the remote controller</td></tr>
+      <tr><td class="mono">MO 01xx22 / MI 01xx23</td><td class="mono">Air Direction Setup / State</td><td class="hl">Horizontal, Downblow 60/80/100 %, Swing</td></tr>
+      <tr><td class="mono">BI 01xx47</td><td class="mono">Thermo On Off State</td><td class="hl">The unit is actually heating or cooling</td></tr>
+      <tr><td class="mono">BI 010048</td><td class="mono">System Alarm Signal</td><td class="hl">Controller-wide alarm</td></tr>
+      <tr><td class="mono">LOG 01xx80</td><td class="mono">Trend Log Room Temp</td><td class="hl">Room Temp every minute, read with ReadRange</td></tr>
+      <tr><td class="mono">AC 01xx39</td><td class="mono">Group Apportioned Electric Energy</td><td class="hl">0.1 kWh; needs the &ldquo;Charge&rdquo; licence</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Dry and Mid 1/Mid 2 exist only when switched on in the Setting Tool. While a unit runs Auto, Mode State shows Cool or Heat unless &ldquo;Use Operation Mode State Auto&rdquo; is ticked. Chillers, LOSSNAY, Air To Water and PI-controller objects are in section 5-2 of Mitsubishi's <strong>WT07919X08</strong>; the controller's own schedules are not on BACnet.</p>
+  <figure style="margin:1.8rem auto 0;max-width:1130px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="mitsubishi-ae200-bacnet-objects.png" width="1130" height="700" alt="BACManager BACnet tab: device AE200-FLOOR2, device instance 3, with its objects listed by name and instance, RoomTemp_01 at analog-input 10109, RoomTemp_02 at 10209, RoomTemp_03 at 10309, Error Code Detail, Set Temp Cool and Set Temp Heat for groups 1 to 3 at analog-value 10124, 10125, 10224 and on, and the System Alarm Signal at binary-input 10048, with the controller's Gap set to 200 ms per property" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Discover, click the controller, and its objects come up with live values &mdash; the instance tells you the group, and Gap paces every request to it. Pictured: a simulated AE-200 with three groups, built from Mitsubishi's object list; object names as entered for this simulation</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="workspace">
+  <div class="sec-label">// free download</div>
+  <h2 class="sec-title">The AE-200 workspace</h2>
+  <p class="sec-sub">One dashboard page for three groups on a floor: run state, mode, room temperature, thermo, alarm and filter for each, with on/off, mode and both set points to write, and the room temperatures on one trend.</p>
+  <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="mitsubishi-ae200-dashboard.png" width="1300" height="770" alt="BACManager dashboard for three CITY MULTI groups behind a Mitsubishi AE-200: Office 1 running in Cool at 21.6 degrees C with set points 22 cool and 21 heat, thermo on; Office 2 running in Auto, shown as Cool, at 23.5 degrees C; Meeting stopped at 26.2 degrees C with the filter sign on; system alarm normal; and a trend where Office 1's room temperature falls" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Office 1's Set Temp Cool written from the page, 23 &rarr; 22 &deg;C (simulated controller and rooms)</figcaption>
+  </figure>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">1</div><h3>Discover</h3><p>On the BACnet tab open BACnet/IP on the network card on LAN2's network and press Discover. The controller answers with its Device No.; click it to see its objects and its Gap.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Open the workspace</h3><p>Workspace &rarr; Open. The file reads device 3, groups 1&ndash;3, with a gap of 200&nbsp;ms per property; if your controller has another Device No., BACManager asks which discovered device takes its place and moves every point &mdash; and the gap &mdash; over. For other groups, change the group digits in the tags.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Run</h3><p>BACManager starts reading the groups by itself. On the Dashboard press Run; on/off, mode and set points are written when you change them. Groups without dual set points need Set Temp (xx10) instead.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:1.6rem">
+    <a href="/Mitsubishi_AE-200_BACnet.json" download class="btn-primary">Download workspace</a>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// when it does not work</div>
+  <h2 class="sec-title">Typical problems</h2>
+  <table class="compare-table">
+    <thead><tr><th>What you see</th><th>Why</th><th class="hl">What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Controller does not answer Who-Is</td><td>Offline, no licence, or the BMS is on LAN1</td><td class="hl">Online in the Setting Tool; register the &ldquo;BACnet connection&rdquo; licence; connect to LAN2</td></tr>
+      <tr><td>&ldquo;Version Mismatch Error&rdquo; on Send settings</td><td>Setting Tool and controller versions do not match</td><td class="hl">Use the tool version for the controller's software</td></tr>
+      <tr><td>Two controllers answer as device 3</td><td>Factory Device No.</td><td class="hl">Set a unique Device No. on every AE-200, AE-50 and EW-50</td></tr>
+      <tr><td>An object is missing</td><td>Not ticked Use, or the group's units do not support it</td><td class="hl">Tick it on the Object tab, send, go Online</td></tr>
+      <tr><td>Writing a set point returns an error</td><td>A dual-set-point object on a group without dual set points</td><td class="hl">xx24/xx25 (or xx26) for dual-set-point groups, xx10 otherwise</td></tr>
+      <tr><td>BMS reads more than 5 properties a second</td><td>Faster than Mitsubishi's 200 ms per property</td><td class="hl">Gap 200 ms per property for the controller (the workspace sets it)</td></tr>
+      <tr><td>Mode reads Cool while the unit is in Auto</td><td>Mode State shows the actual mode</td><td class="hl">Tick &ldquo;Use Operation Mode State Auto&rdquo; if the BMS should see Auto</td></tr>
+      <tr><td>BMS lost the controller after a settings change</td><td>Offline for Send settings, or groups changed; going Online restarts it and can take up to about 10 minutes</td><td class="hl">Plan Setting Tool work; check the mode is Online again</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">Mitsubishi AE-200 BACnet &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Where is the Mitsubishi AE-200 BACnet points list?<span class="icon">+</span></div>
+      <div class="faq-a">In section 5-2 of Mitsubishi Electric's AE-200/AE-50/EW-50 Instruction Book (BACnet function), WT07919X08. The table on this page lists the points a BMS uses per group.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does the AE-200 need a BACnet gateway?<span class="icon">+</span></div>
+      <div class="faq-a">No. The AE-200, AE-50 and EW-50 serve BACnet/IP on their LAN2 port. Each one needs a &ldquo;BACnet connection&rdquo; licence and is configured with Mitsubishi's BACnet Setting Tool.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the AE-200's default BACnet device instance?<span class="icon">+</span></div>
+      <div class="faq-a">Device No. 3. LAN2, the BACnet port, is 192.168.2.1 from the factory and LAN1 192.168.1.1. Give every controller its own Device No.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How are AE-200 BACnet instance numbers built?<span class="icon">+</span></div>
+      <div class="faq-a">Six digits: object class (0 for a group), a fixed 1, the group number 01&ndash;50 and the member number. Group 5's Room Temp is 010509, which a BMS shows as analog-input 10509.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How fast can a BMS poll the AE-200?<span class="icon">+</span></div>
+      <div class="faq-a">Mitsubishi asks for at least 200 ms per property between requests &mdash; after a ReadPropertyMultiple of 10 properties, wait 2 seconds. That is about five properties a second for the whole controller.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why can't I see an AE-200 object over BACnet?<span class="icon">+</span></div>
+      <div class="faq-a">Only objects ticked &ldquo;Use&rdquo; on the BACnet Setting Tool's Object tab exist, and only those the group's units support. Tick it, send the settings while Offline, and switch back to Online.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// sources</div>
+  <h2 class="sec-title">Where this comes from</h2>
+  <p style="max-width:820px;margin:0 auto;color:var(--body);line-height:1.75">Mitsubishi Electric: <em>Air Conditioning Control System Centralized Controller AE-200/AE-50/EW-50 Instruction Book (BACnet function)</em>, WT07919X08, describing software Ver. 7.97, and <em>AE-200/AE-50/EW-50 Instruction Book (BACnet Setting Tool)</em>, WT07921X06. Get them, the Setting Tool and the licence through your Mitsubishi Electric dealer or <a href="https://www.mitsubishielectric.com/" rel="nofollow noopener" style="color:var(--amber-ink)">mitsubishielectric.com</a>, and check them against your controller's software before commissioning. Mitsubishi Electric, CITY MULTI, Mr. Slim and LOSSNAY are trademarks of their owner; BACManager is not affiliated with Mitsubishi Electric. The pictures on this page are from BACManager connected to a simulated controller built from the published object list.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// more device guides</div>
+  <h2 class="sec-title">Other BACnet devices</h2>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem 2rem">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Chillers and rooftop units</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Daikin MicroTech III chiller</a></div>
+      <div style="margin:0.25rem 0"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Trane Symbio 700</a></div>
+      <div style="margin:0.25rem 0"><a href="/aaon-vccx2-bacnet.html" style="color:var(--amber-ink)">AAON VCCX2</a></div>
+      <div style="margin:0.25rem 0"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Lennox CORE</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Boilers</div>
+      <div style="margin:0.25rem 0"><a href="/lochinvar-crest-bacnet.html" style="color:var(--amber-ink)">Lochinvar Crest boiler</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">VRF and split systems</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-itm-bacnet.html" style="color:var(--amber-ink)">Daikin iTM (VRV)</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Drives</div>
+      <div style="margin:0.25rem 0"><a href="/abb-ach580-bacnet.html" style="color:var(--amber-ink)">ABB ACH580</a></div>
+      <div style="margin:0.25rem 0"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Schneider ATV600</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Pumps and valves</div>
+      <div style="margin:0.25rem 0"><a href="/grundfos-cim-bacnet.html" style="color:var(--amber-ink)">Grundfos MAGNA3 (CIM)</a></div>
+      <div style="margin:0.25rem 0"><a href="/wilo-cif-bacnet.html" style="color:var(--amber-ink)">Wilo Stratos MAXO (CIF)</a></div>
+      <div style="margin:0.25rem 0"><a href="/belimo-energy-valve-bacnet.html" style="color:var(--amber-ink)">Belimo Energy Valve</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Routers</div>
+      <div style="margin:0.25rem 0"><a href="/basrouter-bacnet-router.html" style="color:var(--amber-ink)">BASrouter (MS/TP to IP)</a></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:1.4rem"><a href="/bacnet-devices.html" style="color:var(--amber-ink)">All BACnet device guides &rarr;</a></p>
+</section>
+
+<div class="cta-strip">
+  <h2>Commission the AE-200 from your laptop</h2>
+  <p>Download the free trial, discover the controller and open the AE-200 workspace &mdash; three groups by instance, set points and modes to write. No credit card.</p>
+  <div class="ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+    <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    <a href="/bacnet-priority-array.html">Priority Array</a>
+    <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/manual.html">Manual</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://.
+   Each click is also counted in our own Google Sheet (Apps Script), cookie
+   consent or not: site, product, version, page, referrer, language, time
+   zone. No cookies, no IP address. The download never waits for it.
+   A workspace (.json or .zip on this site) is counted as product "Workspace" with
+   the file name as its version, a manual (.pdf) as product "Manual"; both
+   download as before. */
+function dlCount(product, version) {
+  try {
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbyx9RacY_l5KDK0RBBmLk41uKv3McyR_UJmCTWqnRqklh6fYgeXvYecddcQDGzRx5-F/exec', JSON.stringify({
+      site: location.hostname, product: product, version: version,
+      page: location.pathname, referrer: document.referrer, lang: navigator.language,
+      tz: (window.Intl && Intl.DateTimeFormat().resolvedOptions().timeZone) || ''
+    }));
+  } catch (err) {}
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var w = e.target.closest('a[href$=".json"], a[href$=".zip"]');
+  if (w) { dlCount('Workspace', (w.getAttribute('href').match(/([^\/]+)\.(?:json|zip)$/) || [])[1] || ''); return; }
+  var m = e.target.closest('a[href$=".pdf"]');
+  if (m) { dlCount('Manual', (m.getAttribute('href').match(/([^\/]+)\.pdf$/) || [])[1] || ''); return; }
+  var a = e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  var dl = a.getAttribute('data-dl');
+  dlCount(/bacmanager/i.test(dl) ? 'BACManager' : (/Pro\.Setup|pro-v/i.test(dl) ? 'ModbusManager Pro' : 'ModbusManager Standard'),
+    (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
+  window.location.href = 'https://' + dl;
+});
+</script>
+</body>
+</html>

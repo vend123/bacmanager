@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grundfos CIM 300/500 BACnet Points List &amp; Setup (MAGNA3)</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="Grundfos MAGNA3 on BACnet with CIM 300 or CIM 500: switches, instance 227000 + MAC, bus control, setpoint scaling, the watchdog. Free workspace.">
+<meta name="keywords" content="Grundfos BACnet points list, MAGNA3 BACnet, Grundfos CIM 300 BACnet, CIM 500 BACnet IP, Grundfos BACnet MSTP, MAGNA3 BACnet points list, Grundfos CIM 300 setup, Grundfos pump BACnet control source, Grundfos BACnet watchdog, Grundfos E-pump BACnet">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/grundfos-cim-bacnet.html">
+<meta property="og:title" content="Grundfos CIM 300/500 BACnet Points List &amp; Setup (MAGNA3)">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="Put a Grundfos MAGNA3 or E-pump on BACnet with a CIM 300 (MS/TP) or CIM 500 (BACnet/IP): address and baud rate on switches, device instance 227000 plus the MAC, bus control that must come last, the percentage setpoint and a watchdog that leaves the pump on local control. Points list and a free BACManager workspace.">
+<meta property="og:url" content="https://bacmanager.com/grundfos-cim-bacnet.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bacmanager.com/og-grundfos-cim.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Grundfos CIM 300/500 BACnet Points List &amp; Setup (MAGNA3)">
+<meta name="twitter:description" content="Put a Grundfos MAGNA3 or E-pump on BACnet with a CIM 300 (MS/TP) or CIM 500 (BACnet/IP): address and baud rate on switches, device instance 227000 plus the MAC, bus control that must come last, the percentage setpoint and a watchdog that leaves the pump on local control. Points list and a free BACManager workspace.">
+<meta name="twitter:image" content="https://bacmanager.com/og-grundfos-cim.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Grundfos CIM 300 and CIM 500 BACnet Points List and Setup for MAGNA3",
+    "description": "Put a Grundfos MAGNA3 or E-pump on BACnet with a CIM 300 (MS/TP) or CIM 500 (BACnet/IP): address and baud rate on switches, device instance 227000 plus the MAC, bus control that must come last, the percentage setpoint and a watchdog that leaves the pump on local control. Points list and a free BACManager workspace.",
+    "url": "https://bacmanager.com/grundfos-cim-bacnet.html",
+    "image": "https://bacmanager.com/og-grundfos-cim.png",
+    "datePublished": "2026-10-28",
+    "dateModified": "2026-10-28",
+    "author": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where is the Grundfos MAGNA3 BACnet points list?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In Grundfos' &ldquo;BACnet for Grundfos pumps&rdquo; functional profile and user manual for CIM/CIU 300 and 500, document 97572650, which marks every object for MAGNA3, E-pumps and CUE. The table on this page lists the points a BMS uses most."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "CIM 300 or CIM 500 for BACnet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CIM 300 for BACnet MS/TP. CIM 500 for BACnet/IP, with its protocol switch SW1 turned to 2; from the factory it is set to PROFINET IO."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Grundfos CIM 300 default BACnet device instance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "227000 plus the MS/TP MAC set on SW6 and SW7, while SW3 is off. With SW3 on, the instance is the value written to AV0."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why doesn't my Grundfos pump respond to BACnet commands?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Set control source (BO0) is 0, local, from the factory. Write the operating mode, control mode and setpoint first, then BO0 = 1 for bus control."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why did my pump stay on local control after a network fault?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The BACnet watchdog (AV1) put it on its local settings, and it does not return to bus control by itself. BO0 has to be written 1 again once the link is back."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is the Grundfos BACnet setpoint scaled?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In closed loop AO0 is a percentage of the setpoint range: actual = AO0 &times; (rmax &minus; rmin) + rmin, where rmin and rmax are AI133 and AI134 times the sensor maximum AI86. In open loop it is a percentage of the nominal frequency."
+        }
+      }
+    ]
+  }
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.pa-table{width:100%;border-collapse:collapse;font-size:0.86rem;max-width:640px;margin:0 auto}
+.pa-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.9rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.pa-table td{padding:0.5rem 0.9rem;border-bottom:1px solid var(--steel);font-family:'IBM Plex Mono',monospace;font-size:0.82rem}
+.pa-table tr.hl td{background:rgba(242,169,0,0.12);font-weight:600}
+.pa-table tr:last-child td{border-bottom:none}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+
+/* family slogan band, slim (2026-10-22) */
+.slogan-band.slim{background:var(--safety,#F2A900);border-bottom:2px solid var(--ink,#16181A);padding:0.5rem 1rem;text-align:center;color:var(--ink,#16181A);display:flex;gap:0.3rem 1rem;justify-content:center;align-items:baseline;flex-wrap:wrap}
+.slogan-band.slim .sb-main{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.3rem;line-height:1.1;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim .sb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim a{color:var(--ink,#16181A);font-weight:700}
+@media(max-width:768px){.slogan-band.slim .sb-main{font-size:1.05rem}.slogan-band.slim .sb-sub{display:none}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Grundfos CIM BACnet","item": "https://bacmanager.com/grundfos-cim-bacnet.html"}]}
+</script>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/bacnet-scanner.html">Scanner</a></li>
+    <li><a href="/bacnet-schedule-editor.html">Schedule</a></li>
+    <li><a href="/bacnet-mstp-rs485.html">MS/TP</a></li>
+    <li><a href="/bacnet-bbmd-foreign-device.html">BBMD</a></li>
+    <li><a href="/bacnet-devices.html">Devices</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+<div class="slogan-band slim">
+  <span class="sb-main">Every device. One tool. Pay once.</span>
+  <span class="sb-sub">Modbus &middot; BACnet &middot; Siemens S7 &middot; one-time licence &middot; also from us: <a href="https://modbusmanager.com">ModbusManager&nbsp;&#8599;</a></span>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">// grundfos &middot; magna3 &middot; cim 300 &middot; cim 500</div>
+  <h1>Grundfos CIM BACnet<br><span class="accent">Points List &amp; Setup</span></h1>
+  <p class="hero-desc">How to put a Grundfos MAGNA3 or E-pump on BACnet with a CIM 300 (MS/TP) or CIM 500 (BACnet/IP) module: address and baud rate on switches, a device instance of 227000 plus the address, a setpoint in percent of a range &mdash; a pump that ignores the BMS until it is switched to bus control, stops if it is switched too early, and stays on local control after a watchdog trip. With a free BACManager workspace.</p>
+  <div class="hero-ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#workspace" class="btn-ghost">Free MAGNA3 workspace</a>
+  </div>
+  <p class="hero-note">Sources: Grundfos &ldquo;BACnet for Grundfos pumps &mdash; CIM/CIU 300 BACnet MS/TP, CIM/CIU 500 Ethernet for BACnet IP&rdquo; 97572650 and the CIM 300 PICS</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// before you start</div>
+  <h2 class="sec-title">A module in the pump</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#128268;</div><h3>CIM or CIU</h3><p>A CIM is a communication module that plugs into the pump's electronics &mdash; MAGNA3 and the E-pumps &mdash; on a 10-pin connector and takes its power from it. A CIU is the same module in a box of its own, for pumps that cannot take one inside. Grundfos' profile covers MAGNA3, E-pumps 0.25&ndash;7.5 kW and CUE / E-pumps 11&ndash;22 kW.</p></div>
+    <div class="feat"><div class="feat-icon">&#127760;</div><h3>MS/TP: CIM 300. IP: CIM 500</h3><p>CIM 300 speaks BACnet MS/TP. For BACnet/IP use the CIM 500 Ethernet module and turn its protocol switch SW1 to <strong>2</strong>: from the factory it is 0, PROFINET IO. Turning it while powered restarts the module in the new protocol.</p></div>
+    <div class="feat"><div class="feat-icon">&#128203;</div><h3>What the module serves</h3><p>B-ASC, ReadProperty(Multiple), WriteProperty(Multiple), COV with up to 10 subscriptions, DeviceCommunicationControl. Vendor ID 227. BTL-listed for the CIM/CIU 300, firmware 04.02.00. The control objects are writable, not commandable.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// setup</div>
+  <h2 class="sec-title">CIM 300: everything is on switches</h2>
+  <table class="compare-table">
+    <thead><tr><th>Setting</th><th>Switch</th><th>Factory</th><th class="hl">Set to</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">MS/TP MAC</td><td>SW6 (high) + SW7 (low), hex</td><td>&mdash;</td><td class="hl">0&ndash;127; 20 = SW6 on 1, SW7 on 4</td></tr>
+      <tr><td class="mono">Baud rate</td><td>SW4 / SW5</td><td>9600 (OFF/OFF)</td><td class="hl">19200 OFF/ON, 38400 ON/OFF, 76800 ON/ON &mdash; Grundfos recommends faster than 9600</td></tr>
+      <tr><td class="mono">Device instance</td><td>SW3</td><td><strong>227000 + MAC</strong> (OFF)</td><td class="hl">ON: the value written to AV0, any 0&ndash;4194302</td></tr>
+      <tr><td class="mono">Termination 120 &Omega;</td><td>SW1 + SW2</td><td>Out</td><td class="hl">Both ON at the two ends of the trunk only</td></tr>
+      <tr><td class="mono">Device name</td><td>&mdash;</td><td>&ldquo;Grundfos - 227001&rdquo;</td><td class="hl">Writable on the Device object</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">The baud rate and SW3 take effect at once. The CIM 300 has <strong>no bias resistors</strong>, so bias must come from another device on the segment, which takes 32 devices without repeaters. On a CIM 500 the web page at 192.168.1.100 sets the IP address, the UDP port (47808), the device instance (227000) and foreign-device registration with a BBMD; its login is printed in the manual and must be changed on first use.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// control</div>
+  <h2 class="sec-title">Bus values first, then bus control</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">1</div><h3>Set control source</h3><p>BO0 Set control source is <strong>0 local</strong> from the factory: the pump runs on its own settings and does nothing the BMS writes. Write 1 for bus control. BI0 and MI14 say who is in control; BI64 Forced to local says something on site overrides it.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>&hellip;but not first</h3><p>The bus values the pump takes over have factory values too: control mode constant speed and operating mode <strong>Stop</strong>. Grundfos' own example writes operating mode Start (MO1), the control mode (MO0) and the setpoint (AO0) first, and enables bus control last &mdash; otherwise the pump stops.</p></div>
+    <div class="feat"><div class="feat-icon">%</div><h3>The setpoint is a percentage</h3><p>AO0 is % of the setpoint range in closed-loop modes: actual = AO0 &times; (rmax &minus; rmin) + rmin, with rmin and rmax = AI133 and AI134 &times; the sensor maximum AI86. Grundfos' MAGNA3 example: 5&ndash;50 % of 20 m is 1&ndash;10 m, so 40 % is 4.6 m. In constant speed it is % of nominal frequency, and 0 % does not stop the pump.</p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the rule that bites</div>
+  <h2 class="sec-title">The watchdog that does not come back</h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">&#9203;</div><h3>Off from the factory</h3><p>AV1 BACnet watchdog is 0, off: a pump on bus control stays on the last bus values forever if the BMS goes away. Set 5&ndash;3600 s to have it fall back to its local settings instead &mdash; after making those local settings right with Grundfos GO.</p></div>
+    <div class="feat"><div class="feat-icon">&#9888;</div><h3>No way back by itself</h3><p>After a watchdog time-out the pump stays on local control when BACnet returns. Grundfos: the user must set it back to bus control with BO0. A BMS that wrote BO0 once at commissioning never does.</p></div>
+    <div class="feat"><div class="feat-icon">&#8635;</div><h3>Write BO0 again</h3><p>Writing BO0 = 1 cyclically brings the pump back on bus control as soon as the link is back.</p></div>
+  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">In BACManager a BACnet tag has <strong>Refresh (s)</strong>: the last value written to it is written again every that many seconds until it is relinquished. The free workspace sets 10&nbsp;s on BO0 only. Tested against the simulated MAGNA3 with a 15-second watchdog and a 20-second link loss: both runs fell back to local control 15&nbsp;s into the loss; with Refresh the pump was on bus control again 5&nbsp;s after the link returned, without it it stayed on local control for the rest of the run.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="points">
+  <div class="sec-label">// points list</div>
+  <h2 class="sec-title">The MAGNA3 points a BMS uses</h2>
+  <p class="sec-sub">Object names as Grundfos lists them. W = writable, R = read only. A value the pump does not have reads 65535.</p>
+  <table class="compare-table">
+    <thead><tr><th>Object</th><th>Object name</th><th>Access</th><th class="hl">What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">BO0</td><td class="mono">Set control source</td><td>W</td><td class="hl">0 local (factory), 1 bus</td></tr>
+      <tr><td class="mono">MO1</td><td class="mono">Set operating mode</td><td>W</td><td class="hl">1 Start, 2 Stop (factory), 3 Min, 4 Max</td></tr>
+      <tr><td class="mono">MO0</td><td class="mono">Set control mode</td><td>W</td><td class="hl">1 constant speed (factory), 2 constant pressure, 3 proportional pressure, 4 AUTOADAPT, 5 constant flow, 6 constant temperature, 9 FLOWADAPT, 11 constant diff. pressure, 12 constant diff. temperature</td></tr>
+      <tr><td class="mono">AO0</td><td class="mono">Set setpoint</td><td>W</td><td class="hl">% of the setpoint range (closed loop) or of nominal frequency</td></tr>
+      <tr><td class="mono">BO4</td><td class="mono">Reset fault</td><td>W</td><td class="hl">On a rising edge, with bus control</td></tr>
+      <tr><td class="mono">AV1</td><td class="mono">BACnet watchdog</td><td>W</td><td class="hl">0 off (factory), 5&ndash;3600 s</td></tr>
+      <tr><td class="mono">BI0 / MI14 / BI64</td><td class="mono">Control source status / Control Source / Forced to local</td><td>R</td><td class="hl">Local or bus; which source; overridden on site</td></tr>
+      <tr><td class="mono">MI0 / MI1</td><td class="mono">Actual control mode / Actual operating mode</td><td>R</td><td class="hl">What the pump is doing</td></tr>
+      <tr><td class="mono">BI2</td><td class="mono">Rotation status</td><td>R</td><td class="hl">Running</td></tr>
+      <tr><td class="mono">AI0 / AI1</td><td class="mono">Fault code / Warning code</td><td>R</td><td class="hl">Grundfos alarm codes</td></tr>
+      <tr><td class="mono">AI93 / AI5</td><td class="mono">Differential pressure / Flow</td><td>R</td><td class="hl">bar; m&sup3;/h (on MAGNA3 an estimate, for monitoring)</td></tr>
+      <tr><td class="mono">AI7 / AI8 / AI6</td><td class="mono">Speed / Frequency / Relative performance</td><td>R</td><td class="hl">rpm; Hz; % of maximum</td></tr>
+      <tr><td class="mono">AI13 / AI10 / AI30</td><td class="mono">Power / Motor current / Energy consumption</td><td>R</td><td class="hl">W; A; kWh</td></tr>
+      <tr><td class="mono">AI22</td><td class="mono">Fluid temperature</td><td>R</td><td class="hl">&deg;C</td></tr>
+      <tr><td class="mono">AI9 / AI58</td><td class="mono">Actual setpoint / User setpoint</td><td>R</td><td class="hl">The setpoint in use, the one set</td></tr>
+      <tr><td class="mono">AI133 / AI134 / AI86</td><td class="mono">Setpoint range minimum / maximum / Max. of feedback sensor</td><td>R</td><td class="hl">To turn AO0 into metres or bar</td></tr>
+      <tr><td class="mono">AI27 / AI31</td><td class="mono">Runtime / Number of starts</td><td>R</td><td class="hl">h; count</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Which values exist depends on the pump: the profile's tables mark each one for MAGNA3, the small E-pumps and CUE. Twin-head MAGNA3 and TPED pumps in multi-pump mode use Grundfos' separate booster profile. The complete lists, with fault codes, are in Grundfos' <strong>97572650</strong>.</p>
+  <figure style="margin:1.8rem auto 0;max-width:1130px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="grundfos-cim-bacnet-objects.png" width="1130" height="700" alt="BACManager BACnet tab: device Grundfos - 227005, device instance 227005, with its MAGNA3 objects listed by name, Fault code, Warning code, Flow, Relative performance, Speed, Frequency, Actual setpoint, Motor current, Power, Fluid temperature, Runtime, Energy consumption, User setpoint and Differential pressure, polled every second" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Discover, click the pump, and its objects come up by name with live values. Pictured: a simulated MAGNA3 with CIM 300 built from Grundfos' object list, on local control</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="workspace">
+  <div class="sec-label">// free download</div>
+  <h2 class="sec-title">The MAGNA3 workspace</h2>
+  <p class="sec-sub">One dashboard page for a MAGNA3 on a heating circuit: control source and CIM status, differential pressure, estimated flow, speed, relative performance, power and energy, the actual modes and fault codes &mdash; with the bus values to write first, bus control written again every 10 seconds, fault reset and the watchdog.</p>
+  <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="grundfos-cim-dashboard.png" width="1300" height="770" alt="BACManager dashboard for a Grundfos MAGNA3 with CIM 300: control source Bus, CIM status OK, differential pressure 0.72 bar, estimated flow 7.88 cubic metres per hour, 3535 rpm, relative performance 82.2 percent, power 257 W, operating mode Start, proportional pressure, setpoint 70 percent, and a trend where setpoint and performance step up" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">Start, proportional pressure and 30 % written, then bus control; the setpoint then raised to 70 % = 7.3 m (simulated pump)</figcaption>
+  </figure>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">1</div><h3>Discover the pump</h3><p>On the BACnet tab open MS/TP on the PC's RS-485 port at the CIM 300's baud rate, or BACnet/IP for a CIM 500, and press Discover. The pump appears as 227000 plus its MAC.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Open the workspace</h3><p>Workspace &rarr; Open. The file reads device 227005; if yours has another instance, BACManager asks which discovered device takes its place and moves every point over.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Bus values, then bus</h3><p>On the Dashboard press Run. Choose Start, the control mode and the setpoint; then Bus. From then on BO0 is written again every 10 seconds. After BACManager restarts, write it once more.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:1.6rem">
+    <a href="/Grundfos_MAGNA3_CIM_BACnet.json" download class="btn-primary">Download workspace</a>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// when it does not work</div>
+  <h2 class="sec-title">Typical problems</h2>
+  <table class="compare-table">
+    <thead><tr><th>What you see</th><th>Why</th><th class="hl">What to do</th></tr></thead>
+    <tbody>
+      <tr><td>The pump ignores every write</td><td>BO0 is still 0, local</td><td class="hl">Write BO0 = 1 after the bus values</td></tr>
+      <tr><td>The pump stops when bus control is enabled</td><td>The bus operating mode is still Stop</td><td class="hl">Write MO1 = 1 Start, MO0 and AO0 first</td></tr>
+      <tr><td>Back on local control after a network fault</td><td>Watchdog time-out; it does not return by itself</td><td class="hl">Write BO0 = 1 again (Refresh 10 s in BACManager)</td></tr>
+      <tr><td>BACnet/IP module not found</td><td>CIM 500 on PROFINET, SW1 = 0</td><td class="hl">SW1 = 2 BACnet IP</td></tr>
+      <tr><td>Setpoint in metres is not what was meant</td><td>AO0 is % of the setpoint range</td><td class="hl">Scale with AI133, AI134 and AI86</td></tr>
+      <tr><td>A value reads 65535</td><td>Not available on this pump, or no sensor</td><td class="hl">Check the profile's availability column</td></tr>
+      <tr><td>Bad frames on MS/TP</td><td>No bias on the segment; terminators</td><td class="hl">Bias from another device; SW1+SW2 ON at both ends only</td></tr>
+      <tr><td>Two pumps answer as the same device</td><td>Same MAC, SW3 off</td><td class="hl">A unique MAC on SW6/SW7, or SW3 ON with AV0</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">Grundfos CIM BACnet &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Where is the Grundfos MAGNA3 BACnet points list?<span class="icon">+</span></div>
+      <div class="faq-a">In Grundfos' &ldquo;BACnet for Grundfos pumps&rdquo; functional profile and user manual for CIM/CIU 300 and 500, document 97572650, which marks every object for MAGNA3, E-pumps and CUE. The table on this page lists the points a BMS uses most.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">CIM 300 or CIM 500 for BACnet?<span class="icon">+</span></div>
+      <div class="faq-a">CIM 300 for BACnet MS/TP. CIM 500 for BACnet/IP, with its protocol switch SW1 turned to 2; from the factory it is set to PROFINET IO.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the Grundfos CIM 300 default BACnet device instance?<span class="icon">+</span></div>
+      <div class="faq-a">227000 plus the MS/TP MAC set on SW6 and SW7, while SW3 is off. With SW3 on, the instance is the value written to AV0.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why doesn't my Grundfos pump respond to BACnet commands?<span class="icon">+</span></div>
+      <div class="faq-a">Set control source (BO0) is 0, local, from the factory. Write the operating mode, control mode and setpoint first, then BO0 = 1 for bus control.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why did my pump stay on local control after a network fault?<span class="icon">+</span></div>
+      <div class="faq-a">The BACnet watchdog (AV1) put it on its local settings, and it does not return to bus control by itself. BO0 has to be written 1 again once the link is back.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How is the Grundfos BACnet setpoint scaled?<span class="icon">+</span></div>
+      <div class="faq-a">In closed loop AO0 is a percentage of the setpoint range: actual = AO0 &times; (rmax &minus; rmin) + rmin, where rmin and rmax are AI133 and AI134 times the sensor maximum AI86. In open loop it is a percentage of the nominal frequency.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// sources</div>
+  <h2 class="sec-title">Where this comes from</h2>
+  <p style="max-width:820px;margin:0 auto;color:var(--body);line-height:1.75">Grundfos: <em>BACnet for Grundfos pumps &mdash; CIM/CIU 300 BACnet MS/TP, CIM/CIU 500 Ethernet for BACnet IP, Functional profile and user manual</em>, 97572650 (09.2025); the <em>BACnet PICS CIM 300</em>; BTL listing BTL-24189. Get them from <a href="https://www.grundfos.com/" rel="nofollow noopener" style="color:var(--amber-ink)">grundfos.com</a> and check them against your pump and module before commissioning. Grundfos, MAGNA3, AUTOADAPT and FLOWADAPT are trademarks of their owner; BACManager is not affiliated with Grundfos. The pictures on this page are from BACManager connected to a simulated pump built from the published object list.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// more device guides</div>
+  <h2 class="sec-title">Other BACnet devices</h2>
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem 2rem">
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Chillers and rooftop units</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Daikin MicroTech III chiller</a></div>
+      <div style="margin:0.25rem 0"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Trane Symbio 700</a></div>
+      <div style="margin:0.25rem 0"><a href="/aaon-vccx2-bacnet.html" style="color:var(--amber-ink)">AAON VCCX2</a></div>
+      <div style="margin:0.25rem 0"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Lennox CORE</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Boilers</div>
+      <div style="margin:0.25rem 0"><a href="/lochinvar-crest-bacnet.html" style="color:var(--amber-ink)">Lochinvar Crest boiler</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">VRF and split systems</div>
+      <div style="margin:0.25rem 0"><a href="/daikin-itm-bacnet.html" style="color:var(--amber-ink)">Daikin iTM (VRV)</a></div>
+      <div style="margin:0.25rem 0"><a href="/mitsubishi-ae200-bacnet.html" style="color:var(--amber-ink)">Mitsubishi AE-200</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Drives</div>
+      <div style="margin:0.25rem 0"><a href="/abb-ach580-bacnet.html" style="color:var(--amber-ink)">ABB ACH580</a></div>
+      <div style="margin:0.25rem 0"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Schneider ATV600</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Pumps and valves</div>
+      <div style="margin:0.25rem 0"><a href="/wilo-cif-bacnet.html" style="color:var(--amber-ink)">Wilo Stratos MAXO (CIF)</a></div>
+      <div style="margin:0.25rem 0"><a href="/belimo-energy-valve-bacnet.html" style="color:var(--amber-ink)">Belimo Energy Valve</a></div>
+    </div>
+    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem">Routers</div>
+      <div style="margin:0.25rem 0"><a href="/basrouter-bacnet-router.html" style="color:var(--amber-ink)">BASrouter (MS/TP to IP)</a></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:1.4rem"><a href="/bacnet-devices.html" style="color:var(--amber-ink)">All BACnet device guides &rarr;</a></p>
+</section>
+
+<div class="cta-strip">
+  <h2>Commission the MAGNA3 from your laptop</h2>
+  <p>Download the free trial, discover the pump and open the MAGNA3 workspace &mdash; every point by name, bus control written again after a watchdog trip. No credit card.</p>
+  <div class="ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer>
+  <div class="footer-logo">BACManager</div>
+  <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+    <a href="/">Home</a>
+    <a href="/bacnet-scanner.html">Scanner</a>
+    <a href="/bacnet-schedule-editor.html">Schedule</a>
+    <a href="/bacnet-mstp-rs485.html">MS/TP</a>
+    <a href="/bacnet-modbus-gateway.html">Gateway</a>
+    <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    <a href="/bacnet-devices.html">Device guides</a>
+    <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+    <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    <a href="/bacnet-priority-array.html">Priority Array</a>
+    <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+    <a href="https://modbusmanager.com">ModbusManager</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/manual.html">Manual</a>
+    <a href="/license-terms.html">License terms</a>
+    <a href="mailto:support@bacmanager.com">Support</a>
+  </div>
+  <div>support@bacmanager.com</div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://.
+   Each click is also counted in our own Google Sheet (Apps Script), cookie
+   consent or not: site, product, version, page, referrer, language, time
+   zone. No cookies, no IP address. The download never waits for it.
+   A workspace (.json or .zip on this site) is counted as product "Workspace" with
+   the file name as its version, a manual (.pdf) as product "Manual"; both
+   download as before. */
+function dlCount(product, version) {
+  try {
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbyx9RacY_l5KDK0RBBmLk41uKv3McyR_UJmCTWqnRqklh6fYgeXvYecddcQDGzRx5-F/exec', JSON.stringify({
+      site: location.hostname, product: product, version: version,
+      page: location.pathname, referrer: document.referrer, lang: navigator.language,
+      tz: (window.Intl && Intl.DateTimeFormat().resolvedOptions().timeZone) || ''
+    }));
+  } catch (err) {}
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var w = e.target.closest('a[href$=".json"], a[href$=".zip"]');
+  if (w) { dlCount('Workspace', (w.getAttribute('href').match(/([^\/]+)\.(?:json|zip)$/) || [])[1] || ''); return; }
+  var m = e.target.closest('a[href$=".pdf"]');
+  if (m) { dlCount('Manual', (m.getAttribute('href').match(/([^\/]+)\.pdf$/) || [])[1] || ''); return; }
+  var a = e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  var dl = a.getAttribute('data-dl');
+  dlCount(/bacmanager/i.test(dl) ? 'BACManager' : (/Pro\.Setup|pro-v/i.test(dl) ? 'ModbusManager Pro' : 'ModbusManager Standard'),
+    (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
+  window.location.href = 'https://' + dl;
+});
+</script>
+</body>
+</html>
