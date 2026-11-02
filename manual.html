@@ -8,14 +8,14 @@
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="description" content="BACManager 1.4.6 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedules, EDE, simulator, Modbus, dashboards, gateway and MQTT.">
+<meta name="description" content="BACManager 1.4.7 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedules, EDE, simulator, Modbus, dashboards, gateway and MQTT.">
 <meta name="keywords" content="BACManager manual, BACnet explorer documentation, BACnet MS/TP how to, BACnet priority array write, BACnet schedule editor, BACnet EDE export, BACnet Modbus gateway setup, BACnet simulator">
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bacmanager.com/manual.html">
 <meta property="og:title" content="BACManager User Manual &amp; Documentation">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="The complete BACManager 1.4.6 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway with MQTT and Home Assistant, and Runtime.">
+<meta property="og:description" content="The complete BACManager 1.4.7 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway with MQTT and Home Assistant, and Runtime.">
 <meta property="og:url" content="https://bacmanager.com/manual.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
@@ -29,7 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 [
-{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.6: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway with MQTT and Home Assistant discovery, and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-10-28","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
+{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.7: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway with MQTT and Home Assistant discovery, and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-11-02","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Does BACManager work on MS/TP or only BACnet/IP?","acceptedAnswer":{"@type":"Answer","text":"Both. With a USB-RS485 adapter it joins an MS/TP trunk as a master node and does everything it does on BACnet/IP: discover, browse, write with priority, COV, schedules and EDE export."}},
 {"@type":"Question","name":"Which priority does BACManager write with?","acceptedAnswer":{"@type":"Answer","text":"The one you choose in Write priority. Tags, dashboard elements and gateway rows default to 8, Manual Operator. An empty value relinquishes the slot."}},
@@ -331,12 +331,12 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
 </div>
 
 <header class="hero">
-  <div class="eyebrow">Documentation &mdash; BACManager v1.4.6 &middot; updated 28 October 2026</div>
+  <div class="eyebrow">Documentation &mdash; BACManager v1.4.7 &middot; updated 2 November 2026</div>
   <h1>BACManager <span class="accent">User Manual</span></h1>
   <p class="hero-desc">How to discover, browse, write and schedule BACnet/IP and MS/TP devices, read Modbus devices in the same window, and build dashboards, logs, alarms and a BACnet&ndash;Modbus gateway with BACManager on Windows. Jump to a topic, or download the manual as a PDF.</p>
   <div class="hero-ctas">
     <a href="/BACManager_UserManual.pdf" class="btn-primary">Download PDF manual</a>
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.7/BACManager.Setup.1.4.7.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
   </div>
   <p class="hero-note">Free 14-day trial &bull; BACManager &#36;149 one-time &bull; Runtime &#36;39 per machine &bull; Windows 10 / 11</p>
 </header>
@@ -404,7 +404,7 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
 <h2>BBMD &amp; foreign device registration</h2>
 <p>Who-Is is a broadcast and stops at the router. To discover devices on another subnet, register BACManager as a <b>foreign device</b> with that network&rsquo;s BBMD:</p>
 <ol class="body-list"><li>Open the client (BACnet/IP).</li><li>Enter the <b>BBMD</b> address (<code>IP</code> or <code>IP:port</code>, port 47808 by default) and the <b>TTL</b> in seconds (default 300, minimum 30).</li><li>Press <b>Register</b>. The dot turns green and the status reads &ldquo;FDR: registered @ &hellip;&rdquo;; a refusal shows the BVLC result code, a timeout means the BBMD never replied.</li><li>Run <b>Discover</b> &mdash; broadcasts now reach the remote subnet.</li></ol>
-<p>The registration is renewed automatically at 75 % of the TTL, and re-applied the next time the client opens. <b>Unregister</b> ends it. Registration applies to BACnet/IP only; the row is hidden on MS/TP. Background: <a class="inline-link" href="/bacnet-bbmd-foreign-device.html">BBMD &amp; foreign device registration explained</a>.</p>
+<p>The registration is renewed automatically at 75 % of the TTL, and re-applied the next time the client opens. If the BBMD does not answer or refuses, the row says why (in your language) and BACManager tries again every 30 s until it is accepted or you press <b>Unregister</b>, which ends it. Devices found through the BBMD are reached at their own address, not the BBMD&rsquo;s. Registration applies to BACnet/IP only; the row is hidden on MS/TP. Background: <a class="inline-link" href="/bacnet-bbmd-foreign-device.html">BBMD &amp; foreign device registration explained</a>.</p>
 </section>
 
 <section id="mstp" class="doc-section">
@@ -428,6 +428,7 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
 <tr><td><code>192.168.10.25</code></td><td>a directed Who-Is to one address, e.g. across a router</td></tr>
 <tr><td><code>192.168.10.1-254</code> or <code>192.168.10.0/24</code></td><td>a sweep of up to 256 addresses, one directed Who-Is each</td></tr>
 </tbody></table>
+<p>A mistyped address or range (<code>192.168.1.300</code>, <code>10.0.0.0/23</code>) is refused with a message before anything is sent. A new Discover stops a sweep that is still running.</p>
 <p>Each I-Am adds the device to <b>Devices</b>: name (read after discovery), &ldquo;ID &hellip; &middot; address &middot; vendor &hellip;&rdquo;, sorted by device instance. The activity log shows every &ldquo;iAm &larr; device &hellip;&rdquo;.</p>
 <p><b>Devices behind a router.</b> A device that answers through a BACnet router &mdash; MS/TP controllers behind an IP-to-MS/TP router, or the indoor units a VRF controller such as a Daikin iTM presents on its own network &mdash; shows &ldquo;net N&rdquo; in its line. BACManager keeps the network and address the I-Am came from and sends every request for that device through the router, so it is browsed, polled and written like any other. More on finding devices: <a class="inline-link" href="/bacnet-scanner.html">BACnet scanner</a>.</p>
 </section>
@@ -451,7 +452,7 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
 <section id="properties" class="doc-section">
 <h2>Property browser</h2>
 <p>&#128269; on an object opens its properties. <b>Read common set</b> reads the properties that matter for that object type &mdash; name, type, description, present value, units, status flags, event state, reliability, out-of-service, limits, COV increment, and for commandable objects the <b>priority-array</b> (87) and <b>relinquish-default</b> (104); for the device object the vendor, model, firmware, protocol revision, APDU and segmentation settings.</p>
-<p>Any other property: choose it in <b>&mdash; property &mdash;</b> or type its number in <b>ID</b>, then <b>Read</b>. To write, enter the value (empty = NULL), leave the type on <b>auto</b> or pick Real, Unsigned, Signed, Boolean, Enumerated or String, and press <b>Write</b>; the value is read back at once. A property the device does not have shows &ldquo;error&rdquo; &mdash; hover for the reason.</p>
+<p>Any other property: choose it in <b>&mdash; property &mdash;</b> or type its number in <b>ID</b>, then <b>Read</b>. To write, enter the value (empty = NULL), leave the type on <b>auto</b> or pick Real, Unsigned, Signed, Boolean, Enumerated or String, and press <b>Write</b>; the value is read back at once. <b>Auto</b> takes the type the standard gives the property (Object_Name and Description as text, Out_Of_Service as Boolean, Units as Enumerated, COV_Increment and limits as Real) and the object type for Present_Value. A value that does not fit the type is refused before sending: Boolean takes true, false, 1 or 0; Unsigned and Enumerated a whole number from 0; a decimal is written with a point (21.5). A property the device does not have shows &ldquo;error&rdquo; &mdash; hover for the reason.</p>
 <div class="callout tip"><div class="c-label">Loop objects</div><p>A Loop&rsquo;s setpoint is property <b>108</b>, its process value (controlled variable) <b>21</b>, the output is the present value <b>85</b>, and P / I / D are <b>93 / 49 / 26</b>. Type the ID to read or write them.</p></div>
 </section>
 
@@ -481,15 +482,16 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
 <ul class="body-list">
 <li>Each day lists time/value pairs: edit them in place, &times; removes one, <b>+ add</b> adds one. Times are <code>HH:MM</code>.</li>
 <li><b>Write schedule</b> writes the weekly schedule to the device; <b>Reload</b> reads it again; <b>Raw properties</b> switches to the property browser.</li>
+<li>An impossible entry &mdash; a time like 25:61, an empty or non-numeric value &mdash; is marked and nothing is written until it is fixed; the device keeps its schedule.</li>
 <li><b>Writes to</b> (the object properties the schedule commands) and <b>Exceptions</b> (dates, week-n-day entries and calendar references with their priority) are shown read-only.</li>
 </ul>
-<p>A <b>calendar</b> object opens as a list of entries: specific dates (<code>yyyy-mm-dd</code>, an empty part means &ldquo;any&rdquo;), <b>date ranges</b> (from &hellip; to, e.g. a summer shutdown, or 1&ndash;15 August of every year with the year left empty) and week-n-day patterns (month, week, weekday). <b>+ date</b>, <b>+ range</b> and <b>+ weekday</b> add entries, &times; removes one, <b>Write calendar</b> writes the list.</p>
+<p>A <b>calendar</b> object opens as a list of entries: specific dates (<code>yyyy-mm-dd</code>, an empty part means &ldquo;any&rdquo;), <b>date ranges</b> (from &hellip; to, e.g. a summer shutdown, or 1&ndash;15 August of every year with the year left empty) and week-n-day patterns (month, week, weekday). <b>+ date</b>, <b>+ range</b> and <b>+ weekday</b> add entries, &times; removes one, <b>Write calendar</b> writes the list. A month 15, a day 35 or a year outside 1900&ndash;2154 is refused before writing.</p>
 <p>More: <a class="inline-link" href="/bacnet-schedule-editor.html">BACnet schedule &amp; calendar editor</a>.</p>
 </section>
 
 <section id="export" class="doc-section">
 <h2>EDE &amp; CSV export</h2>
-<p>With a device selected, <b>&#11015; EDE</b> writes its object list as a BACnet <b>EDE 2.3</b> file (keyname, device instance, object name, type and instance, description, default present value, min/max, commandable, high/low limit, unit code&hellip;) that other BACnet tools import, and <b>&#11015; CSV</b> writes a plain list (device, type, instance, name, description, present value, units). Each object is read during the export; the status counts them.</p>
+<p>With a device selected, <b>&#11015; EDE</b> writes its object list as a BACnet <b>EDE 2.3</b> file (keyname, device instance, object name, type and instance, description, default present value, min/max, commandable, high/low limit, unit code&hellip;) in the layout B.I.G.-EU EDE readers expect (header block, one row per object, unique keynames; saved as <code>&lt;project&gt;_EDE.csv</code>) that other BACnet tools import, and <b>&#11015; CSV</b> writes a plain list (device, type, instance, name, description, present value, units). Each object is read during the export; the status counts them.</p>
 </section>
 
 <section id="simulator" class="doc-section">
@@ -511,7 +513,7 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
 <ul class="body-list">
 <li><b>Connect</b>: Modbus TCP (IP, port 502), RTU (COM port, baud, parity, data and stop bits) and further transports; auto-reconnect. See <a class="inline-link" href="https://modbusmanager.com/manual.html#connecting">Connecting</a>.</li>
 <li><b>Poll windows &amp; Registers</b>: FC01&ndash;FC04 blocks with their own slave ID and interval; every value as decimal, hex, binary, 32- and 64-bit; value names, conditional colours, word order, CSV export, snapshot and PDF report.</li>
-<li><b>Write</b> (FC05, 06, 16, 22, 23), <b>Chart</b>, <b>Serial Monitor</b>, <b>Test Center</b> (incl. FC08, FC43/14).</li>
+<li><b>Write</b> (FC05, 06, 16), <b>Chart</b>, <b>Serial Monitor</b>, <b>Test Center</b> (any single request incl. FC15, FC22, FC23, FC08, FC17, FC43/14).</li>
 <li><b>Slave Scan</b> with <b>Auto-detect</b>, <b>Address Scan</b>, and the <b>Slave</b> simulator with simulations and the Link panel.</li>
 </ul>
 </section>
@@ -601,7 +603,7 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
 
 <section id="limits" class="doc-section">
 <h2>Not supported yet</h2>
-<p>So you know before you need it, BACManager 1.4.6 does <b>not</b>:</p>
+<p>So you know before you need it, BACManager 1.4.7 does <b>not</b>:</p>
 <ul class="body-list">
 <li>use BACnet/SC (secure connect) &mdash; only BACnet/IP and MS/TP;</li>
 <li>read Trend Log objects (they are listed, but ReadRange is not implemented);</li>
@@ -644,7 +646,7 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
   <h2>Try it on your building</h2>
   <p>Download the 14-day trial, open the BACnet client and discover your devices &mdash; or start the simulator and follow this manual.</p>
   <div class="ctas">
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.6/BACManager.Setup.1.4.6.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.7/BACManager.Setup.1.4.7.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
     <a href="/BACManager_UserManual.pdf" class="btn-cta-outline">Download PDF manual</a>
   </div>
   <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
