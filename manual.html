@@ -533,7 +533,7 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
 
 <section id="dashboard" class="doc-section">
 <h2>Dashboard &amp; PID faceplate</h2>
-<p>The dashboard editor is the one from ModbusManager Pro &mdash; pages and popup pages, Classic and Modern themes, 62 elements in Standard Objects, Basic, Solar/Energy, Process, <b>HVAC</b> (fan, damper, coils, filter, AHU, thermostat, humidifier, heat exchanger&hellip;), Input/Data and Charts, undo/redo, Runtime mode and full screen. The <a class="inline-link" href="https://modbusmanager.com/manual.html#dashboard">ModbusManager manual</a> describes the editor in detail. BACManager adds:</p>
+<p>The dashboard editor is the one from ModbusManager Pro &mdash; pages and popup pages, Classic and Modern themes, 63 elements in Standard Objects, Basic, Solar/Energy, Process, <b>HVAC</b> (fan, damper, coils, filter, AHU, thermostat, humidifier, heat exchanger&hellip;), Input/Data and Charts, undo/redo, Runtime mode and full screen. The <a class="inline-link" href="https://modbusmanager.com/manual.html#dashboard">ModbusManager manual</a> describes the editor in detail. BACManager adds:</p>
 <ul class="body-list">
 <li><b>Source &rarr; BACnet</b> in an element&rsquo;s properties: Device ID, Object, Instance (and Property for a Loop: output, process value, setpoint, P, I, D). The device must be polled or COV-subscribed in the BACnet tab or by a gateway source to show a live value.</li>
 <li><b>PID Loop faceplate</b> with a <b>BACnet Loop object</b> box: enter the Device ID and Loop instance and press <b>Bind PV, SP, OUT, P/I/D</b> &mdash; PV is bound to property 21, SP to 108, OUT to 85, P/I/D to 93/49/26. Auto/Manual is bound by hand if the controller exposes it.</li>
@@ -541,7 +541,7 @@ nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
 <li><b>Device Table</b> columns can be <b>BACnet</b>: an object type and instance, with a <b>device step</b> or an instance step from row to row, so one column reads the same object of every device.</li>
 <li><b>Indoor Unit</b> faceplate <b>Bind</b>: Daikin iTM (the device is the unit) and Mitsubishi AE-200 (device and group) bind every point in one click.</li>
 <li><b>Motor / Drive</b> faceplate presets <b>ABB ACH580</b> and <b>Schneider ATV600</b>: the drive&rsquo;s BACnet objects of one device; Start writes the run command after a confirmation.</li>
-<li><b>Status Bits</b> and <b>Annunciator</b> tiles read BACnet objects as well; an Annunciator tile can also follow a BACManager alarm and acknowledge it.</li>
+<li><b>Status Bits</b>, <b>Annunciator</b> tiles and the <b>Group Frame</b>&rsquo;s alarm point read BACnet objects as well; an Annunciator tile can also follow a BACManager alarm and acknowledge it.</li>
 </ul>
 <figure class="shot mid"><img src="/manual-dash.jpg" width="680" height="280" loading="lazy" alt="Dashboard in Runtime with a PID faceplate for Loop 0: PV 27.9 degrees, setpoint 28.0, output 64.7 percent, a small trend of the setpoint step and the process following, P 8, I 20, D 0; beside it room temperature and supply humidity from analog inputs"><figcaption>A PID faceplate bound to a BACnet Loop after a setpoint step from 25 to 28 &deg;C, with two analog inputs.</figcaption></figure>
 <p>Write elements write only in <b>Runtime</b> and only after the element has read a value. A BACnet write uses priority 8 unless the tag says otherwise.</p>
