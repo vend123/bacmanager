@@ -8,14 +8,14 @@
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="description" content="BACManager 1.4.7 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedules, EDE, simulator, Modbus, dashboards, gateway and MQTT.">
+<meta name="description" content="BACManager 1.4.8 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedules, EDE, simulator, Modbus, dashboards, gateway and MQTT.">
 <meta name="keywords" content="BACManager manual, BACnet explorer documentation, BACnet MS/TP how to, BACnet priority array write, BACnet schedule editor, BACnet EDE export, BACnet Modbus gateway setup, BACnet simulator">
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bacmanager.com/manual.html">
 <meta property="og:title" content="BACManager User Manual &amp; Documentation">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="The complete BACManager 1.4.7 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway with MQTT and Home Assistant, and Runtime.">
+<meta property="og:description" content="The complete BACManager 1.4.8 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway with MQTT and Home Assistant, and Runtime.">
 <meta property="og:url" content="https://bacmanager.com/manual.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
@@ -29,7 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 [
-{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.7: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway with MQTT and Home Assistant discovery, and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-11-02","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
+{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.8: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway with MQTT and Home Assistant discovery, and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-11-07","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Does BACManager work on MS/TP or only BACnet/IP?","acceptedAnswer":{"@type":"Answer","text":"Both. With a USB-RS485 adapter it joins an MS/TP trunk as a master node and does everything it does on BACnet/IP: discover, browse, write with priority, COV, schedules and EDE export."}},
 {"@type":"Question","name":"Which priority does BACManager write with?","acceptedAnswer":{"@type":"Answer","text":"The one you choose in Write priority. Tags, dashboard elements and gateway rows default to 8, Manual Operator. An empty value relinquishes the slot."}},
@@ -342,12 +342,12 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 </div>
 
 <header class="hero">
-  <div class="eyebrow">Documentation &mdash; BACManager v1.4.7 &middot; updated 2 November 2026</div>
+  <div class="eyebrow">Documentation &mdash; BACManager v1.4.8 &middot; updated 7 November 2026</div>
   <h1>BACManager <span class="accent">User Manual</span></h1>
   <p class="hero-desc">How to discover, browse, write and schedule BACnet/IP and MS/TP devices, read Modbus devices in the same window, and build dashboards, logs, alarms and a BACnet&ndash;Modbus gateway with BACManager on Windows. Jump to a topic, or download the manual as a PDF.</p>
   <div class="hero-ctas">
     <a href="/BACManager_UserManual.pdf" class="btn-primary">Download PDF manual</a>
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.7/BACManager.Setup.1.4.7.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.8/BACManager.Setup.1.4.8.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
   </div>
   <p class="hero-note">Free 14-day trial &bull; BACManager &#36;149 one-time &bull; Runtime &#36;39 per machine &bull; Windows 10 / 11</p>
 </header>
@@ -372,7 +372,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <li><a href="#dashboard">Dashboard &amp; PID faceplate</a></li>
 <li><a href="#history-alarms">History &amp; alarms</a></li>
 <li><a href="#gateway">Gateway</a><ul><li><a href="#mqtt">MQTT &amp; Home Assistant</a></li></ul></li>
-<li><a href="#s7">Siemens S7 (beta)</a></li>
+<li><a href="#s7">Siemens S7</a></li>
 <li><a href="#runtime">Runtime edition</a></li>
 <li><a href="#workspaces">Workspaces</a></li>
 <li><a href="#licensing">Licensing</a></li>
@@ -386,7 +386,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <h2>Getting started</h2>
 <p>BACManager is a Windows tool for buildings where BACnet and Modbus meet. It discovers BACnet/IP and MS/TP devices, browses and writes their objects with the priority array, edits Schedule and Calendar objects, subscribes to COV and exports EDE &mdash; and in the same window reads Modbus RTU and TCP meters and drives. Dashboards, a Historian, alarms, tags with Structured Text and a BACnet&ndash;Modbus gateway are included. Everything runs locally.</p>
 <table class="doc-table"><thead><tr><th style="width:170px">Licence</th><th>What it includes</th></tr></thead><tbody>
-<tr><td><b>BACManager</b> &mdash; &#36;149</td><td>Everything in this manual: BACnet explorer and editors, BACnet simulator, Modbus tools, dashboard editor, Historian, alarms, gateway, Siemens S7 (beta), Runtime package export.</td></tr>
+<tr><td><b>BACManager</b> &mdash; &#36;149</td><td>Everything in this manual: BACnet explorer and editors, BACnet simulator, Modbus tools, dashboard editor, Historian, alarms, gateway, Siemens S7, Runtime package export.</td></tr>
 <tr><td><b>Runtime</b> &mdash; &#36;39 / machine</td><td>Runs a dashboard package full screen on a panel PC with live BACnet and Modbus, alarms and trends; no editor, scanner, schedule editor, gateway or simulator. See <a class="inline-link" href="#runtime">Runtime edition</a>.</td></tr>
 </tbody></table>
 <div class="steps"><div class="step"><div class="step-label">Install</div><div class="step-title">Run the installer</div><div class="step-text">Download the installer and start BACManager from the Start menu.</div></div><div class="step"><div class="step-label">Trial</div><div class="step-title">14 days, full features</div><div class="step-text">No account, no credit card. The licence button shows the days left.</div></div><div class="step"><div class="step-label">Open</div><div class="step-title">Open the BACnet client</div><div class="step-text">BACnet/IP or MS/TP, then <b>Open</b>.</div></div><div class="step"><div class="step-label">Discover</div><div class="step-title">Find the devices</div><div class="step-text"><b>Discover</b> sends Who-Is; pick a device and browse its objects.</div></div></div>
@@ -532,7 +532,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <section id="tags" class="doc-section">
 <h2>Tags &amp; Structured Text</h2>
 <figure class="shot"><img src="/manual-mm-tags-crop.jpg" width="1300" height="280" loading="lazy" alt="Tags list with register and internal tags and a Structured Text script"><figcaption>Tags and a Structured Text loop (shown with Modbus register tags).</figcaption></figure>
-<p>Tags name values so dashboards, alarms, the Historian, the gateway and scripts can use them. Types: <b>Register</b> (Modbus, with data type, word order, Scale &times; and Offset +), <b>Internal</b>, <b>Siemens S7 (beta)</b> and <b>BACnet</b>:</p>
+<p>Tags name values so dashboards, alarms, the Historian, the gateway and scripts can use them. Types: <b>Register</b> (Modbus, with data type, word order, Scale &times; and Offset +), <b>Internal</b>, <b>Siemens S7</b> and <b>BACnet</b>:</p>
 <ul class="body-list">
 <li><b>BACnet</b> tag: Device ID, Object (AI, AO, AV, BI, BO, BV, MSI, MSO, MSV or Loop), Instance, <b>Property</b> (85 = present value; for a Loop 21, 108, 93, 49, 26) and the write <b>Priority</b> (8 by default). The list shows it as <code>BAC [1234 analog-value:0]</code>.</li>
 <li>&#127991; <b>Add as tag</b> in the object list creates a present-value tag in one click.</li>
@@ -578,8 +578,8 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <figure class="shot"><img src="/bac-gateway-bidirectional.png" loading="lazy" alt="Gateway tab with a read row from a Modbus register to a BACnet analog input, a write row from a BACnet analog value to a Modbus register, and the BMS side BACnet/IP server panel"><figcaption>Both directions on one PC: Modbus registers exposed as BACnet objects, and BACnet points exposed as Modbus registers.</figcaption></figure>
 <p>The gateway connects the two worlds in both directions at once. Each mapping row has its own source and destination:</p>
 <ul class="body-list">
-<li><b>Sources</b> (endpoints): <b>+ TCP</b> and <b>+ RTU</b> Modbus devices, <b>+ BACnet</b> (a device already discovered in the BACnet tab; the row sets object type, instance, property and the write priority, 8 by default), <b>+ Siemens S7 (beta)</b> and <b>+ Tags</b>.</li>
-<li><b>Destinations</b>: the <b>Modbus map</b> &mdash; a Modbus TCP slave (PLC side, port 502) any PLC or SCADA polls; a <b>BACnet obj</b> on the gateway&rsquo;s own BACnet/IP device; an <b>S7 DB (beta)</b> a Siemens PLC reads with GET; or <b>MQTT</b> (below).</li>
+<li><b>Sources</b> (endpoints): <b>+ TCP</b> and <b>+ RTU</b> Modbus devices, <b>+ BACnet</b> (a device already discovered in the BACnet tab; the row sets object type, instance, property and the write priority, 8 by default), <b>+ Siemens S7</b> and <b>+ Tags</b>.</li>
+<li><b>Destinations</b>: the <b>Modbus map</b> &mdash; a Modbus TCP slave (PLC side, port 502) any PLC or SCADA polls; a <b>BACnet obj</b> on the gateway&rsquo;s own BACnet/IP device; an <b>S7 DB</b> a Siemens PLC reads with GET; or <b>MQTT</b> (below).</li>
 <li><b>BMS side</b>: tick <b>Expose mapping rows as a BACnet device</b>, set the Device ID (default 1001), name and BACnet/IP port (47808). It runs as a separate process, so it can use 47808 while the BACnet tab&rsquo;s client uses another port. Rows with Dest &ldquo;BACnet obj&rdquo; become AI, AO, AV, BI, BO, BV, MSV or Loop objects with an instance and optional units. A BMS discovers it with Who-Is and can read, subscribe to COV and &mdash; for rows in write mode on commandable types &mdash; write with priority; the write goes on to the source device.</li>
 <li><b>Mode</b> read (source &rarr; destination) or write (destination &rarr; source); data type, scale and offset per row.</li>
 </ul>
@@ -590,8 +590,8 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 </section>
 
 <section id="s7" class="doc-section">
-<h2>Siemens S7 (beta)</h2>
-<p>BACManager reads and writes Siemens S7-1200/1500 (and S7-300/400) PLCs over PUT/GET, the same way as ModbusManager Pro: permit PUT/GET in the CPU, turn off optimized block access for the DBs, add the PLC in Tags &rarr; <b>Siemens S7 (beta)&hellip;</b> (IP, rack 0, slot 1; slot 2 for S7-300/400), then use S7 tags, the dashboard&rsquo;s S7 source or an S7 gateway endpoint. Addresses look like <code>DB1,REAL4</code>, <code>DB1,X12.0</code>, <code>MW2</code>. It is released as beta, tested against a simulated PLC. Guide: <a class="inline-link" href="https://modbusmanager.com/siemens-s7-put-get.html">S7-1200 / S7-1500 PUT/GET from a PC</a>.</p>
+<h2>Siemens S7</h2>
+<p>BACManager reads and writes Siemens S7-1200/1500 (and S7-300/400) PLCs over PUT/GET, the same way as ModbusManager Pro: permit PUT/GET in the CPU, turn off optimized block access for the DBs, add the PLC in Tags &rarr; <b>Siemens S7&hellip;</b> (IP, rack 0, slot 1; slot 2 for S7-300/400), then use S7 tags, the dashboard&rsquo;s S7 source or an S7 gateway endpoint. Addresses look like <code>DB1,REAL4</code>, <code>DB1,X12.0</code>, <code>MW2</code>. It has been tested against a real S7 PLC and is no longer marked beta. Guide: <a class="inline-link" href="https://modbusmanager.com/siemens-s7-put-get.html">S7-1200 / S7-1500 PUT/GET from a PC</a>.</p>
 </section>
 
 <section id="runtime" class="doc-section">
@@ -668,7 +668,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
   <h2>Try it on your building</h2>
   <p>Download the 14-day trial, open the BACnet client and discover your devices &mdash; or start the simulator and follow this manual.</p>
   <div class="ctas">
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.7/BACManager.Setup.1.4.7.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.8/BACManager.Setup.1.4.8.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
     <a href="/BACManager_UserManual.pdf" class="btn-cta-outline">Download PDF manual</a>
   </div>
   <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
