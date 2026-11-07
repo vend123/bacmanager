@@ -365,6 +365,27 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 
 <div class="divider-line"></div>
 
+<section class="section" id="workspace">
+  <div class="sec-label">// free download</div>
+  <h2 class="sec-title">See every manual override at once</h2>
+  <p class="sec-sub">The classic is the forgotten override: someone writes a valve fully open at priority 8 to test it, and the building runs that way for weeks while the schedule at 16 is ignored. BACManager&rsquo;s <b>BACnet Priority</b> dashboard element reads one commandable point&rsquo;s priority array and shows which slot holds it, by name &mdash; P8 an operator, P16 the schedule, RD nothing written. This workspace puts 20 points of two air handlers and a plant on one Runtime page, one line each.</p>
+  <figure class="shot" style="margin:1.6rem auto 0;max-width:1100px">
+    <img src="bacnet-priority-overview.png" width="1218" height="497" loading="lazy" alt="BACManager Runtime page Manual overrides, BAS-1: twenty BACnet points of air handlers AHU-1 and AHU-2 and a plant, one line each with value, holding priority and sixteen slot bars. AHU-1 supply air setpoint 16.0 degrees C and AHU-1 cooling valve 100 percent are held at priority 8 by an operator, the AHU-2 outdoor air damper at 0 percent by priority 5, the chiller off by priority 6, most others at 16 by the schedule">
+    <figcaption>Two operator overrides left at 8 on AHU-1, freeze protection at 5 on the AHU-2 damper, the chiller held off by its minimum off time at 6 (simulated controller)</figcaption>
+  </figure>
+  <div class="feat-grid" style="margin-top:1.8rem">
+    <div class="feat"><div class="feat-icon">1</div><h3>Discover the controller</h3><p>On the BACnet tab open BACnet/IP (or MS/TP) and press Discover.</p></div>
+    <div class="feat"><div class="feat-icon">2</div><h3>Open the workspace</h3><p>Workspace &rarr; Open. The file reads device 1001; BACManager asks which discovered device takes its place and moves every line over. In each line&rsquo;s Properties set your object type and instance.</p></div>
+    <div class="feat"><div class="feat-icon">3</div><h3>Release on purpose</h3><p>In Runtime, <b>Release 8</b> on a line asks first and names the value that takes over (&ldquo;priority 16 (Schedule): 21.0 &deg;C&rdquo;). Life safety at 1 and 2 is never released from the dashboard.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:1.6rem">
+    <a href="/BACnet_Priority_Overview.json" download class="btn-primary">Download workspace</a>
+  </div>
+  <p class="sec-sub" style="text-align:center;margin-top:0.8rem">The BACnet Priority element needs BACManager 1.4.8 or newer.</p>
+</section>
+
+<div class="divider-line"></div>
+
 <section class="section" id="faq">
   <div class="sec-label">// questions</div>
   <h2 class="sec-title">Priority array &mdash; FAQ</h2>
