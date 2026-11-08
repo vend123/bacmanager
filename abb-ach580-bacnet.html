@@ -15,7 +15,7 @@
 <link rel="canonical" href="https://bacmanager.com/abb-ach580-bacnet.html">
 <meta property="og:title" content="ABB ACH580 BACnet Points List &amp; Setup (MS/TP, Group 58)">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="Bring an ABB ACH580 HVAC drive onto a BMS over BACnet MS/TP: the group 58 parameters, the device ID you must change, start/stop and speed over BACnet, and the comm-loss default that trips a drive whose BMS only reads. Free BACManager workspace.">
+<meta property="og:description" content="Bring an ABB ACH580 HVAC drive onto a BMS over BACnet MS/TP: the group 58 parameters, the device ID you must change, start/stop and speed over BACnet, and the comm-loss setting that trips a drive whose BMS only reads. Free BACManager workspace.">
 <meta property="og:url" content="https://bacmanager.com/abb-ach580-bacnet.html">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bacmanager.com/og-abb-ach580.png">
@@ -23,7 +23,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ABB ACH580 BACnet Points List &amp; Setup (MS/TP, Group 58)">
-<meta name="twitter:description" content="Bring an ABB ACH580 HVAC drive onto a BMS over BACnet MS/TP: the group 58 parameters, the device ID you must change, start/stop and speed over BACnet, and the comm-loss default that trips a drive whose BMS only reads. Free BACManager workspace.">
+<meta name="twitter:description" content="Bring an ABB ACH580 HVAC drive onto a BMS over BACnet MS/TP: the group 58 parameters, the device ID you must change, start/stop and speed over BACnet, and the comm-loss setting that trips a drive whose BMS only reads. Free BACManager workspace.">
 <meta name="twitter:image" content="https://bacmanager.com/og-abb-ach580.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,11 +35,11 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "ABB ACH580 BACnet Points List and Setup over MS/TP",
-    "description": "Bring an ABB ACH580 HVAC drive onto a BMS over BACnet MS/TP: the group 58 parameters, the device ID you must change, start/stop and speed over BACnet, and the comm-loss default that trips a drive whose BMS only reads. Free BACManager workspace.",
+    "description": "Bring an ABB ACH580 HVAC drive onto a BMS over BACnet MS/TP: the group 58 parameters, the device ID you must change, start/stop and speed over BACnet, and the comm-loss setting that trips a drive whose BMS only reads. Free BACManager workspace.",
     "url": "https://bacmanager.com/abb-ach580-bacnet.html",
     "image": "https://bacmanager.com/og-abb-ach580.png",
     "datePublished": "2026-10-27",
-    "dateModified": "2026-10-27",
+    "dateModified": "2026-11-08",
     "author": {
       "@type": "Organization",
       "name": "BACManager",
@@ -76,7 +76,7 @@
         "name": "Why does my ACH580 fault with 6681 EFB comm loss?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "By default the drive faults when no command or reference has been written for 30 seconds (58.14 Fault, 58.15 Cw / Ref1 / Ref2, 58.16 30 s) — reads don't count. Write the commands again regularly, or set 58.15 to Any message."
+          "text": "When 58.14 Communication loss action is Fault, the drive faults when no command or reference has been written for 30 seconds (58.15 Cw / Ref1 / Ref2, 58.16 30 s) — reads don't count. Write the commands again regularly, or set 58.15 to Any message. The current firmware manual (Rev J, 2026) gives No action as the 58.14 default, older editions Fault: check yours."
         }
       },
       {
@@ -345,7 +345,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <section class="hero">
   <div class="eyebrow">// abb &middot; ach580 hvac drive &middot; bacnet ms/tp</div>
   <h1>ABB ACH580<br><span class="accent">BACnet Points List &amp; Setup</span></h1>
-  <p class="hero-desc">How to put an ABB ACH580 HVAC drive on BACnet MS/TP: the group 58 parameters, the device ID you have to change, the two parameters that hand start/stop and speed to BACnet &mdash; and the communication-loss default that trips a drive whose BMS writes once and then only reads. With a free BACManager workspace that keeps the commands alive.</p>
+  <p class="hero-desc">How to put an ABB ACH580 HVAC drive on BACnet MS/TP: the group 58 parameters, the device ID you have to change, the two parameters that hand start/stop and speed to BACnet &mdash; and the communication-loss setting that trips a drive whose BMS writes once and then only reads. With a free BACManager workspace that keeps the commands alive.</p>
   <div class="hero-ctas">
     <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.8/BACManager.Setup.1.4.8.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
     <a href="#workspace" class="btn-ghost">Free ACH580 workspace</a>
@@ -416,16 +416,16 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <section class="section">
   <div class="sec-label">// the rule that bites</div>
   <h2 class="sec-title">Writing once is not enough: 6681 EFB comm loss</h2>
-  <p class="sec-sub">ABB notes that BACnet has no timeout of its own, so the drive keeps one. Its defaults:</p>
+  <p class="sec-sub">ABB notes that BACnet has no timeout of its own, so the drive keeps one &mdash; but whether it acts depends on 58.14:</p>
   <table class="compare-table">
     <thead><tr><th>Parameter</th><th>Default</th><th class="hl">Means</th></tr></thead>
     <tbody>
-      <tr><td class="mono">58.14 Communication loss action</td><td>Fault</td><td class="hl">Trip on 6681 EFB comm loss when start/stop or the reference comes from the EFB</td></tr>
+      <tr><td class="mono">58.14 Communication loss action</td><td>No action (Rev J)<br>Fault (older editions)</td><td class="hl">With Fault: trip on 6681 EFB comm loss when start/stop or the reference comes from the EFB. Commissioning often sets Fault on purpose, so a fan does not run on after the BMS is gone &mdash; read 58.14 on the panel</td></tr>
       <tr><td class="mono">58.15 Communication loss mode</td><td>Cw / Ref1 / Ref2</td><td class="hl">Only a write of the control word or a reference resets the timer &mdash; reading does not</td></tr>
       <tr><td class="mono">58.16 Communication loss time</td><td>30 s</td><td class="hl">0&ndash;6000 s</td></tr>
     </tbody>
   </table>
-  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">So a BMS that writes Run and a speed once and then only polls the drive lets the timer run out, and 30 seconds later the drive trips. There are three ways out. Write the commands again well inside 58.16 &mdash; in BACManager a BACnet tag has <strong>Refresh (s)</strong>, which writes the last value again every that many seconds until it is relinquished, and the free workspace sets 10&nbsp;s on BV10 and AV16. Or set 58.15 to <em>Any message</em>, as ABB's own setup example does, so that polling keeps the link alive. Or choose <em>Last speed</em> or <em>Speed ref safe</em> (28.41) in 58.14 &mdash; with ABB's warning to make sure it is safe to keep running when communication breaks. After any change in group 58, Refresh settings in 58.06.</p>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">So with 58.14 = Fault, a BMS that writes Run and a speed once and then only polls the drive lets the timer run out, and 30 seconds later the drive trips. With No action it keeps running on the last command even when the BMS is gone, which is the opposite risk. There are three ways out. Write the commands again well inside 58.16 &mdash; in BACManager a BACnet tag has <strong>Refresh (s)</strong>, which writes the last value again every that many seconds until it is relinquished, and the free workspace sets 10&nbsp;s on BV10 and AV16. Or set 58.15 to <em>Any message</em>, as ABB's own setup example does, so that polling keeps the link alive. Or choose <em>Last speed</em> or <em>Speed ref safe</em> (28.41) in 58.14 &mdash; with ABB's warning to make sure it is safe to keep running when communication breaks. After any change in group 58, Refresh settings in 58.06.</p>
   <p style="max-width:820px;margin:1rem auto 0;color:var(--body);line-height:1.75">Tested against the simulated ACH580 with the comm-loss time shortened to 20&nbsp;s: with Refresh 10&nbsp;s the drive ran without a fault for the whole run; without it, MSV1 Active-Fault-1 went to Comm-Error about 20&nbsp;s after the last write.</p>
 </section>
 
@@ -523,7 +523,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Why does my ACH580 fault with 6681 EFB comm loss?<span class="icon">+</span></div>
-      <div class="faq-a">By default the drive faults when no command or reference has been written for 30 seconds (58.14 Fault, 58.15 Cw / Ref1 / Ref2, 58.16 30 s) &mdash; reads don't count. Write the commands again regularly, or set 58.15 to Any message.</div>
+      <div class="faq-a">When 58.14 Communication loss action is Fault, the drive faults when no command or reference has been written for 30 seconds (58.15 Cw / Ref1 / Ref2, 58.16 30 s) &mdash; reads don't count. Write the commands again regularly, or set 58.15 to Any message. The current firmware manual (Rev J, 2026) gives No action as the 58.14 default, older editions Fault: check yours.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">What is the ACH580's default BACnet device instance?<span class="icon">+</span></div>
