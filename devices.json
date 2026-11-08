@@ -1,0 +1,141 @@
+{
+ "about": "The device library ModbusManager and BACManager read (Device library, Open in app). One entry per ready workspace on this site.",
+ "updated": "2026-11-08",
+ "devices": [
+  {
+   "id": "daikin-itm",
+   "name": "Daikin iTM (VRV)",
+   "cat": "hvac",
+   "proto": "BACnet/IP",
+   "desc": "Indoor units through the iTM BACnet option: on/off, mode, setpoints, alarms",
+   "ws": "Daikin_iTM_VRV_BACnet.json",
+   "page": "daikin-itm-bacnet.html"
+  },
+  {
+   "id": "mitsubishi-ae200",
+   "name": "Mitsubishi AE-200",
+   "cat": "hvac",
+   "proto": "BACnet/IP",
+   "desc": "City Multi groups through the AE-200: on/off, mode, setpoint, fan",
+   "ws": "Mitsubishi_AE-200_BACnet.json",
+   "page": "mitsubishi-ae200-bacnet.html"
+  },
+  {
+   "id": "daikin-mt3",
+   "name": "Daikin MicroTech III chiller",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Chiller: water temperatures, capacity, compressors and alarms",
+   "ws": "Daikin_MicroTech_III_Chiller_BACnet.json",
+   "page": "daikin-microtech-iii-bacnet.html"
+  },
+  {
+   "id": "trane-symbio",
+   "name": "Trane Symbio 700 (RTU)",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Rooftop unit: supply and space temperature, economizer, stages",
+   "ws": "Trane_Symbio_700_RTU_BACnet.json",
+   "page": "trane-symbio-700-bacnet.html"
+  },
+  {
+   "id": "aaon-vccx2",
+   "name": "AAON VCCX2 (RTU)",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Rooftop unit controller: temperatures, modes, setpoints, alarms",
+   "ws": "AAON_VCCX2_RTU_BACnet.json",
+   "page": "aaon-vccx2-bacnet.html"
+  },
+  {
+   "id": "lennox-core",
+   "name": "Lennox CORE (RTU)",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Rooftop unit: occupancy, setpoints and the points the BMS must refresh",
+   "ws": "Lennox_CORE_RTU_BACnet.json",
+   "page": "lennox-core-bacnet.html"
+  },
+  {
+   "id": "lochinvar-crest",
+   "name": "Lochinvar Crest boiler",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Boiler: supply and return, firing rate, enable and lockouts",
+   "ws": "Lochinvar_Crest_Boiler_BACnet.json",
+   "page": "lochinvar-crest-bacnet.html"
+  },
+  {
+   "id": "belimo-ev",
+   "name": "Belimo Energy Valve",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Flow, ΔT, power and energy of a coil, with valve position",
+   "ws": "Belimo_Energy_Valve_BACnet.json",
+   "page": "belimo-energy-valve-bacnet.html"
+  },
+  {
+   "id": "grundfos-magna3",
+   "name": "Grundfos MAGNA3 (CIM 300/500)",
+   "cat": "pumps",
+   "proto": "BACnet",
+   "desc": "Circulator pump: head, flow, power, mode and alarms",
+   "ws": "Grundfos_MAGNA3_CIM_BACnet.json",
+   "page": "grundfos-cim-bacnet.html"
+  },
+  {
+   "id": "wilo-maxo",
+   "name": "Wilo Stratos MAXO (CIF)",
+   "cat": "pumps",
+   "proto": "BACnet",
+   "desc": "Smart pump: head, flow, power, mode and faults",
+   "ws": "Wilo_Stratos_MAXO_CIF_BACnet.json",
+   "page": "wilo-cif-bacnet.html"
+  },
+  {
+   "id": "abb-ach580-bac",
+   "name": "ABB ACH580",
+   "cat": "drives",
+   "proto": "BACnet MS/TP",
+   "desc": "HVAC drive: run command, speed, current, power and faults",
+   "ws": "ABB_ACH580_Drive_BACnet.json",
+   "page": "abb-ach580-bacnet.html"
+  },
+  {
+   "id": "schneider-atv600",
+   "name": "Schneider Altivar ATV600",
+   "cat": "drives",
+   "proto": "BACnet",
+   "desc": "Drive: run, speed reference and feedback, current, faults",
+   "ws": "Schneider_ATV600_Drive_BACnet.json",
+   "page": "schneider-atv600-bacnet.html"
+  },
+  {
+   "id": "basrouter",
+   "name": "BASrouter MS/TP plant",
+   "cat": "network",
+   "proto": "BACnet MS/TP → IP",
+   "desc": "A plant behind a BASrouter: MS/TP devices reached from BACnet/IP",
+   "ws": "BASrouter_MSTP_Plant_BACnet.json",
+   "page": "basrouter-bacnet-router.html"
+  },
+  {
+   "id": "bacnet-priority",
+   "name": "BACnet priority overview",
+   "cat": "network",
+   "proto": "BACnet",
+   "desc": "Who holds every commandable point: overrides at a glance",
+   "ws": "BACnet_Priority_Overview.json",
+   "page": "bacnet-priority-array.html"
+  },
+  {
+   "id": "ahu-ha",
+   "name": "AHU → Home Assistant",
+   "cat": "ha",
+   "proto": "BACnet → MQTT",
+   "desc": "Air handler values published to MQTT with Home Assistant discovery",
+   "ws": "AHU_BACnet_MQTT_HomeAssistant.json",
+   "page": "bacnet-to-mqtt-home-assistant.html"
+  }
+ ]
+}
