@@ -8,14 +8,14 @@
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="description" content="BACManager 1.4.8 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedules, EDE, simulator, Modbus, dashboards, gateway and MQTT.">
+<meta name="description" content="BACManager 1.4.9 manual: BACnet/IP and MS/TP discovery, property browser, priority writes, COV, schedules, EDE, simulator, Modbus, dashboards, gateway and MQTT.">
 <meta name="keywords" content="BACManager manual, BACnet explorer documentation, BACnet MS/TP how to, BACnet priority array write, BACnet schedule editor, BACnet EDE export, BACnet Modbus gateway setup, BACnet simulator">
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bacmanager.com/manual.html">
 <meta property="og:title" content="BACManager User Manual &amp; Documentation">
 <meta property="og:site_name" content="BACManager">
-<meta property="og:description" content="The complete BACManager 1.4.8 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway with MQTT and Home Assistant, and Runtime.">
+<meta property="og:description" content="The complete BACManager 1.4.9 manual: BACnet/IP and MS/TP, discovery and BBMD, property browser and priorities, COV, schedules, EDE, simulator, Modbus, dashboards, Historian, alarms, gateway with MQTT and Home Assistant, and Runtime.">
 <meta property="og:url" content="https://bacmanager.com/manual.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
@@ -29,7 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 [
-{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.8: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway with MQTT and Home Assistant discovery, and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-11-07","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
+{"@context":"https://schema.org","@type":"TechArticle","headline":"BACManager User Manual","description":"User manual for BACManager 1.4.9: BACnet/IP and MS/TP discovery, BBMD, property browser, priority-array writes, COV, schedule and calendar editor, EDE export, BACnet simulator, Modbus tools, dashboards with PID faceplate, Historian, alarms, BACnet-Modbus gateway with MQTT and Home Assistant discovery, and Runtime.","url":"https://bacmanager.com/manual.html","datePublished":"2026-10-18","dateModified":"2026-11-13","author":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"publisher":{"@type":"Organization","name":"BACManager","url":"https://bacmanager.com"},"about":{"@type":"SoftwareApplication","name":"BACManager","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"downloadUrl":"https://bacmanager.com/#pricing"}},
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Does BACManager work on MS/TP or only BACnet/IP?","acceptedAnswer":{"@type":"Answer","text":"Both. With a USB-RS485 adapter it joins an MS/TP trunk as a master node and does everything it does on BACnet/IP: discover, browse, write with priority, COV, schedules and EDE export."}},
 {"@type":"Question","name":"Which priority does BACManager write with?","acceptedAnswer":{"@type":"Answer","text":"The one you choose in Write priority. Tags, dashboard elements and gateway rows default to 8, Manual Operator. An empty value relinquishes the slot."}},
@@ -362,12 +362,12 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 </div>
 
 <header class="hero">
-  <div class="eyebrow">Documentation &mdash; BACManager v1.4.8 &middot; updated 7 November 2026</div>
+  <div class="eyebrow">Documentation &mdash; BACManager v1.4.9 &middot; updated 13 November 2026</div>
   <h1>BACManager <span class="accent">User Manual</span></h1>
   <p class="hero-desc">How to discover, browse, write and schedule BACnet/IP and MS/TP devices, read Modbus devices in the same window, and build dashboards, logs, alarms and a BACnet&ndash;Modbus gateway with BACManager on Windows. Jump to a topic, or download the manual as a PDF.</p>
   <div class="hero-ctas">
     <a href="/BACManager_UserManual.pdf" class="btn-primary">Download PDF manual</a>
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.8/BACManager.Setup.1.4.8.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.9/BACManager.Setup.1.4.9.exe" class="btn-ghost" onclick="trackDownload()">Download free trial</a>
   </div>
   <p class="hero-note">Free 14-day trial &bull; BACManager &#36;149 one-time &bull; Runtime &#36;39 per machine &bull; Windows 10 / 11</p>
 </header>
@@ -687,7 +687,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 
 <section id="limits" class="doc-section">
 <h2>Not supported yet</h2>
-<p>So you know before you need it, BACManager 1.4.8 does <b>not</b>:</p>
+<p>So you know before you need it, BACManager 1.4.9 does <b>not</b>:</p>
 <ul class="body-list">
 <li>send DeviceCommunicationControl, ReinitializeDevice or TimeSynchronization;</li>
 <li>discover routers (Who-Is-Router-To-Network) or set Who-Is instance limits;</li>
@@ -727,7 +727,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
   <h2>Try it on your building</h2>
   <p>Download the 14-day trial, open the BACnet client and discover your devices &mdash; or start the simulator and follow this manual.</p>
   <div class="ctas">
-    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.8/BACManager.Setup.1.4.8.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.9/BACManager.Setup.1.4.9.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
     <a href="/BACManager_UserManual.pdf" class="btn-cta-outline">Download PDF manual</a>
   </div>
   <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
