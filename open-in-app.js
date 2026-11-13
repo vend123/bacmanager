@@ -1,4 +1,4 @@
-// Open a ready workspace straight in BACManager (bacmanager:// link, BACManager 1.9.9 / 1.4.9 or newer).
+// Open a ready workspace straight in BACManager (bacmanager:// link, BACManager 1.4.9 or newer).
 // Written by tools/web-research/open-in-app.js — edit it there.
 (function () {
   var FILES = ["Daikin_iTM_VRV_BACnet.json","Mitsubishi_AE-200_BACnet.json","Daikin_MicroTech_III_Chiller_BACnet.json","Trane_Symbio_700_RTU_BACnet.json","AAON_VCCX2_RTU_BACnet.json","Lennox_CORE_RTU_BACnet.json","Lochinvar_Crest_Boiler_BACnet.json","Belimo_Energy_Valve_BACnet.json","Grundfos_MAGNA3_CIM_BACnet.json","Wilo_Stratos_MAXO_CIF_BACnet.json","ABB_ACH580_Drive_BACnet.json","Schneider_ATV600_Drive_BACnet.json","BASrouter_MSTP_Plant_BACnet.json","BACnet_Priority_Overview.json","AHU_BACnet_MQTT_HomeAssistant.json"];
@@ -22,8 +22,25 @@
         if (document.hidden || document.getElementById('oia-note-' + file)) return;
         var n = document.createElement('div');
         n.id = 'oia-note-' + file;
-        n.style.cssText = 'font-size:0.85rem;margin:0.5rem 0;color:inherit;opacity:0.85';
-        n.innerHTML = 'Nothing opened? This button needs <b>BACManager 1.4.9 or newer</b> on this PC. With an older version, or none, <a href="/#download">download the latest BACManager</a> (it installs over the old one), or download the .json file below and use <i>Open workspace</i>.';
+        n.style.cssText = 'font-size:0.9rem;line-height:1.5;margin:0.8rem 0;padding:0.8rem 1rem;border:2px solid #F2A900;background:rgba(242,169,0,0.12);border-radius:3px;color:inherit';
+        // the page's own download button for this app: its link (and version) is the current release
+        var dl = document.querySelector('a.btn-primary[data-dl*="BACManager.Setup"]') || document.querySelector('a[data-dl*="BACManager.Setup"]');
+        var url = dl ? dl.getAttribute('data-dl') : '';
+        var now = (url.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '';
+        var p = document.createElement('div');
+        p.innerHTML = 'Nothing opened? This button needs <b>BACManager 1.4.9 or newer</b> on this PC. With an older version, or none, download the new version &mdash; it installs over the old one and keeps your licence:';
+        n.appendChild(p);
+        var d = document.createElement('a');
+        if (url) { d.href = '#download'; d.setAttribute('data-dl', url); } else d.href = '/#download';
+        d.className = (dl && dl.className) || b.className;
+        d.style.display = 'inline-block'; d.style.margin = '0.6rem 0 0.4rem';
+        d.textContent = '\u2B07 Download BACManager' + (now ? ' ' + now : '');
+        d.addEventListener('click', function () { try { if (typeof gtag === 'function') gtag('event', 'trial_download', { event_category: 'Download', event_label: 'BACManager-OpenInApp-Fallback', value: 1 }); } catch (e) {} });
+        n.appendChild(d);
+        var o = document.createElement('div');
+        o.style.cssText = 'font-size:0.8rem;opacity:0.8';
+        o.innerHTML = 'Or download the .json file below and open it with <i>Open workspace</i>.';
+        n.appendChild(o);
         b.parentNode.insertBefore(n, b.nextSibling && b.nextSibling.nextSibling ? b.nextSibling.nextSibling : null);
       }, 1500);
     });
