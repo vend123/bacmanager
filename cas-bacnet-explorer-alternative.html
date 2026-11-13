@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://bacmanager.com/og-bacmanager.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="CAS BACnet Explorer Alternative: BACManager vs CAS">
-<meta name="twitter:description" content="CAS BACnet Explorer is free and BACnet/SC-capable. BACManager adds Modbus, a schedule editor, and a BACnet-to-Modbus gateway.">
+<meta name="twitter:description" content="CAS BACnet Explorer is free and BACnet/SC-capable, and so is BACManager since 1.4.9. BACManager adds Modbus, a schedule editor, and a BACnet-to-Modbus gateway.">
 <meta name="twitter:image" content="https://bacmanager.com/og-bacmanager.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@
   "description": "A fair comparison of BACManager and CAS BACnet Explorer for engineers who need Modbus polling, a schedule editor, or a BACnet-to-Modbus gateway alongside BACnet discovery.",
   "url": "https://bacmanager.com/cas-bacnet-explorer-alternative.html",
   "datePublished": "2026-08-30",
-  "dateModified": "2026-08-30",
+  "dateModified": "2026-11-13",
   "author": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"},
   "publisher": {"@type": "Organization", "name": "BACManager", "url": "https://bacmanager.com"}
 },
@@ -47,7 +47,7 @@
     {"@type": "Question", "name": "Is CAS BACnet Explorer really free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, per Chipkin's own product page it is free to download and use, including commercial and OEM work, with no license key required."}},
     {"@type": "Question", "name": "Does CAS BACnet Explorer support MS/TP?", "acceptedAnswer": {"@type": "Answer", "text": "Yes - it supports BACnet/IP, MS/TP over RS-485 with a standard USB-to-RS485 adapter, and BACnet/SC (Secure Connect)."}},
     {"@type": "Question", "name": "What does BACManager add that CAS BACnet Explorer doesn't have?", "acceptedAnswer": {"@type": "Answer", "text": "A Schedule and Calendar editor with an editable weekly grid, Modbus RTU/TCP polling in the same window, and a Gateway that bridges BACnet present-values into a Modbus map a PLC can read and write."}},
-    {"@type": "Question", "name": "Does BACManager support BACnet/SC?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet - only BACnet/IP and MS/TP. If a site specifically requires BACnet Secure Connect, CAS BACnet Explorer currently supports it and BACManager does not."}},
+    {"@type": "Question", "name": "Does BACManager support BACnet/SC?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, since version 1.4.9: BACnet/SC beside BACnet/IP and MS/TP, with a primary and a failover hub, the operational and CA certificates imported as PEM or PKCS#12, and a warning before a certificate expires."}},
     {"@type": "Question", "name": "Is the BACManager price a subscription?", "acceptedAnswer": {"@type": "Answer", "text": "No. BACManager is a one-time $149 license with 12 months of free updates - no subscription, no per-point fees."}}
   ]
 }
@@ -333,7 +333,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
       <tr><td>BACnet/IP discovery (whoIs)</td><td class="yes">✓</td><td class="hl yes">✓</td></tr>
       <tr><td>Property browser (read/write)</td><td class="yes">✓</td><td class="hl yes">✓</td></tr>
       <tr><td>MS/TP over RS-485</td><td class="yes">✓ (USB-RS485 adapter)</td><td class="hl yes">✓ full master node</td></tr>
-      <tr><td>BACnet/SC (Secure Connect)</td><td class="yes">✓</td><td class="hl no">✗ not yet</td></tr>
+      <tr><td>BACnet/SC (Secure Connect)</td><td class="yes">✓</td><td class="hl yes">✓ since 1.4.9</td></tr>
       <tr><td>Built-in BACnet device simulator</td><td class="yes">✓</td><td class="hl yes">✓</td></tr>
       <tr><td>EDE export</td><td class="yes">✓ (2.3 CSV)</td><td class="hl yes">✓ EDE 2.3 + CSV</td></tr>
       <tr><td>Schedule &amp; Calendar editor (grid)</td><td class="no">✗</td><td class="hl yes">✓ editable weekly grid</td></tr>
@@ -363,7 +363,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <section class="section">
   <div class="sec-label">// being fair</div>
   <h2 class="sec-title">When CAS BACnet Explorer is the right call</h2>
-  <p style="max-width:800px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">If your work is entirely BACnet — IP, MS/TP or SC — and there's no schedule that needs a real editing grid and no Modbus device on the site, CAS BACnet Explorer is free, capable, and actively maintained. It's also currently ahead on BACnet/SC, which BACManager doesn't support yet. BACManager earns its price on the messier sites: Modbus meters or drives sharing the panel, schedules that need on-site editing, or a PLC that needs BACnet data without speaking BACnet itself. The fastest way to know which camp a given site falls into is to run BACManager's free trial against it.</p>
+  <p style="max-width:800px;margin:0 auto;text-align:center;color:var(--muted);line-height:1.7">If your work is entirely BACnet — IP, MS/TP or SC — and there's no schedule that needs a real editing grid and no Modbus device on the site, CAS BACnet Explorer is free, capable, and actively maintained. Both now speak BACnet/SC (BACManager since 1.4.9). BACManager earns its price on the messier sites: Modbus meters or drives sharing the panel, schedules that need on-site editing, or a PLC that needs BACnet data without speaking BACnet itself. The fastest way to know which camp a given site falls into is to run BACManager's free trial against it.</p>
 </section>
 
 <div class="divider-line"></div>
@@ -386,7 +386,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Does BACManager support BACnet/SC?<span class="icon">+</span></div>
-      <div class="faq-a">Not yet — only BACnet/IP and MS/TP. If a site specifically requires BACnet Secure Connect, CAS BACnet Explorer currently supports it and BACManager does not.</div>
+      <div class="faq-a">Yes, since version 1.4.9: BACnet/SC beside BACnet/IP and MS/TP, with a primary and a failover hub, the operational and CA certificates imported as PEM or PKCS#12, and a warning before a certificate expires (<a href="/manual.html#sc">manual</a>).</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Is the BACManager price a subscription?<span class="icon">+</span></div>

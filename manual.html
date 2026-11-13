@@ -191,7 +191,7 @@ a.inline-link:hover{border-bottom-color:var(--amber-ink)}
 .vid .th span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;text-shadow:0 0 8px #000}
 .vid .lb{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--ink);padding-right:.8rem}
 .doc-toc ul ul{margin:.35rem 0 .2rem .7rem;gap:.3rem;font-size:.72rem}
-@media print{nav,.hazard,.doc-toc,.cta-strip,footer,#mm-consent,.hero-ctas,.vid{display:none!important}.doc-wrap{display:block;padding:0}.doc-section{break-inside:auto}.shot{break-inside:avoid}body{background:#fff}.faq-a{display:block!important}.doc-section h2,.doc-section h3{break-after:avoid}.faq-q .icon{display:none}}
+@media print{nav,.hazard,.doc-toc,.cta-strip,footer,#mm-consent,#bac-consent,.hero-ctas,.vid{display:none!important}.doc-wrap{display:block;padding:0}.doc-section{break-inside:auto}.shot{break-inside:avoid}body{background:#fff}.faq-a{display:block!important}.doc-section h2,.doc-section h3{break-after:avoid}.faq-q .icon{display:none}}
 
 @media(max-width:768px){.steps{grid-template-columns:1fr 1fr}}@media(max-width:520px){.steps{grid-template-columns:1fr}}
 figure.shot figcaption{color:#C9CDC6;background:var(--ink);border-top:none}
@@ -379,13 +379,16 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <li><a href="#bacnet-ip">BACnet/IP connection</a></li>
 <li><a href="#bbmd">BBMD &amp; foreign device</a></li>
 <li><a href="#mstp">MS/TP (RS-485)</a></li>
+<li><a href="#sc">BACnet/SC (Secure Connect)</a></li>
 <li><a href="#discovery">Discovering devices</a></li>
 <li><a href="#objects">Objects &amp; polling</a></li>
 <li><a href="#properties">Property browser</a></li>
 <li><a href="#writing">Writing &amp; priorities</a></li>
 <li><a href="#cov">COV subscriptions</a></li>
 <li><a href="#schedule">Schedule &amp; calendar</a></li>
+<li><a href="#trendlog">Trend Logs</a></li>
 <li><a href="#export">EDE &amp; CSV export</a></li>
+<li><a href="#traffic">Traffic view</a></li>
 <li><a href="#simulator">BACnet simulator</a></li>
 <li><a href="#modbus">Modbus tools</a></li>
 <li><a href="#tags">Tags &amp; Structured Text</a></li>
@@ -449,6 +452,20 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <li><b>Open</b>, then <b>Discover</b>.</li>
 </ol>
 <p>BACManager joins the token ring as a master node (it answers Poll-For-Master and passes the token; Max Master 127), so it can send confirmed requests: browse, write, COV, schedules and EDE work as on BACnet/IP. Discover sends one broadcast Who-Is on the segment; Target IP and BBMD do not apply. MS/TP and Modbus RTU use separate COM ports, so both can run at once. More: <a class="inline-link" href="/bacnet-mstp-rs485.html">BACnet MS/TP over RS-485</a>.</p>
+</section>
+
+<section id="sc" class="doc-section">
+<h2>BACnet/SC (Secure Connect)</h2>
+<p>BACnet/SC (ASHRAE 135 Annex AB) carries BACnet over a WebSocket on TLS to a <b>hub</b>; the hub passes each message on to the node it is for. Both sides show a certificate issued by the site&rsquo;s CA, so only machines with such a certificate can join.</p>
+<ol class="body-list">
+<li>Choose the datalink <b>BACnet/SC</b>.</li>
+<li><b>&#128272; Certificates&hellip;</b>: import this computer&rsquo;s <b>operational certificate and its key</b> &mdash; PEM (.pem/.crt and .key, chosen together or in one file) or PKCS#12 (.pfx/.p12 with its password) &mdash; and the <b>CA</b> that issued the site&rsquo;s certificates. The dialog shows each one&rsquo;s subject, issuer and how many days it is valid.</li>
+<li><b>Primary hub</b>: <code>wss://host:port</code>; <b>Failover hub</b> is optional.</li>
+<li><b>Open</b>, then <b>Discover</b> (Who-Is goes to every node through the hub; Target IP and BBMD do not apply).</li>
+</ol>
+<p>The status row says where you are: <i>Connected to the primary hub &middot; since 14:02 &middot; VMAC 02:4f:1a:9c:33:07 &middot; heartbeat ok</i>. When the hub goes away BACManager says so and tries again every 5 seconds, the failover hub too; on the failover it tries the primary every 30 s and goes back to it. Everything else &mdash; objects, polling, writes, COV, schedules, Trend Logs, device alarms, the traffic view, tags, dashboards and the gateway &mdash; works over SC as on BACnet/IP; a device&rsquo;s address is its VMAC, shown as <code>sc:024f1a9c3307</code>.</p>
+<p><b>Checked on Open:</b> the hub&rsquo;s certificate must be issued by your CA and name the host in the hub address (<b>check the hub&rsquo;s name in its certificate</b> can be turned off for sites whose hub certificates name no host). A wrong one refuses the connection and says which: expired, not issued by the CA, not naming this host, or the hub not accepting this computer&rsquo;s certificate.</p>
+<p><b>Certificates belong to this computer.</b> They are kept in the user&rsquo;s data folder, never in a workspace or a Runtime package; <b>Export</b> of the operational certificate asks first, since the file holds the private key. A certificate within the <b>warning days</b> (30 by default) is marked in the dialog and raised as an alarm in the alarm list, with your e-mail or Telegram notifications if you set them. A Runtime machine asks for its hub and certificates in the <b>BACnet network</b> service dialog.</p>
 </section>
 
 <section id="discovery" class="doc-section">
@@ -520,9 +537,31 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <p>More: <a class="inline-link" href="/bacnet-schedule-editor.html">BACnet schedule &amp; calendar editor</a>.</p>
 </section>
 
+<section id="trendlog" class="doc-section">
+<h2>Trend Logs</h2>
+<p>Click a <b>Trend Log</b> or <b>Trend Log Multiple</b> object to open its log. The header shows how many records the device holds, the buffer size, the interval and whether logging is enabled. Choose <b>All</b>, the <b>Last</b> n records, a <b>Time range</b> or from a <b>Sequence no.</b>, and <b>Read</b>: BACManager reads the buffer with ReadRange page by page (By Position, By Sequence Number or By Time, whichever the device supports; segmented answers are joined), with progress and <b>Cancel</b>.</p>
+<ul class="body-list">
+<li><b>Chart</b> and <b>Table</b>: the records with their time, value and status (log disabled, buffer purged, clock changed, in alarm, fault, overridden, out of service); a Trend Log Multiple draws each point in its own colour. <b>Export CSV</b> writes every record read.</li>
+<li><b>Add to History</b> stores the records as a History series (the device&rsquo;s own timestamps), so a dashboard Trend can draw them.</li>
+<li><b>Keep this log in History</b> reads the new records every 15 minutes (or as you set) from where the last read ended, so History holds the device&rsquo;s log without gaps or doubles even while BACManager was closed for less than the device&rsquo;s buffer.</li>
+</ul>
+<p>The BACnet simulator has a demo Trend Log to try it on.</p>
+</section>
+
 <section id="export" class="doc-section">
 <h2>EDE &amp; CSV export</h2>
 <p>With a device selected, <b>&#11015; EDE</b> writes its object list as a BACnet <b>EDE 2.3</b> file (keyname, device instance, object name, type and instance, description, default present value, min/max, commandable, high/low limit, unit code&hellip;) in the layout B.I.G.-EU EDE readers expect (header block, one row per object, unique keynames; saved as <code>&lt;project&gt;_EDE.csv</code>) that other BACnet tools import, and <b>&#11015; CSV</b> writes a plain list (device, type, instance, name, description, present value, units). Each object is read during the export; the status counts them.</p>
+</section>
+
+<section id="traffic" class="doc-section">
+<h2>Traffic view</h2>
+<p><b>Traffic</b> beside <b>Objects</b> in the BACnet tab shows what goes over the wire, read for you:</p>
+<ul class="body-list">
+<li><b>Messages</b>: BACManager&rsquo;s own requests and the answers (Who-Is/I-Am, ReadProperty, ReadPropertyMultiple, WriteProperty with value and priority, COV, event notifications, ReadRange&hellip;), each answer with the milliseconds it took; a request with no answer as a timeout; Error, Reject and Abort with their reason by name; and what other devices and clients broadcast. Filters: own, broadcasts, MS/TP frames, one device, a service group, errors only. Click a row for its decoded lines, its bytes and the message it answers.</li>
+<li><b>Devices</b>: for each device the requests, answers, average and longest answer time, timeouts, and the errors, rejects and aborts with how many times each reason came.</li>
+<li><b>MS/TP bus</b> (on MS/TP): every frame on the bus, not only BACManager&rsquo;s &mdash; the stations, who passes the token, frame counts, the token round time, Poll-For-Master, frames with a bad header or data CRC, and a station that stopped passing the token.</li>
+</ul>
+<p><b>&#9679; Recording</b> stops and starts it, <b>Clear</b> empties it; up to 10 000 messages are kept in memory and nothing is written to disk unless you export: <b>CSV</b>, or <b>.pcap</b> to open in Wireshark (BACnet/IP as IPv4, MS/TP as raw frames). Other devices&rsquo; unicast traffic with each other is not seen &mdash; that needs a mirrored switch port and Wireshark.</p>
 </section>
 
 <section id="simulator" class="doc-section">
@@ -559,7 +598,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <li>A BACnet tag is read on its own: every device a tag reads is polled while the client is open and the device has answered, so a workspace shows live values without pressing Poll. <b>Poll</b> in the BACnet tab takes over that device&rsquo;s poll and <b>Stop</b> hands it back. Extra properties such as a Loop&rsquo;s 108 and 21 are read in the same poll.</li>
 <li><b>Refresh (s)</b> writes the tag&rsquo;s last written value again every that many seconds (0 = off, 10 at the least) until it is relinquished &mdash; for controllers that drop a BMS value not written again in time, like a Lennox CORE&rsquo;s five-minute rule. It applies whoever wrote the value &mdash; a dashboard control, the gateway or MQTT; the list marks such a tag with &#8635;.</li>
 </ul>
-<p>The <b>Script Editor (Structured Text)</b> computes with tags: <code>:=</code>, arithmetic, comparisons, <code>AND OR NOT</code>, <code>IF/ELSIF/ELSE/END_IF</code>, <code>FOR &hellip; TO &hellip; DO &hellip; END_FOR</code> and <code>(* comments *)</code>, run once or as a loop (interval &ge; 100 ms). Writing a BACnet tag from a script writes the device with the tag&rsquo;s priority.</p>
+<p>The <b>Script Editor (Structured Text)</b> computes with tags: <code>:=</code>, arithmetic, <code>MOD</code>, comparisons, <code>AND OR XOR NOT</code>, <code>IF/ELSIF/ELSE/END_IF</code>, <code>CASE &hellip; OF</code> (values, lists, ranges, <code>ELSE</code>), <code>FOR &hellip; TO &hellip; BY &hellip; DO</code>, <code>WHILE</code>, <code>REPEAT &hellip; UNTIL</code>, <code>EXIT</code>, <code>RETURN</code> and <code>(* comments *)</code>, run once or as a loop (interval &ge; 100 ms). The standard <b>function blocks</b>, declared in a <code>VAR &hellip; END_VAR</code> block, keep their state from run to run: timers <code>TON</code>, <code>TOF</code>, <code>TP</code> (times as <code>T#5s</code>, <code>T#500ms</code>), edges <code>R_TRIG</code>, <code>F_TRIG</code>, counters <code>CTU</code>, <code>CTD</code>, <code>CTUD</code> and latches <code>SR</code>, <code>RS</code>. <b>? Help</b> in the editor lists every statement and block with an example to copy; an error names its line. A loop that never ends is stopped after 2 s; a script that keeps failing pauses 30 s (then up to 5 minutes) and tries again instead of stopping. Writing a BACnet tag from a script writes the device with the tag&rsquo;s priority.</p>
 </section>
 
 <section id="dashboard" class="doc-section">
@@ -574,7 +613,8 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <li>In Runtime the operator changes the setpoint (written to property 108) after a confirmation.</li>
 <li><b>Device Table</b> columns can be <b>BACnet</b>: an object type and instance, with a <b>device step</b> or an instance step from row to row, so one column reads the same object of every device.</li>
 <li><b>Indoor Unit</b> faceplate <b>Bind</b>: Daikin iTM (the device is the unit) and Mitsubishi AE-200 (device and group) bind every point in one click.</li>
-<li><b>Motor / Drive</b> faceplate presets <b>ABB ACH580</b> and <b>Schneider ATV600</b>: the drive&rsquo;s BACnet objects of one device; Start writes the run command after a confirmation.</li>
+<li><b>Motor / Drive</b> faceplate presets <b>ABB ACH580</b> and <b>Schneider ATV600</b>: the drive&rsquo;s BACnet objects of one device; Start writes the run command after a confirmation. <b>Write the command again every (ms)</b> keeps a drive running whose fieldbus watchdog counts only writes: while it runs, BACManager writes the run command and the reference again at that interval, and stops on Stop, Reset, a fault or a lost link.</li>
+<li>A <b>Trend</b> or <b>Multi Trend</b> can take a <b>History</b> series as its source (also a device&rsquo;s Trend Log kept in History): it draws what History holds and follows as new samples are stored. A trend line breaks only where the data really stopped (5 s, or three samples, whichever is longer).</li>
 <li><b>Status Bits</b>, <b>Annunciator</b> tiles and the <b>Group Frame</b>&rsquo;s alarm point read BACnet objects as well; an Annunciator tile can also follow a BACManager alarm and acknowledge it.</li>
 <li>The <b>AHU</b>, <b>Chiller</b>, <b>Rooftop Unit</b> and <b>VRF Indoor Unit</b> have a <b>With values</b> view: every bound value in its own labelled box at the place where it is measured (<a class="inline-link" href="https://modbusmanager.com/manual.html#equipment-values">details</a>). Their points are registers or tags, so a BACnet object is bound through a tag.</li>
 <li>So have the pump, valve, tank, pipe, motor, fan, damper, coils, filter, humidifier, heat exchanger, boiler and compressor, each with a <b>fault</b> point that turns the symbol red with FAULT; Value, Icon + Value and KPI Card have <b>Limits</b> with hysteresis; both can go to the alarm list. The 3-phase meter, PV energy flow, the electrical single-line elements, energy accounting, refrigeration, weather and water elements, and the Button, Setpoint and Lamp options are described in the <a class="inline-link" href="https://modbusmanager.com/manual.html#with-values">ModbusManager manual</a>.</li>
@@ -589,7 +629,8 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <figure class="shot"><img src="/manual-mm-history.jpg" width="1300" height="830" loading="lazy" alt="History tab with logged series, time range, data management and a chart"><figcaption>The Historian: series on the left, the chart on the right.</figcaption></figure>
 <p><b>History</b>: &#128200; on a BACnet object (or a tag, or a Modbus register) starts logging; the series list sets a <b>Deadband</b> and a display scale. Choose 1h/24h/7d/All or a date range, zoom by dragging, export CSV, and delete old data. Values are stored as they arrive (at the poll rate or on COV).</p>
 <figure class="shot"><img src="/manual-mm-alarms.jpg" width="1300" height="235" loading="lazy" alt="Alarms tab with an active alarm and alarm definitions"><figcaption>Active alarms with acknowledgement, and definitions.</figcaption></figure>
-<p><b>Alarms</b>: <b>+ New alarm</b> with source <b>BACnet</b> (Device ID, Object, Instance), a tag or a Modbus register; condition (&gt;, &lt;, &ge;, &le;, =, &ne;, between, outside), warning and critical limits, hysteresis and delay. Active alarms are acknowledged in the tab or from a dashboard Alarm Banner / Alarm List; sound can be muted. These are BACManager&rsquo;s own alarms on values &mdash; BACnet event notifications from devices are not received (see <a class="inline-link" href="#limits">Not supported yet</a>).</p>
+<p><b>Alarms</b>: <b>+ New alarm</b> with source <b>BACnet</b> (Device ID, Object, Instance), a tag or a Modbus register; condition (&gt;, &lt;, &ge;, &le;, =, &ne;, between, outside), warning and critical limits, hysteresis and delay. Active alarms are acknowledged in the tab or from a dashboard Alarm Banner / Alarm List; sound can be muted. These are BACManager&rsquo;s own alarms on values.</p>
+<p id="device-alarms"><b>A device&rsquo;s own alarms</b> join the same list, history, sound and notifications, marked <b>device</b> beside <b>BACManager</b>. Under <b>Device alarms</b> on the Alarms tab: <b>Read the devices&rsquo; own alarms</b>, ask each device every 30 s (GetEventInformation, or GetAlarmSummary on older devices), which devices, and the priority up to which an alarm is critical (0&hellip;127 by default; above it, a warning). Event notifications a device sends arrive at once, and BACManager confirms them. Each row shows the device, object, priority, transition (e.g. normal &rarr; high-limit) and the device&rsquo;s message. <b>Ack</b> sends AcknowledgeAlarm to the device with the <b>operator name</b> as its source (asked at the first Ack, then kept; a Runtime machine asks at every start), and the history records who acknowledged. A dashboard Alarm List and Annunciator acknowledge them the same way. To have a device send its alarms here, open its <b>Notification Class</b> and press <b>&#128232; Send alarms to BACManager</b>: after a question it adds this computer to the class&rsquo;s recipients. The gateway&rsquo;s <b>Publish alarms</b> sends every alarm to MQTT.</p>
 <p id="notifications"><b>&#128232; Notifications</b> on the Alarms tab sends them out by <b>e-mail</b> (SMTP), to a <b>Telegram</b> group or to a <b>webhook</b> (JSON: ntfy, Home Assistant, Node-RED, n8n, Slack / Teams workflows), with a test button per channel. You choose what is sent (raised, warning &rarr; critical, back to normal, acknowledged), the lowest level, how soon the same alarm may be sent again, and above how many a minute they go as one message. Each alarm has a <b>Notify</b> box. BACManager sends them itself, also with the window closed and on a Runtime machine; passwords and tokens stay on the computer, never in a workspace or a Runtime package (<a class="inline-link" href="https://modbusmanager.com/manual.html#notifications">details</a>).</p>
 </section>
 
@@ -629,6 +670,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <section id="workspaces" class="doc-section">
 <h2>Workspaces &amp; templates</h2>
 <p><b>&#128190; Workspace</b> saves one JSON file to Documents; the folder button opens one. It holds the Modbus poll windows and their settings, the dashboard, tags and script, the Historian&rsquo;s logged series, the slave blocks, the BACnet simulator configuration and BACnet panel state, the BACnet request gaps, and the gateway configuration (opening a workspace asks before applying it). Connection settings stay with each PC; alarm definitions and the S7 PLC list are kept by the application. ModbusManager Pro and BACManager open each other&rsquo;s workspaces. <b>Templates</b> load ready Modbus poll windows for common devices.</p>
+<p><b>&#128218; Device library</b> lists the ready workspaces from bacmanager.com and modbusmanager.com (energy meters, solar, drives, HVAC, pumps, PLCs, BACnet networks, Home Assistant) with a search; <b>Open</b> shows what the workspace holds (pages, elements, tags, scripts &mdash; never a connection) and asks before it replaces yours. <b>Open in BACManager</b> on a device guide does the same from the browser. If a workspace has tags that cannot be created (e.g. a reserved name), a window lists each one with the reason, the elements and script lines that use it, and how to fix it.</p>
 <p><b>Other device numbers.</b> A workspace names BACnet devices by instance. When it reads devices that are not in the BACnet tab&rsquo;s list, BACManager asks which discovered device takes each one&rsquo;s place (with its own <b>Discover</b> button) and moves every point over at once: tags, dashboard elements, the script, logged series, gateway rows and endpoints, PID loops and request gaps. <b>Keep</b> leaves a number as it is; two workspace devices cannot both go to one. The gateway&rsquo;s own BACnet device and the simulator keep their numbers, and a Runtime kiosk is never asked. With nothing discovered the workspace loads as before and a hint names its devices. The free workspaces on the <a class="inline-link" href="/bacnet-devices.html">device guides</a> open this way.</p>
 </section>
 
@@ -647,9 +689,6 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <h2>Not supported yet</h2>
 <p>So you know before you need it, BACManager 1.4.8 does <b>not</b>:</p>
 <ul class="body-list">
-<li>use BACnet/SC (secure connect) &mdash; only BACnet/IP and MS/TP;</li>
-<li>read Trend Log objects (they are listed, but ReadRange is not implemented);</li>
-<li>receive BACnet event or alarm notifications, or acknowledge device alarms;</li>
 <li>send DeviceCommunicationControl, ReinitializeDevice or TimeSynchronization;</li>
 <li>discover routers (Who-Is-Router-To-Network) or set Who-Is instance limits;</li>
 <li>edit exception schedules (they are shown).</li>
