@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BACnet Device Guides: Points Lists &amp; Setup for 19 Devices</title>
+<title>BACnet Device Guides: Points Lists &amp; Setup for 23 Devices</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -13,7 +13,7 @@
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bacmanager.com/bacnet-devices.html">
-<meta property="og:title" content="BACnet Device Guides: Points Lists &amp; Setup for 19 Devices">
+<meta property="og:title" content="BACnet Device Guides: Points Lists &amp; Setup for 23 Devices">
 <meta property="og:site_name" content="BACManager">
 <meta property="og:description" content="Guides to bringing real equipment onto a BMS over BACnet: Daikin, Trane, AAON, Lennox, Lochinvar, Mitsubishi, ABB, Schneider, Grundfos, Wilo, Belimo and a BACnet router. Factory settings, points lists, the rule that bites and a free BACManager workspace for each.">
 <meta property="og:url" content="https://bacmanager.com/bacnet-devices.html">
@@ -22,7 +22,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BACnet Device Guides: Points Lists &amp; Setup for 19 Devices">
+<meta name="twitter:title" content="BACnet Device Guides: Points Lists &amp; Setup for 23 Devices">
 <meta name="twitter:description" content="Guides to bringing real equipment onto a BMS over BACnet: Daikin, Trane, AAON, Lennox, Lochinvar, Mitsubishi, ABB, Schneider, Grundfos, Wilo, Belimo and a BACnet router. Factory settings, points lists, the rule that bites and a free BACManager workspace for each.">
 <meta name="twitter:image" content="https://bacmanager.com/og-bacnet-devices.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -293,6 +293,8 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
             <div class="nd-head">Chillers and rooftop units</div>
             <a href="/daikin-microtech-iii-bacnet.html">Daikin MicroTech III chiller</a>
             <a href="/trane-symbio-700-bacnet.html">Trane Symbio 700</a>
+            <a href="/carrier-30rc-bacnet.html">Carrier AquaSnap 30RC</a>
+            <a href="/york-ylaa-bacnet.html">York YLAA chiller</a>
             <a href="/aaon-vccx2-bacnet.html">AAON VCCX2</a>
             <a href="/lennox-core-bacnet.html">Lennox CORE</a>
             <div class="nd-head">Air handling units</div>
@@ -300,6 +302,8 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
             <a href="/systemair-access-bacnet.html">Systemair Access (Geniox, Topvex)</a>
             <div class="nd-head">VAV and room controllers</div>
             <a href="/kmc-conquest-vav-bacnet.html">KMC Conquest VAV</a>
+            <div class="nd-head">Data centre cooling</div>
+            <a href="/liebert-icom-bacnet.html">Vertiv Liebert iCOM</a>
             <div class="nd-head">Boilers</div>
             <a href="/lochinvar-crest-bacnet.html">Lochinvar Crest boiler</a>
             <div class="nd-head">VRF and split systems</div>
@@ -310,6 +314,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
             <a href="/schneider-atv600-bacnet.html">Schneider ATV600</a>
             <a href="/siemens-g120p-bacnet.html">Siemens SINAMICS G120P</a>
             <a href="/danfoss-fc102-bacnet.html">Danfoss VLT FC 102</a>
+            <a href="/yaskawa-hv600-bacnet.html">Yaskawa HV600</a>
             <div class="nd-head">Pumps and valves</div>
             <a href="/grundfos-cim-bacnet.html">Grundfos MAGNA3 (CIM)</a>
             <a href="/wilo-cif-bacnet.html">Wilo Stratos MAXO (CIF)</a>
@@ -359,7 +364,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
     <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.10/BACManager.Setup.1.4.10.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
     <a href="#devices" class="btn-ghost">Pick a device</a>
   </div>
-  <p class="hero-note">19 devices &middot; made from the makers' own manuals, PICS and EDE lists</p>
+  <p class="hero-note">23 devices &middot; made from the makers' own manuals, PICS and EDE lists</p>
 </section>
 
 <div class="divider-line"></div>
@@ -370,6 +375,8 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
   <div class="feat-grid">
     <div class="feat"><h3><a href="/daikin-microtech-iii-bacnet.html" style="color:inherit">Daikin MicroTech III chiller</a></h3><p>Daikin MicroTech III chiller on BACnet MS/TP or IP: module, keypad setup, key points list, priority 8 writes, why setpoints are ignored. Free workspace.</p><p style="margin-top:0.6rem"><a href="/daikin-microtech-iii-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
     <div class="feat"><h3><a href="/trane-symbio-700-bacnet.html" style="color:inherit">Trane Symbio 700</a></h3><p>Trane Symbio 700 rooftop on BACnet MS/TP or IP: rotary address, app setup, J17 wiring, key points, the priority 14 rule. Symbio 800 notes. Free workspace.</p><p style="margin-top:0.6rem"><a href="/trane-symbio-700-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
+    <div class="feat"><h3><a href="/carrier-30rc-bacnet.html" style="color:inherit">Carrier AquaSnap 30RC</a></h3><p>Carrier AquaSnap 30RC on BACnet/IP: BACNET menu off from the factory, device ID 1600001, Network control, metric units. Points list, free workspace.</p><p style="margin-top:0.6rem"><a href="/carrier-30rc-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
+    <div class="feat"><h3><a href="/york-ylaa-bacnet.html" style="color:inherit">York YLAA chiller</a></h3><p>York YLAA chiller on BACnet MS/TP: keypad setup, instance = address x 100 + offset, 4800 baud trap, SC-EQ card, Local/Remote. Free workspace.</p><p style="margin-top:0.6rem"><a href="/york-ylaa-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
     <div class="feat"><h3><a href="/aaon-vccx2-bacnet.html" style="color:inherit">AAON VCCX2</a></h3><p>AAON VCCX2 on BACnet MS/TP: LCD setup, the BACnet port vs the 485 loop, key points, overrides released by 65535, the damper trap. Free workspace.</p><p style="margin-top:0.6rem"><a href="/aaon-vccx2-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
     <div class="feat"><h3><a href="/lennox-core-bacnet.html" style="color:inherit">Lennox CORE</a></h3><p>Lennox CORE on BACnet MS/TP or IP: setup wizard, defaults, key points, and the 5-minute rule that drops a unit into backup mode. Free workspace.</p><p style="margin-top:0.6rem"><a href="/lennox-core-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
   </div>
@@ -393,6 +400,16 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
   <h2 class="sec-title">VAV and room controllers</h2>
   <div class="feat-grid">
     <div class="feat"><h3><a href="/kmc-conquest-vav-bacnet.html" style="color:inherit">KMC Conquest VAV</a></h3><p>KMC Conquest BAC-9001A VAV on BACnet: NetSensor COMM menu, default IP, °F/cfm object list, why to write AV5/AV6 not AV3/AV4. Free workspace.</p><p style="margin-top:0.6rem"><a href="/kmc-conquest-vav-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// data centre cooling</div>
+  <h2 class="sec-title">Data centre cooling</h2>
+  <div class="feat-grid">
+    <div class="feat"><h3><a href="/liebert-icom-bacnet.html" style="color:inherit">Vertiv Liebert iCOM</a></h3><p>Vertiv Liebert iCOM on BACnet via the IntelliSlot Unity card: write access, IP or MS/TP, data map, iCOM points, relinquish trap. Free workspace.</p><p style="margin-top:0.6rem"><a href="/liebert-icom-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
   </div>
 </section>
 
@@ -427,6 +444,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
     <div class="feat"><h3><a href="/schneider-atv600-bacnet.html" style="color:inherit">Schneider ATV600</a></h3><p>Altivar Process ATV600 on BACnet MS/TP with VW3A3725: address and instance 0, the 1 s fieldbus timeout, CnF, control channel. Free workspace.</p><p style="margin-top:0.6rem"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
     <div class="feat"><h3><a href="/siemens-g120p-bacnet.html" style="color:inherit">Siemens SINAMICS G120P</a></h3><p>SINAMICS G120P on BACnet MS/TP: macro 110, instance 1 and Max Master 32 from the factory, p2040 and F01910, control-word bits. Free workspace.</p><p style="margin-top:0.6rem"><a href="/siemens-g120p-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
     <div class="feat"><h3><a href="/danfoss-fc102-bacnet.html" style="color:inherit">Danfoss VLT FC 102</a></h3><p>Danfoss VLT FC 102 on built-in BACnet MS/TP: 8-30, instance 1 from the factory, terminal 27 and 8-50, the 8-03 timeout and alarm 17. Free workspace.</p><p style="margin-top:0.6rem"><a href="/danfoss-fc102-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
+    <div class="feat"><h3><a href="/yaskawa-hv600-bacnet.html" style="color:inherit">Yaskawa HV600</a></h3><p>Yaskawa HV600 on embedded BACnet MS/TP: H5-08 = 3, instance 1 in hex across H5-14/H5-15, b1-01/b1-02 sources, CE on comm loss. Free workspace.</p><p style="margin-top:0.6rem"><a href="/yaskawa-hv600-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
   </div>
 </section>
 

@@ -190,6 +190,42 @@
    "desc": "VAV controller: space temperature, setpoints, occupancy, airflow, damper",
    "ws": "KMC_Conquest_VAV_BACnet.json",
    "page": "kmc-conquest-vav-bacnet.html"
+  },
+  {
+   "id": "carrier-30rc",
+   "name": "Carrier AquaSnap 30RC",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Chiller: network start/stop, control point, demand limit, water temperatures, compressors, alarms",
+   "ws": "Carrier_30RC_Chiller_BACnet.json",
+   "page": "carrier-30rc-bacnet.html"
+  },
+  {
+   "id": "york-ylaa",
+   "name": "York YLAA chiller",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Chiller (native BACnet): start/stop, remote setpoint, load limit, water temperatures, pressures, alarms",
+   "ws": "York_YLAA_Chiller_BACnet.json",
+   "page": "york-ylaa-bacnet.html"
+  },
+  {
+   "id": "liebert-icom",
+   "name": "Vertiv Liebert iCOM",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "CRAC/CRAH unit: on/off, supply and return air set points, temperatures, humidity, compressors, events",
+   "ws": "Liebert_iCOM_BACnet.json",
+   "page": "liebert-icom-bacnet.html"
+  },
+  {
+   "id": "yaskawa-hv600",
+   "name": "Yaskawa HV600",
+   "cat": "drives",
+   "proto": "BACnet",
+   "desc": "Drive (embedded BACnet MS/TP): run, frequency command, output, current, power, faults",
+   "ws": "Yaskawa_HV600_Drive_BACnet.json",
+   "page": "yaskawa-hv600-bacnet.html"
   }
  ]
 }
