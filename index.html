@@ -249,6 +249,10 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
         <a href="/bacnet-schedule-editor.html"><span class="ni">&#128197;&#65039;</span>Schedule &amp; Calendar Editor</a>
         <a href="/bacnet-modbus-gateway.html"><span class="ni">&#128256;&#65039;</span>BACnet &harr; Modbus Gateway</a>
         <a href="/bacnet-to-mqtt-home-assistant.html" class="nd-sub"><span class="ni">&#128225;&#65039;</span>BACnet to MQTT</a>
+        <a href="/bacnet-trend-log.html"><span class="ni">&#128200;&#65039;</span>Trend Log Reader</a>
+        <a href="/bacnet-alarms.html"><span class="ni">&#128276;&#65039;</span>Device Alarms</a>
+        <a href="/bacnet-traffic-analyzer.html"><span class="ni">&#128246;&#65039;</span>Traffic Analyzer</a>
+        <a href="/bacnet-sc-secure-connect.html"><span class="ni">&#128272;&#65039;</span>BACnet/SC Secure Connect</a>
         <a href="/bacnet-hmi-runtime.html"><span class="ni">&#128421;&#65039;</span>BACnet HMI Runtime (OEM)</a>
         <a href="/#features"><span class="ni">&#128203;&#65039;</span>All features</a>
       </div></div>
@@ -455,6 +459,31 @@ document.addEventListener('keydown', function(e){
       <div class="feat-icon">&#128268;</div>
       <h3>BACnet &harr; Modbus gateway</h3>
       <p>Bridge either direction from one PC &mdash; expose Modbus meters as a BACnet device for a BMS, or a BACnet device as a Modbus map for a PLC. Publishes to <a href="/bacnet-to-mqtt-home-assistant.html" style="color:var(--amber-ink)"><strong>MQTT and Home Assistant</strong></a> too. Priority-aware writes, runs unattended in the background. <a href="/bacnet-modbus-gateway.html" style="color:var(--amber-ink)">Gateway guide &rarr;</a></p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">&#128200;</div>
+      <h3>Trend Log reader</h3>
+      <p>Read the log the controller already kept: Trend Log and Trend Log Multiple via ReadRange &mdash; all, last n, a time range or from a sequence number &mdash; as a chart and a table, to CSV, or kept in History without gaps. <a href="/bacnet-trend-log.html" style="color:var(--amber-ink)">Trend Log guide &rarr;</a></p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">&#128276;</div>
+      <h3>Device alarms</h3>
+      <p>The controllers' own alarms beside yours: event notifications at once, GetEventInformation every 30&nbsp;s, and Ack sent to the device as AcknowledgeAlarm with the operator's name. <a href="/bacnet-alarms.html" style="color:var(--amber-ink)">Alarms guide &rarr;</a></p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">&#128272;</div>
+      <h3>BACnet/SC</h3>
+      <p>Join a Secure Connect hub as a node with the site's certificates (PEM or PFX), primary and failover hub &mdash; then discovery, objects, writes, schedules, Trend Logs and alarms work over SC as on BACnet/IP. <a href="/bacnet-sc-secure-connect.html" style="color:var(--amber-ink)">BACnet/SC guide &rarr;</a></p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">&#128246;</div>
+      <h3>Traffic analyzer</h3>
+      <p>Every request and answer decoded, with its time; Error, Reject and Abort reasons by name; slow devices; every frame and token pass on an MS/TP bus. CSV or .pcap for Wireshark. <a href="/bacnet-traffic-analyzer.html" style="color:var(--amber-ink)">Traffic guide &rarr;</a></p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">&#128218;</div>
+      <h3>Device library</h3>
+      <p>The ready workspaces from this site's <a href="/bacnet-devices.html" style="color:var(--amber-ink)">device guides</a>, searchable inside the app; <strong>Open in BACManager</strong> on a guide loads one straight from the browser, and asks before it replaces yours.</p>
     </div>
   </div>
 </section>
