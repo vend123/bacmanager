@@ -154,6 +154,42 @@
    "desc": "Power meter: phase voltages, currents, power, PF, demand, energy, THD (read only)",
    "ws": "Accuenergy_Acuvim_II_BACnet.json",
    "page": "acuvim-ii-bacnet.html"
+  },
+  {
+   "id": "danfoss-fc102-bacnet",
+   "name": "Danfoss VLT HVAC Drive FC 102",
+   "cat": "drives",
+   "proto": "BACnet",
+   "desc": "Drive (native BACnet MS/TP): run, reference, bus control, frequency, current, power, faults",
+   "ws": "Danfoss_FC102_Drive_BACnet.json",
+   "page": "danfoss-fc102-bacnet.html"
+  },
+  {
+   "id": "swegon-gold",
+   "name": "Swegon GOLD",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Air handling unit: operation level, supply air set point, air flows, temperatures, fans, alarms",
+   "ws": "Swegon_GOLD_AHU_BACnet.json",
+   "page": "swegon-gold-bacnet.html"
+  },
+  {
+   "id": "systemair-access",
+   "name": "Systemair Access (Geniox, Topvex)",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "Air handling unit: unit mode, supply set point, heat recovery, heater, fans, alarms",
+   "ws": "Systemair_Access_AHU_BACnet.json",
+   "page": "systemair-access-bacnet.html"
+  },
+  {
+   "id": "kmc-conquest-vav",
+   "name": "KMC Conquest VAV",
+   "cat": "hvac",
+   "proto": "BACnet",
+   "desc": "VAV controller: space temperature, setpoints, occupancy, airflow, damper",
+   "ws": "KMC_Conquest_VAV_BACnet.json",
+   "page": "kmc-conquest-vav-bacnet.html"
   }
  ]
 }
