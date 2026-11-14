@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BACnet Device Guides: Points Lists &amp; Setup for 13 Devices</title>
+<title>BACnet Device Guides: Points Lists &amp; Setup for 15 Devices</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -13,7 +13,7 @@
 <meta name="author" content="BACManager">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bacmanager.com/bacnet-devices.html">
-<meta property="og:title" content="BACnet Device Guides: Points Lists &amp; Setup for 13 Devices">
+<meta property="og:title" content="BACnet Device Guides: Points Lists &amp; Setup for 15 Devices">
 <meta property="og:site_name" content="BACManager">
 <meta property="og:description" content="Guides to bringing real equipment onto a BMS over BACnet: Daikin, Trane, AAON, Lennox, Lochinvar, Mitsubishi, ABB, Schneider, Grundfos, Wilo, Belimo and a BACnet router. Factory settings, points lists, the rule that bites and a free BACManager workspace for each.">
 <meta property="og:url" content="https://bacmanager.com/bacnet-devices.html">
@@ -22,7 +22,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BACnet Device Guides: Points Lists &amp; Setup for 13 Devices">
+<meta name="twitter:title" content="BACnet Device Guides: Points Lists &amp; Setup for 15 Devices">
 <meta name="twitter:description" content="Guides to bringing real equipment onto a BMS over BACnet: Daikin, Trane, AAON, Lennox, Lochinvar, Mitsubishi, ABB, Schneider, Grundfos, Wilo, Belimo and a BACnet router. Factory settings, points lists, the rule that bites and a free BACManager workspace for each.">
 <meta name="twitter:image" content="https://bacmanager.com/og-bacnet-devices.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -38,8 +38,8 @@
     "description": "Guides to bringing real equipment onto a BMS over BACnet: Daikin, Trane, AAON, Lennox, Lochinvar, Mitsubishi, ABB, Schneider, Grundfos, Wilo, Belimo and a BACnet router. Factory settings, points lists, the rule that bites and a free BACManager workspace for each.",
     "url": "https://bacmanager.com/bacnet-devices.html",
     "image": "https://bacmanager.com/og-bacnet-devices.png",
-    "datePublished": "2026-10-28",
-    "dateModified": "2026-10-28",
+    "datePublished": "2026-11-14",
+    "dateModified": "2026-11-14",
     "author": {
       "@type": "Organization",
       "name": "BACManager",
@@ -303,10 +303,13 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
             <div class="nd-head">Drives</div>
             <a href="/abb-ach580-bacnet.html">ABB ACH580</a>
             <a href="/schneider-atv600-bacnet.html">Schneider ATV600</a>
+            <a href="/siemens-g120p-bacnet.html">Siemens SINAMICS G120P</a>
             <div class="nd-head">Pumps and valves</div>
             <a href="/grundfos-cim-bacnet.html">Grundfos MAGNA3 (CIM)</a>
             <a href="/wilo-cif-bacnet.html">Wilo Stratos MAXO (CIF)</a>
             <a href="/belimo-energy-valve-bacnet.html">Belimo Energy Valve</a>
+            <div class="nd-head">Energy meters</div>
+            <a href="/acuvim-ii-bacnet.html">Accuenergy Acuvim II</a>
             <div class="nd-head">Routers</div>
             <a href="/basrouter-bacnet-router.html">BASrouter (MS/TP to IP)</a>
           </div></div>
@@ -350,7 +353,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
     <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.10/BACManager.Setup.1.4.10.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
     <a href="#devices" class="btn-ghost">Pick a device</a>
   </div>
-  <p class="hero-note">13 devices &middot; made from the makers' own manuals, PICS and EDE lists</p>
+  <p class="hero-note">15 devices &middot; made from the makers' own manuals, PICS and EDE lists</p>
 </section>
 
 <div class="divider-line"></div>
@@ -395,6 +398,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
   <div class="feat-grid">
     <div class="feat"><h3><a href="/abb-ach580-bacnet.html" style="color:inherit">ABB ACH580</a></h3><p>ABB ACH580 drive on BACnet MS/TP: group 58 setup, device ID 4194303, BV10/AV16 control, why it trips on 6681 EFB comm loss. Free workspace.</p><p style="margin-top:0.6rem"><a href="/abb-ach580-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
     <div class="feat"><h3><a href="/schneider-atv600-bacnet.html" style="color:inherit">Schneider ATV600</a></h3><p>Altivar Process ATV600 on BACnet MS/TP with VW3A3725: address and instance 0, the 1 s fieldbus timeout, CnF, control channel. Free workspace.</p><p style="margin-top:0.6rem"><a href="/schneider-atv600-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
+    <div class="feat"><h3><a href="/siemens-g120p-bacnet.html" style="color:inherit">Siemens SINAMICS G120P</a></h3><p>SINAMICS G120P on BACnet MS/TP: macro 110, instance 1 and Max Master 32 from the factory, p2040 and F01910, control-word bits. Free workspace.</p><p style="margin-top:0.6rem"><a href="/siemens-g120p-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
   </div>
 </section>
 
@@ -407,6 +411,16 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
     <div class="feat"><h3><a href="/grundfos-cim-bacnet.html" style="color:inherit">Grundfos MAGNA3 (CIM)</a></h3><p>Grundfos MAGNA3 on BACnet with CIM 300 or CIM 500: switches, instance 227000 + MAC, bus control, setpoint scaling, the watchdog. Free workspace.</p><p style="margin-top:0.6rem"><a href="/grundfos-cim-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
     <div class="feat"><h3><a href="/wilo-cif-bacnet.html" style="color:inherit">Wilo Stratos MAXO (CIF)</a></h3><p>Wilo-Stratos MAXO on BACnet with a CIF-Module: MS/TP or IP, no ReadPropertyMultiple on MS/TP, values on change only, bus command timer. Free workspace.</p><p style="margin-top:0.6rem"><a href="/wilo-cif-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
     <div class="feat"><h3><a href="/belimo-energy-valve-bacnet.html" style="color:inherit">Belimo Energy Valve</a></h3><p>Belimo Energy Valve 4 on BACnet: protocol None from the factory, setpoint source Analog, the bus watchdog, units and the points list. Free workspace.</p><p style="margin-top:0.6rem"><a href="/belimo-energy-valve-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// energy meters</div>
+  <h2 class="sec-title">Energy meters</h2>
+  <div class="feat-grid">
+    <div class="feat"><h3><a href="/acuvim-ii-bacnet.html" style="color:inherit">Accuenergy Acuvim II</a></h3><p>Accuenergy Acuvim II on BACnet MS/TP or IP: S38 Protocol 1, S52 device ID, the 71 Analog Inputs, read-only, AXM-BMS AV list. Free workspace.</p><p style="margin-top:0.6rem"><a href="/acuvim-ii-bacnet.html" style="color:var(--amber-ink)">Read the guide &rarr;</a></p></div>
   </div>
 </section>
 

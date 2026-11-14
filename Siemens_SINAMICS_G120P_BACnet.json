@@ -1,0 +1,726 @@
+{
+  "version": 2,
+  "activePoll": 0,
+  "polls": [],
+  "tags": [
+    {
+      "name": "_bac_31010_5_4",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 4,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_18",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 18,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_0",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 0,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_10",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 10,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_8",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 8,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_3",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 3,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_2",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 2,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_0",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 0,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_5",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 5,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_7",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 7,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_1",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 1,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_17",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 17,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_12",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 12,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_20",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 20,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_22",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 22,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_2",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 2,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_3",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 3,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_8",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 8,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_93",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 93,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_27",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 27,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_28",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 28,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_5_26",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 5,
+      "bacInstance": 26,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_10",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 10,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_32",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 32,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_16",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 16,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_31010_2_39",
+      "type": "bacnet",
+      "bacDeviceId": 31010,
+      "bacType": 2,
+      "bacInstance": 39,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    }
+  ],
+  "dashPages": [
+    {
+      "id": 1,
+      "name": "SF-1",
+      "elements": [
+        {
+          "id": 1,
+          "value": 0,
+          "type": "statictext",
+          "x": 20,
+          "y": 12,
+          "w": 760,
+          "h": 36,
+          "text": "SF-1 supply fan  ·  Siemens SINAMICS G120P (CU230P-2)",
+          "fontSize": 22,
+          "bold": true,
+          "color": "#e6eef8"
+        },
+        {
+          "id": 2,
+          "value": 0,
+          "type": "multistate",
+          "x": 800,
+          "y": 12,
+          "w": 230,
+          "h": 44,
+          "label": "MANUAL AUTO (BV 4)",
+          "states": "0=LOCAL:#f0c040,1=AUTO:#3fd28a",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_5_4"
+        },
+        {
+          "id": 3,
+          "value": 0,
+          "type": "multistate",
+          "x": 1040,
+          "y": 12,
+          "w": 230,
+          "h": 44,
+          "label": "ACT FAULT (AV 18)",
+          "states": "0=No fault:#3fd28a,1910=F01910 bus:#f85149",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_18"
+        },
+        {
+          "id": 4,
+          "value": 0,
+          "type": "drive",
+          "x": 20,
+          "y": 70,
+          "w": 330,
+          "h": 290,
+          "label": "SF-1 drive",
+          "unit": "%",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "powerUnit": "kW",
+          "startVal": 1,
+          "stopVal": 0,
+          "resetVal": 1,
+          "resetBack": 0,
+          "resetMs": 1000,
+          "fbTimeout": 10,
+          "askFirst": true,
+          "items": [
+            {
+              "role": "run",
+              "name": "RUN STOPPED",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_5_0"
+            },
+            {
+              "role": "ready",
+              "name": "DRIVE READY",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_5_10"
+            },
+            {
+              "role": "atSp",
+              "name": "AT SETPOINT",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_5_8"
+            },
+            {
+              "role": "warn",
+              "name": "WARN",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_5_3"
+            },
+            {
+              "role": "fault",
+              "name": "FAULT",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_5_2"
+            },
+            {
+              "role": "faultCode",
+              "name": "ACT FAULT",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_2_18"
+            },
+            {
+              "role": "freq",
+              "name": "OUT FREQ HZ",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_2_0"
+            },
+            {
+              "role": "current",
+              "name": "CURRENT",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_2_5"
+            },
+            {
+              "role": "power",
+              "name": "POWER",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_2_7"
+            },
+            {
+              "role": "speedAct",
+              "name": "OUT FREQ PCT",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_2_1"
+            },
+            {
+              "role": "ref",
+              "name": "FREQ SP PCT",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_2_17"
+            },
+            {
+              "role": "hours",
+              "name": "INV RUN TIME",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_2_12"
+            },
+            {
+              "role": "runCmd",
+              "name": "RUN STOP CMD",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_5_20"
+            },
+            {
+              "role": "resetCmd",
+              "name": "FAULT RESET",
+              "sourceType": "tag",
+              "tagName": "_bac_31010_5_22"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "value": 0,
+          "type": "fan",
+          "x": 385,
+          "y": 76,
+          "w": 110,
+          "h": 110,
+          "label": "SF-1",
+          "threshold": 1,
+          "colorOn": "#00d4aa",
+          "colorOff": "#5b6470",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_5_0"
+        },
+        {
+          "id": 6,
+          "value": 0,
+          "type": "text",
+          "x": 515,
+          "y": 76,
+          "w": 180,
+          "h": 74,
+          "label": "Output frequency",
+          "unit": "Hz",
+          "decimals": 1,
+          "fontSize": 24,
+          "color": "#00d4aa",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_0"
+        },
+        {
+          "id": 7,
+          "value": 0,
+          "type": "text",
+          "x": 515,
+          "y": 162,
+          "w": 180,
+          "h": 74,
+          "label": "Motor speed",
+          "unit": "rpm",
+          "decimals": 0,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_2"
+        },
+        {
+          "id": 8,
+          "value": 0,
+          "type": "text",
+          "x": 380,
+          "y": 250,
+          "w": 150,
+          "h": 74,
+          "label": "Current",
+          "unit": "A",
+          "decimals": 1,
+          "fontSize": 24,
+          "color": "#f0c040",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_5"
+        },
+        {
+          "id": 9,
+          "value": 0,
+          "type": "text",
+          "x": 545,
+          "y": 250,
+          "w": 150,
+          "h": 74,
+          "label": "Power",
+          "unit": "kW",
+          "decimals": 2,
+          "fontSize": 24,
+          "color": "#3b82f6",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_7"
+        },
+        {
+          "id": 10,
+          "value": 0,
+          "type": "text",
+          "x": 380,
+          "y": 336,
+          "w": 150,
+          "h": 74,
+          "label": "DC link",
+          "unit": "V",
+          "decimals": 0,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_3"
+        },
+        {
+          "id": 11,
+          "value": 0,
+          "type": "text",
+          "x": 545,
+          "y": 336,
+          "w": 150,
+          "h": 74,
+          "label": "Heat sink",
+          "unit": "°C",
+          "decimals": 0,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_8"
+        },
+        {
+          "id": 12,
+          "value": 0,
+          "type": "statictext",
+          "x": 20,
+          "y": 380,
+          "w": 480,
+          "h": 28,
+          "text": "Control-word bits before RUN STOP CMD",
+          "fontSize": 15,
+          "bold": true,
+          "color": "#9fb3cc"
+        },
+        {
+          "id": 13,
+          "value": 0,
+          "type": "enumwrite",
+          "x": 20,
+          "y": 414,
+          "w": 225,
+          "h": 62,
+          "label": "CTL OVERRIDE (BV 93)",
+          "options": "0=0,1=1",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_5_93"
+        },
+        {
+          "id": 14,
+          "value": 0,
+          "type": "enumwrite",
+          "x": 260,
+          "y": 414,
+          "w": 225,
+          "h": 62,
+          "label": "OFF2 (BV 27)",
+          "options": "0=0,1=1",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_5_27"
+        },
+        {
+          "id": 15,
+          "value": 0,
+          "type": "enumwrite",
+          "x": 20,
+          "y": 488,
+          "w": 225,
+          "h": 62,
+          "label": "OFF3 (BV 28)",
+          "options": "0=0,1=1",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_5_28"
+        },
+        {
+          "id": 16,
+          "value": 0,
+          "type": "enumwrite",
+          "x": 260,
+          "y": 488,
+          "w": 225,
+          "h": 62,
+          "label": "RUN ENA CMD (BV 26)",
+          "options": "0=0,1=1",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_5_26"
+        },
+        {
+          "id": 17,
+          "value": 0,
+          "type": "text",
+          "x": 20,
+          "y": 570,
+          "w": 230,
+          "h": 74,
+          "label": "Energy KWH NR",
+          "unit": "kWh",
+          "decimals": 0,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_10"
+        },
+        {
+          "id": 18,
+          "value": 0,
+          "type": "text",
+          "x": 260,
+          "y": 570,
+          "w": 225,
+          "h": 74,
+          "label": "Motor hours INV RUN TIME",
+          "unit": "h",
+          "decimals": 0,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_12"
+        },
+        {
+          "id": 19,
+          "value": 0,
+          "type": "multitend",
+          "x": 720,
+          "y": 76,
+          "w": 550,
+          "h": 330,
+          "label": "Frequency (Hz) and current (A)",
+          "maxPoints": 1200,
+          "decimals": 1,
+          "yMin": 0,
+          "yMax": 50,
+          "items": [
+            {
+              "name": "OUT FREQ HZ",
+              "color": "#00d4aa",
+              "history": [],
+              "sourceType": "tag",
+              "tagName": "_bac_31010_2_0"
+            },
+            {
+              "name": "CURRENT",
+              "color": "#f0c040",
+              "history": [],
+              "sourceType": "tag",
+              "tagName": "_bac_31010_2_5"
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "value": 0,
+          "type": "kpi",
+          "x": 720,
+          "y": 424,
+          "w": 270,
+          "h": 104,
+          "label": "Power",
+          "unit": "kW",
+          "decimals": 2,
+          "periodMin": 15,
+          "color": "#3b82f6",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_7"
+        },
+        {
+          "id": 21,
+          "value": 0,
+          "type": "text",
+          "x": 1010,
+          "y": 424,
+          "w": 260,
+          "h": 74,
+          "label": "Ramp-up ACCEL TIME",
+          "unit": "s",
+          "decimals": 0,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_32"
+        },
+        {
+          "id": 22,
+          "value": 0,
+          "type": "text",
+          "x": 1010,
+          "y": 510,
+          "w": 260,
+          "h": 74,
+          "label": "Reference RPM STPT 1",
+          "unit": "rpm",
+          "decimals": 0,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_16"
+        },
+        {
+          "id": 23,
+          "value": 0,
+          "type": "text",
+          "x": 720,
+          "y": 546,
+          "w": 270,
+          "h": 74,
+          "label": "ACT WARN (AV 39)",
+          "unit": "",
+          "decimals": 0,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_31010_2_39"
+        }
+      ]
+    }
+  ],
+  "dashTheme": "modern",
+  "dashFx": true
+}

@@ -1,0 +1,586 @@
+{
+  "version": 2,
+  "activePoll": 0,
+  "polls": [],
+  "tags": [
+    {
+      "name": "_bac_41001_0_2",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 2,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_3",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 3,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_4",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 4,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_10",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 10,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_11",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 11,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_12",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 12,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_15",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 15,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_16",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 16,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_17",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 17,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_18",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 18,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_27",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 27,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_28",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 28,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_29",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 29,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_30",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 30,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_1",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 1,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_6",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 6,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_7",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 7,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_8",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 8,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_40",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 40,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_41",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 41,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_34",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 34,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_22",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 22,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_14",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 14,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_32",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 32,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_31",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 31,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_68",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 68,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_69",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 69,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    },
+    {
+      "name": "_bac_41001_0_70",
+      "type": "bacnet",
+      "bacDeviceId": 41001,
+      "bacType": 0,
+      "bacInstance": 70,
+      "bacProp": 85,
+      "value": 0,
+      "description": "Managed by a dashboard element"
+    }
+  ],
+  "dashPages": [
+    {
+      "id": 1,
+      "name": "MDB-1",
+      "elements": [
+        {
+          "id": 1,
+          "value": 0,
+          "type": "statictext",
+          "x": 20,
+          "y": 12,
+          "w": 900,
+          "h": 36,
+          "text": "MDB-1 incomer  ·  Accuenergy Acuvim II  ·  BACnet AI1–AI71, read only",
+          "fontSize": 22,
+          "bold": true,
+          "color": "#e6eef8"
+        },
+        {
+          "id": 2,
+          "value": 0,
+          "type": "meter3",
+          "x": 20,
+          "y": 64,
+          "w": 360,
+          "h": 300,
+          "label": "MDB-1 · Acuvim II",
+          "nomV": 230,
+          "ratedA": 160,
+          "pUnit": "kW",
+          "vUnbal": 2,
+          "iUnbal": 10,
+          "lostPct": 50,
+          "showLL": true,
+          "showEnergy": true,
+          "view": "full",
+          "phaseColors": "iec",
+          "flagTag": "",
+          "pts": {
+            "v1": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_2"
+            },
+            "v2": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_3"
+            },
+            "v3": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_4"
+            },
+            "i1": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_10"
+            },
+            "i2": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_11"
+            },
+            "i3": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_12"
+            },
+            "p1": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_15"
+            },
+            "p2": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_16"
+            },
+            "p3": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_17"
+            },
+            "pt": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_18"
+            },
+            "pf1": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_27"
+            },
+            "pf2": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_28"
+            },
+            "pf3": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_29"
+            },
+            "pft": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_30"
+            },
+            "hz": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_1"
+            },
+            "v12": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_6"
+            },
+            "v23": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_7"
+            },
+            "v31": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_8"
+            },
+            "eimp": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_40"
+            },
+            "eexp": {
+              "src": "tag",
+              "tagName": "_bac_41001_0_41"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "value": 0,
+          "type": "kpi",
+          "x": 400,
+          "y": 64,
+          "w": 280,
+          "h": 104,
+          "label": "Total Active Power (AI18)",
+          "unit": "kW",
+          "decimals": 1,
+          "periodMin": 15,
+          "color": "#3b82f6",
+          "sourceType": "tag",
+          "tagName": "_bac_41001_0_18"
+        },
+        {
+          "id": 4,
+          "value": 0,
+          "type": "text",
+          "x": 400,
+          "y": 182,
+          "w": 280,
+          "h": 74,
+          "label": "Active Power Demand (AI34)",
+          "unit": "kW",
+          "decimals": 1,
+          "fontSize": 24,
+          "color": "#00d4aa",
+          "sourceType": "tag",
+          "tagName": "_bac_41001_0_34"
+        },
+        {
+          "id": 5,
+          "value": 0,
+          "type": "text",
+          "x": 400,
+          "y": 270,
+          "w": 280,
+          "h": 74,
+          "label": "Total Reactive Power (AI22)",
+          "unit": "kvar",
+          "decimals": 1,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_41001_0_22"
+        },
+        {
+          "id": 6,
+          "value": 0,
+          "type": "text",
+          "x": 700,
+          "y": 64,
+          "w": 270,
+          "h": 74,
+          "label": "Neutral Current (AI14)",
+          "unit": "A",
+          "decimals": 1,
+          "fontSize": 24,
+          "color": "#f0c040",
+          "sourceType": "tag",
+          "tagName": "_bac_41001_0_14"
+        },
+        {
+          "id": 7,
+          "value": 0,
+          "type": "text",
+          "x": 700,
+          "y": 152,
+          "w": 270,
+          "h": 74,
+          "label": "Current Unbalance (AI32)",
+          "unit": "%",
+          "decimals": 1,
+          "fontSize": 24,
+          "color": "#f0c040",
+          "sourceType": "tag",
+          "tagName": "_bac_41001_0_32"
+        },
+        {
+          "id": 8,
+          "value": 0,
+          "type": "text",
+          "x": 990,
+          "y": 64,
+          "w": 280,
+          "h": 74,
+          "label": "Voltage Unbalance (AI31)",
+          "unit": "%",
+          "decimals": 2,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_41001_0_31"
+        },
+        {
+          "id": 9,
+          "value": 0,
+          "type": "text",
+          "x": 990,
+          "y": 152,
+          "w": 280,
+          "h": 74,
+          "label": "Import Active Energy (AI40)",
+          "unit": "kWh",
+          "decimals": 0,
+          "fontSize": 24,
+          "color": "#9fb3cc",
+          "sourceType": "tag",
+          "tagName": "_bac_41001_0_40"
+        },
+        {
+          "id": 10,
+          "value": 0,
+          "type": "valuetable",
+          "x": 700,
+          "y": 244,
+          "w": 570,
+          "h": 120,
+          "label": "Current THD per phase (AI68–70)",
+          "decimals": 1,
+          "items": [
+            {
+              "name": "Phase A Current THD",
+              "unit": "%",
+              "sourceType": "tag",
+              "tagName": "_bac_41001_0_68"
+            },
+            {
+              "name": "Phase B Current THD",
+              "unit": "%",
+              "sourceType": "tag",
+              "tagName": "_bac_41001_0_69"
+            },
+            {
+              "name": "Phase C Current THD",
+              "unit": "%",
+              "sourceType": "tag",
+              "tagName": "_bac_41001_0_70"
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "value": 0,
+          "type": "multitend",
+          "x": 20,
+          "y": 384,
+          "w": 1250,
+          "h": 360,
+          "label": "Total Active Power and Demand (kW)",
+          "maxPoints": 1200,
+          "decimals": 1,
+          "yMin": 0,
+          "yMax": 80,
+          "items": [
+            {
+              "name": "Total Active Power",
+              "color": "#3b82f6",
+              "history": [],
+              "sourceType": "tag",
+              "tagName": "_bac_41001_0_18"
+            },
+            {
+              "name": "Active Power Demand",
+              "color": "#00d4aa",
+              "history": [],
+              "sourceType": "tag",
+              "tagName": "_bac_41001_0_34"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "dashTheme": "modern",
+  "dashFx": true
+}

@@ -1,6 +1,6 @@
 {
  "about": "The device library ModbusManager and BACManager read (Device library, Open in app). One entry per ready workspace on this site.",
- "updated": "2026-11-08",
+ "updated": "2026-11-14",
  "devices": [
   {
    "id": "daikin-itm",
@@ -136,6 +136,24 @@
    "desc": "Air handler values published to MQTT with Home Assistant discovery",
    "ws": "AHU_BACnet_MQTT_HomeAssistant.json",
    "page": "bacnet-to-mqtt-home-assistant.html"
+  },
+  {
+   "id": "siemens-g120p",
+   "name": "Siemens SINAMICS G120P",
+   "cat": "drives",
+   "proto": "BACnet",
+   "desc": "Drive (CU230P-2): run, setpoint, control-word bits, frequency, current, power, faults",
+   "ws": "Siemens_SINAMICS_G120P_BACnet.json",
+   "page": "siemens-g120p-bacnet.html"
+  },
+  {
+   "id": "acuvim-ii",
+   "name": "Accuenergy Acuvim II",
+   "cat": "meters",
+   "proto": "BACnet",
+   "desc": "Power meter: phase voltages, currents, power, PF, demand, energy, THD (read only)",
+   "ws": "Accuenergy_Acuvim_II_BACnet.json",
+   "page": "acuvim-ii-bacnet.html"
   }
  ]
 }
