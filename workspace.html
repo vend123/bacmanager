@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BACManager Workspaces: What They Are and How to Use Them</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="description" content="A workspace is one .json file with dashboard, tags, BACnet points and script. Open a ready one, move it to your device instance, save your own.">
+<meta name="keywords" content="BACManager workspace, BACnet workspace file, BACnet dashboard template, BACnet device library, change BACnet device instance, BACnet project file, open workspace BACnet, BACnet HMI template">
+<meta name="author" content="BACManager">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bacmanager.com/workspace.html">
+<meta property="og:title" content="BACManager Workspaces: What They Are and How to Use Them">
+<meta property="og:site_name" content="BACManager">
+<meta property="og:description" content="One .json file holds a whole BACManager setup: dashboard, tags, BACnet points, script, never the connection. Open a free workspace from a device guide or the Device library, move its points to your device instance in one dialog, save and move your own.">
+<meta property="og:url" content="https://bacmanager.com/workspace.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bacmanager.com/og-workspace.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BACManager Workspaces: What They Are and How to Use Them">
+<meta name="twitter:description" content="One .json file holds a whole BACManager setup: dashboard, tags, BACnet points, script, never the connection. Open a free workspace from a device guide or the Device library, move its points to your device instance in one dialog, save and move your own.">
+<meta name="twitter:image" content="https://bacmanager.com/og-workspace.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What Is a Workspace? Open, Point at Your Device, Save",
+    "description": "One .json file holds a whole BACManager setup: dashboard, tags, BACnet points, script, never the connection. Open a free workspace from a device guide or the Device library, move its points to your device instance in one dialog, save and move your own.",
+    "url": "https://bacmanager.com/workspace.html",
+    "image": "https://bacmanager.com/og-workspace.png",
+    "datePublished": "2026-11-17",
+    "dateModified": "2026-11-17",
+    "author": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BACManager",
+      "url": "https://bacmanager.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a BACManager workspace?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "One JSON file with a complete setup: the dashboard, tags and script, the BACnet points they read, the Historian series, Modbus poll windows and the gateway. Opening it restores all of that at once."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does a workspace contain my network settings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The network interface, the MS/TP port and the BACnet/SC hub stay with each PC, so a workspace from the website never connects anywhere by itself."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "My device has a different instance number. Do I edit every point?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Discover your devices first, then open the workspace: BACManager asks which discovered device takes the place of each one in the file and moves every point over at once."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where are workspaces saved?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In your Documents folder. The folder button lists the workspaces there; Browse opens one from any other folder."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can ModbusManager Pro open a BACManager workspace?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. ModbusManager Pro and BACManager open each other's workspaces."
+        }
+      }
+    ]
+  }
+]
+</script>
+<style>
+:root{--enclosure:#D8DAD5;--enclosure2:#E6E8E3;--plate:#F4F5F2;--ink:#16181A;--body:#3A3E40;--muted:#5F5E5A;--steel:#B9BDB6;--safety:#F2A900;--amber-ink:#9A6700;--run:#1E7A4F;--bad:#A32D2D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Archivo',sans-serif;background:var(--enclosure);color:var(--ink);min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--enclosure2);z-index:100}
+.logo{font-family:'Saira Condensed',sans-serif;font-size:1.25rem;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.logo span{color:var(--amber-ink)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);flex-wrap:wrap;align-items:center}
+.nav-links a{color:inherit;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--safety);padding:0.5rem 1.3rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.nav-cta:hover{color:#fff}
+.hazard{height:10px;background:repeating-linear-gradient(45deg,var(--safety) 0 14px,var(--ink) 14px 28px)}
+.hero{padding:4rem 3rem 3.5rem;max-width:1140px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-size:3rem;font-weight:700;line-height:1;color:var(--ink);margin-bottom:1rem;letter-spacing:0.01em;text-transform:uppercase;max-width:760px}
+.hero h1 .accent{color:var(--amber-ink)}
+.hero-desc{font-size:1rem;color:var(--body);line-height:1.7;margin-bottom:1.8rem;max-width:660px}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--run);color:#fff;padding:0.75rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-primary:hover{background:#186040}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:0.65rem 1.4rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+.btn-ghost:hover{background:var(--ink);color:var(--safety)}
+.hero-note{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:0.7rem}
+.section{padding:3.5rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.7rem}
+.sec-title{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;margin-bottom:0.6rem}
+.sec-sub{font-size:0.95rem;color:var(--body);line-height:1.7;margin-bottom:2rem;max-width:680px}
+.divider-line{border:none;border-top:2px solid var(--ink)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat{background:var(--plate);border:2px solid var(--ink);border-radius:3px;padding:1.4rem 1.6rem}
+.feat-icon{font-size:1.6rem;margin-bottom:0.7rem}
+.feat h3{font-family:'Saira Condensed',sans-serif;font-size:1.08rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.5rem}
+.feat p{font-size:0.85rem;color:var(--body);line-height:1.65}
+.way{border-left:3px solid var(--safety);padding:4px 0 4px 18px;margin-bottom:26px}
+.way h3{margin:0 0 6px;font-size:1.15rem;color:var(--ink);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.02em}
+.way p{margin:0;color:var(--body);line-height:1.65;font-size:0.95rem}
+figure.shot{margin:1.1rem 0 0;max-width:900px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)}
+.pa-table{width:100%;border-collapse:collapse;font-size:0.86rem;max-width:640px;margin:0 auto}
+.pa-table th{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.55rem 0.9rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.pa-table td{padding:0.5rem 0.9rem;border-bottom:1px solid var(--steel);font-family:'IBM Plex Mono',monospace;font-size:0.82rem}
+.pa-table tr.hl td{background:rgba(242,169,0,0.12);font-weight:600}
+.pa-table tr:last-child td{border-bottom:none}
+.compare-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.compare-table th{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.7rem 1rem;border-bottom:2px solid var(--ink);text-align:left;background:var(--enclosure2)}
+.compare-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--steel)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .hl{background:rgba(30,122,79,0.06)}
+.yes{color:var(--run);font-weight:600}
+.no{color:var(--bad)}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-top:1px solid var(--steel)}
+.faq-item:last-child{border-bottom:1px solid var(--steel)}
+.faq-q{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:0.02em;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q:hover{color:var(--amber-ink)}
+.faq-q .icon{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{font-size:0.9rem;color:var(--body);line-height:1.75;padding:0 0 1.1rem;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .icon{transform:rotate(45deg)}
+.cta-strip{background:var(--ink);color:var(--safety);padding:3.5rem 3rem;text-align:center}
+.cta-strip h2{font-family:'Saira Condensed',sans-serif;font-size:2.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.6rem}
+.cta-strip p{font-size:0.95rem;color:var(--enclosure);margin-bottom:1.8rem;max-width:540px;margin-left:auto;margin-right:auto}
+.cta-strip .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-yellow{background:var(--safety);color:var(--ink);padding:0.8rem 2rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.btn-cta-yellow:hover{background:#e09800}
+.btn-cta-outline{background:transparent;color:var(--safety);border:2px solid var(--safety);padding:0.7rem 1.8rem;border-radius:2px;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none}
+footer{background:var(--ink);color:var(--steel);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:0.75rem}
+.footer-logo{font-family:'Saira Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase}
+footer a{color:var(--steel);text-decoration:none}
+footer a:hover{color:#fff}
+.nav-burger{display:none;background:none;border:none;font-size:1.5rem;color:var(--ink);cursor:pointer;padding:0 0.3rem;line-height:1}
+@media(max-width:768px){
+  nav{padding:0.75rem 1.2rem;flex-wrap:wrap;gap:0.5rem}
+  .nav-burger{display:block;margin-left:auto}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2);border-bottom:2px solid var(--ink);padding:0.8rem 1.2rem;gap:0.7rem;z-index:150}
+  .hero{padding:2.5rem 1.2rem 2rem}
+  .hero h1{font-size:2.2rem}
+  .section{padding:2.5rem 1.2rem}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .cta-strip{padding:2.5rem 1.2rem}
+  footer{padding:1.5rem 1.2rem;flex-direction:column;align-items:flex-start;gap:0.75rem}
+}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+@media(max-width:680px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}}
+
+/* family slogan band, slim (2026-10-22) */
+.slogan-band.slim{background:var(--safety,#F2A900);border-bottom:2px solid var(--ink,#16181A);padding:0.5rem 1rem;text-align:center;color:var(--ink,#16181A);display:flex;gap:0.3rem 1rem;justify-content:center;align-items:baseline;flex-wrap:wrap}
+.slogan-band.slim .sb-main{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.3rem;line-height:1.1;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim .sb-sub{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;text-transform:uppercase}
+.slogan-band.slim a{color:var(--ink,#16181A);font-weight:700}
+@media(max-width:768px){.slogan-band.slim .sb-main{font-size:1.05rem}.slogan-band.slim .sb-sub{display:none}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGQC0VZ6MK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','analytics_storage': 'denied'});
+  try { if (localStorage.getItem('bac_consent') === 'granted') { gtag('consent', 'update', {'analytics_storage': 'granted'}); } } catch(e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-HGQC0VZ6MK');
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org","@type": "BreadcrumbList","itemListElement": [{"@type": "ListItem","position": 1,"name": "BACManager","item": "https://bacmanager.com/"},{"@type": "ListItem","position": 2,"name": "Features","item": "https://bacmanager.com/#features"},{"@type": "ListItem","position": 3,"name": "Workspaces","item": "https://bacmanager.com/workspace.html"}]}
+</script>
+<style id="site-nav">
+/* site menu (tools/web-research/site-nav.js) */
+.nav-drop{position:relative;padding-bottom:0.6rem;margin-bottom:-0.6rem}
+.nav-drop-label{cursor:pointer;text-transform:uppercase;white-space:nowrap;color:inherit;display:inline-block}
+.nav-drop.nd-has>.nav-drop-label{color:var(--ink,#16181A);font-weight:600}
+.nav-drop-menu{position:absolute;top:100%;left:0;padding-top:0.6rem;display:none;z-index:200}
+.nav-drop:hover>.nav-drop-menu,.nav-drop:focus-within>.nav-drop-menu{display:block}
+.nd-box{display:flex;flex-direction:column;background:var(--enclosure2,#e8e9e4);border:1px solid var(--ink,#16181A);border-radius:3px;box-shadow:0 6px 20px rgba(0,0,0,0.18);padding:0.35rem 0;min-width:210px}
+.nav-drop-menu a,.nd-glabel{display:flex;align-items:center;gap:0.55rem;padding:0.45rem 1rem;white-space:nowrap;text-transform:none;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;letter-spacing:0.02em;color:var(--ink,#16181A);text-decoration:none;background:none;border:none;text-align:left;cursor:pointer;width:100%;box-sizing:border-box}
+.nav-drop-menu a:hover,.nd-glabel:hover,.nd-group:hover>.nd-glabel,.nd-group.open>.nd-glabel{background:var(--safety,#F2A900);color:var(--ink,#16181A)}
+.nav-drop-menu .ni{display:inline-block;width:1.25rem;text-align:center;flex:none;font-size:0.9rem;line-height:1}
+.nav-drop-menu a.nd-sub{padding-left:2.1rem;font-size:0.75rem}
+.nav-drop-menu .nd-hot{color:#9A6700;font-weight:600}
+.nav-drop-menu a[aria-current="page"]{font-weight:700;box-shadow:inset 3px 0 0 var(--safety,#F2A900)}
+.nd-group.nd-has>.nd-glabel{font-weight:700}
+.nd-arrow{margin-left:auto;padding-left:1rem;font-size:0.7rem;color:var(--muted,#5F5E5A);display:inline-block;transform-origin:calc(50% + 0.5rem) 50%}
+.nd-group{position:relative}
+.nd-flyout{display:none;position:absolute;left:100%;top:-0.4rem;padding-left:0.25rem;z-index:210}
+.nd-group:hover>.nd-flyout,.nd-group:focus-within>.nd-flyout,.nd-group.open>.nd-flyout{display:block}
+.nd-head{font-family:'IBM Plex Mono',monospace;font-size:0.64rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted,#5F5E5A);padding:0.55rem 1rem 0.15rem;border-top:1px solid var(--steel,#B9BDB6);margin-top:0.25rem}
+.nd-box>.nd-head:first-child{border-top:none;margin-top:0}
+/* tablet (769-1100px): logo, six menu items and the button need ~840px; below that the menu
+   wrapped to two or three lines and the download button ran off the screen (2026-11-10).
+   769-900px gets the ☰ menu as on phones (the pages' own phone rules stop at 768px);
+   901-1100px keeps the row, tighter. The small text download link repeats the button,
+   so it goes in this range, as it already does on phones. */
+@media(min-width:769px) and (max-width:1100px){
+nav{gap:1rem!important;padding-left:1.2rem!important;padding-right:1.2rem!important}
+nav .nav-links{gap:1.1rem!important;letter-spacing:0.02em!important;white-space:nowrap}
+nav>div>a:not(.nav-cta){display:none!important}
+nav .nav-cta{white-space:nowrap;padding:0.45rem 0.9rem!important}
+}
+@media(min-width:769px) and (max-width:900px){
+nav .nav-burger{display:block!important;margin-left:auto}
+nav .nav-links{display:none!important}
+nav .nav-links.open{display:flex!important;flex-direction:column;position:absolute;top:100%;left:0;right:0;box-sizing:border-box;background:var(--enclosure2,#e8e9e4);border-bottom:2px solid var(--ink,#16181A);padding:0.8rem 1.2rem;gap:0.9rem;z-index:150;box-shadow:0 8px 20px rgba(0,0,0,0.15);white-space:normal;margin:0!important}
+}
+@media(max-width:900px){
+nav .nav-links.open{align-items:stretch;text-align:left}
+nav .nav-links.open .nav-drop{padding-bottom:0;margin-bottom:0}
+nav .nav-links.open .nav-drop-label{font-weight:700;color:var(--ink,#16181A)}
+nav .nav-links.open .nav-drop-menu{position:static;display:block;padding:0;margin:0.3rem 0 0.2rem}
+nav .nav-links.open .nd-box{border:none;box-shadow:none;background:none;padding:0;min-width:0}
+nav .nav-links.open .nav-drop-menu a,nav .nav-links.open .nd-glabel{padding:0.4rem 0;font-size:0.82rem;white-space:normal}
+nav .nav-links.open .nav-drop-menu a.nd-sub{padding-left:1.8rem}
+nav .nav-links.open .nd-flyout a[aria-current="page"]{padding-left:0.6rem}
+nav .nav-links.open .nd-flyout{position:static;padding:0 0 0.3rem 1.8rem;display:none}
+nav .nav-links.open .nd-group:hover>.nd-flyout,nav .nav-links.open .nd-group:focus-within>.nd-flyout{display:none}
+nav .nav-links.open .nd-group.open>.nd-flyout{display:block}
+nav .nav-links.open .nd-group.open>.nd-glabel,nav .nav-links.open .nd-group:hover>.nd-glabel{background:none}
+nav .nav-links.open .nd-group.open .nd-arrow{transform:rotate(90deg)}
+nav .nav-links.open .nd-head{padding:0.45rem 0 0.1rem}
+}
+</style>
+<style id="sf-css">
+footer.sf{display:block;text-align:left;padding:2.2rem 3rem 1.6rem;border-top:2px solid var(--ink,#16181A);background:var(--enclosure2,#E8EAE5);color:var(--muted,#5F5E5A);font-family:'Archivo',sans-serif;font-size:.92rem}
+footer.sf a{color:var(--muted,#5F5E5A);text-decoration:none}
+footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
+.sf-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6rem 2rem;max-width:1100px}
+.sf-col{display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.sf-h{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink,#16181A);font-weight:600;margin-bottom:.2rem}
+.sf-bot{display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;align-items:baseline;justify-content:space-between;border-top:1px solid var(--steel,#B9BDB6);margin-top:1.8rem;padding-top:1rem;font-size:.85rem}
+.sf-logo{font-family:'Saira Condensed',sans-serif;color:var(--ink,#16181A);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+@media(max-width:768px){footer.sf{padding:1.8rem 1.2rem}.sf-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1100px){.sec-label,.eyebrow,.np-eyebrow,.np-specs span,.step-label,.def-label,.toc-label,.c-label,.q-k,.plan-label,.os-tag,.pro-tag,.ed,.sb-sub,.sb-sub a,.nd-head,.also-label,figcaption{font-size:11px!important}}
+.sf-swipe{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber-ink,#8A6200);text-align:right;margin:.3rem 0 .4rem}
+.sf-swipe[hidden]{display:none}
+</style>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav>
+  <a href="/" class="logo">BAC<span>MANAGER</span></a>
+  <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li class="nav-drop">
+      <span class="nav-drop-label" tabindex="0">Features &#9662;</span>
+      <div class="nav-drop-menu"><div class="nd-box">
+        <a href="/bacnet-scanner.html" class="nd-hot"><span class="ni">&#128269;&#65039;</span>BACnet Scanner</a>
+        <a href="/bacnet-schedule-editor.html"><span class="ni">&#128197;&#65039;</span>Schedule &amp; Calendar Editor</a>
+        <a href="/bacnet-modbus-gateway.html"><span class="ni">&#128256;&#65039;</span>BACnet &harr; Modbus Gateway</a>
+        <a href="/bacnet-to-mqtt-home-assistant.html" class="nd-sub"><span class="ni">&#128225;&#65039;</span>BACnet to MQTT</a>
+        <a href="/bacnet-trend-log.html"><span class="ni">&#128200;&#65039;</span>Trend Log Reader</a>
+        <a href="/bacnet-alarms.html"><span class="ni">&#128276;&#65039;</span>Device Alarms</a>
+        <a href="/bacnet-traffic-analyzer.html"><span class="ni">&#128246;&#65039;</span>Traffic Analyzer</a>
+        <a href="/bacnet-sc-secure-connect.html"><span class="ni">&#128272;&#65039;</span>BACnet/SC Secure Connect</a>
+        <a href="/bacnet-hmi-runtime.html"><span class="ni">&#128421;&#65039;</span>BACnet HMI Runtime (OEM)</a>
+        <a href="/#features"><span class="ni">&#128203;&#65039;</span>All features</a>
+      </div></div>
+    </li>
+    <li class="nav-drop nd-has">
+      <span class="nav-drop-label" tabindex="0">Guides &#9662;</span>
+      <div class="nav-drop-menu"><div class="nd-box">
+        <div class="nd-group">
+          <button type="button" class="nd-glabel nd-hot" aria-haspopup="true" onclick="this.parentNode.classList.toggle('open')"><span class="ni">&#128295;&#65039;</span>Device guides<span class="nd-arrow">&#9656;</span></button>
+          <div class="nd-flyout"><div class="nd-box">
+            <a href="/bacnet-devices.html">All device guides &rarr;</a>
+            <div class="nd-head">Chillers and rooftop units</div>
+            <a href="/daikin-microtech-iii-bacnet.html">Daikin MicroTech III chiller</a>
+            <a href="/trane-symbio-700-bacnet.html">Trane Symbio 700</a>
+            <a href="/carrier-30rc-bacnet.html">Carrier AquaSnap 30RC</a>
+            <a href="/york-ylaa-bacnet.html">York YLAA chiller</a>
+            <a href="/aaon-vccx2-bacnet.html">AAON VCCX2</a>
+            <a href="/lennox-core-bacnet.html">Lennox CORE</a>
+            <div class="nd-head">Air handling units</div>
+            <a href="/swegon-gold-bacnet.html">Swegon GOLD</a>
+            <a href="/systemair-access-bacnet.html">Systemair Access (Geniox, Topvex)</a>
+            <div class="nd-head">VAV and room controllers</div>
+            <a href="/kmc-conquest-vav-bacnet.html">KMC Conquest VAV</a>
+            <div class="nd-head">Data centre cooling</div>
+            <a href="/liebert-icom-bacnet.html">Vertiv Liebert iCOM</a>
+            <div class="nd-head">Boilers</div>
+            <a href="/lochinvar-crest-bacnet.html">Lochinvar Crest boiler</a>
+            <div class="nd-head">VRF and split systems</div>
+            <a href="/daikin-itm-bacnet.html">Daikin iTM (VRV)</a>
+            <a href="/mitsubishi-ae200-bacnet.html">Mitsubishi AE-200</a>
+            <div class="nd-head">Drives</div>
+            <a href="/abb-ach580-bacnet.html">ABB ACH580</a>
+            <a href="/schneider-atv600-bacnet.html">Schneider ATV600</a>
+            <a href="/siemens-g120p-bacnet.html">Siemens SINAMICS G120P</a>
+            <a href="/danfoss-fc102-bacnet.html">Danfoss VLT FC 102</a>
+            <a href="/yaskawa-hv600-bacnet.html">Yaskawa HV600</a>
+            <div class="nd-head">Pumps and valves</div>
+            <a href="/grundfos-cim-bacnet.html">Grundfos MAGNA3 (CIM)</a>
+            <a href="/wilo-cif-bacnet.html">Wilo Stratos MAXO (CIF)</a>
+            <a href="/belimo-energy-valve-bacnet.html">Belimo Energy Valve</a>
+            <div class="nd-head">Energy meters</div>
+            <a href="/acuvim-ii-bacnet.html">Accuenergy Acuvim II</a>
+            <div class="nd-head">Routers</div>
+            <a href="/basrouter-bacnet-router.html">BASrouter (MS/TP to IP)</a>
+          </div></div>
+        </div>
+        <div class="nd-group">
+          <button type="button" class="nd-glabel" aria-haspopup="true" onclick="this.parentNode.classList.toggle('open')"><span class="ni">&#128216;&#65039;</span>BACnet basics<span class="nd-arrow">&#9656;</span></button>
+          <div class="nd-flyout"><div class="nd-box">
+            <a href="/bacnet-mstp-rs485.html">MS/TP &amp; RS-485</a>
+            <a href="/bacnet-priority-array.html">Priority Array Explained</a>
+            <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+          </div></div>
+        </div>
+        <div class="nd-group">
+          <button type="button" class="nd-glabel" aria-haspopup="true" onclick="this.parentNode.classList.toggle('open')"><span class="ni">&#9878;&#65039;</span>Comparisons<span class="nd-arrow">&#9656;</span></button>
+          <div class="nd-flyout"><div class="nd-box">
+            <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+            <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+          </div></div>
+        </div>
+        <a href="/workspace.html" aria-current="page"><span class="ni">&#128190;&#65039;</span>Workspaces: open &amp; use</a>
+        <a href="/manual.html"><span class="ni">&#128214;&#65039;</span>User Manual</a>
+      </div></div>
+    </li>
+    <li><a href="/#compare">Why one tool</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="https://modbusmanager.com">ModbusManager &#8599;</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openBuyModal();return false">Get BACManager</a>
+</nav>
+<div class="slogan-band slim">
+  <span class="sb-main">Every device. One tool. Pay once.</span>
+  <span class="sb-sub">Modbus &middot; BACnet &middot; Siemens S7 &middot; one-time licence &middot; also from us: <a href="https://modbusmanager.com">ModbusManager&nbsp;&#8599;</a></span>
+</div>
+<!-- crumbs (site-crumbs.js) --><style>.sc-crumbs{max-width:1140px;margin:0 auto;padding:.75rem 3rem 0;font-family:'IBM Plex Mono',monospace;font-size:.72rem;line-height:1.5;color:var(--muted,#5F5E5A)}.sc-crumbs a{color:var(--muted,#5F5E5A);text-decoration:none;border-bottom:1px dotted currentColor}.sc-crumbs a:hover{color:var(--ink,#16181A)}.sc-crumbs .sep{margin:0 .45rem;opacity:.7}.sc-crumbs [aria-current]{color:var(--ink,#16181A)}@media(max-width:768px){.sc-crumbs{padding:.6rem 1.2rem 0}}</style><div class="sc-crumbs" role="navigation" aria-label="Breadcrumb"><a href="/">BACManager</a><span class="sep">&rsaquo;</span><a href="/#features">Features</a><span class="sep">&rsaquo;</span><span aria-current="page">Workspaces</span></div><!-- /crumbs -->
+
+<section class="hero">
+  <div class="eyebrow">// one .json file &middot; device library &middot; open in bacmanager</div>
+  <h1>What Is a Workspace?<br><span class="accent">Open, Point at Your Device, Save</span></h1>
+  <p class="hero-desc">A workspace is one <code>.json</code> file that holds a complete BACManager setup: the dashboard, the tags and the script, the BACnet points it reads, the Historian series and the gateway. Every device guide on this site comes with a free one. Open it, let BACManager move its points to the device instance on <em>your</em> network, and the dashboard comes alive without building anything.</p>
+  <div class="hero-ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.10/BACManager.Setup.1.4.10.exe" class="btn-primary" onclick="trackDownload()">Download free trial</a>
+    <a href="#open" class="btn-ghost">Three ways to open one</a>
+  </div>
+  <p class="hero-note">Windows 10/11 &middot; one-time license &middot; 14-day trial</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// the result</div>
+  <h2 class="sec-title">A ready dashboard, reading your device</h2>
+  <figure style="margin:1.6rem auto 0;max-width:1100px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="workspace-live.png" width="1294" height="764" alt="BACManager dashboard of the free ABB ACH580 workspace, live: the AHU-1 supply fan running at 42.0 Hz, 1239 rpm, 15.7 A, 5.4 kW output power, 70 % speed, drive OK, at setpoint, the Run command and the 70 % reference, and a trend of frequency, power and current" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">The free ABB ACH580 workspace from the Device library, moved from device 1021 to the drive found on the network (58040), after Run and a 70 % reference. Screenshot from BACManager 1.4.10 against a simulated drive.</figcaption>
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// inside the file</div>
+  <h2 class="sec-title">What a workspace holds &mdash; and what it does not</h2>
+  <p class="sec-sub">A workspace says what to read and how to show it. The network the device is on belongs to the PC.</p>
+  <table class="compare-table">
+    <thead><tr><th>In the workspace</th><th class="hl">Not in the workspace</th></tr></thead>
+    <tbody>
+      <tr><td>The dashboard: pages, elements, theme</td><td class="hl">Connection settings: network interface, MS/TP port, BACnet/SC hub &mdash; each PC keeps its own</td></tr>
+      <tr><td>Tags, the script, the BACnet points they read (by device instance)</td><td class="hl">Alarm definitions of the Alarms tab and the S7 PLC list (the application keeps those)</td></tr>
+      <tr><td>Which series the Historian logs, the BACnet request gaps, the BACnet tab's list of discovered devices</td><td class="hl">Recorded history &mdash; the values stay in the Historian database</td></tr>
+      <tr><td>Modbus poll windows, slave blocks, the BACnet simulator configuration, the gateway (opening asks before applying it)</td><td class="hl">Nothing connects by itself: you open the client</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="open">
+  <div class="sec-label">// three ways in</div>
+  <h2 class="sec-title">Open a ready workspace</h2>
+  <div class="feat-grid">
+    <div class="feat"><h3>1. Open in BACManager</h3><p>The button next to <strong>Download workspace</strong> on every device guide opens it straight in BACManager 1.4.9 or newer on your PC.</p></div>
+    <div class="feat"><h3>2. &#128218; Device library</h3><p>Inside the app: every ready workspace from bacmanager.com and modbusmanager.com, with a search and categories. New devices appear without an app update.</p></div>
+    <div class="feat"><h3>3. A downloaded file</h3><p>&#128194; in the toolbar lists the workspaces in your Documents folder; <strong>Browse&hellip;</strong> opens one from Downloads, a USB stick or an e-mail.</p></div>
+  </div>
+  <figure style="margin:1.6rem auto 0;max-width:720px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="workspace-site-buttons.png" width="675" height="96" alt="Buttons on the ABB ACH580 BACnet guide: Open in BACManager and Download workspace" loading="lazy" style="display:block;width:100%;height:auto">
+  </figure>
+  <figure style="margin:1.6rem auto 0;max-width:720px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="workspace-library.png" width="1080" height="930" alt="BACManager Device library: search, categories All 59, Energy meters 9, Solar 9, Drives 11, HVAC 19, Pumps 3, PLC 3, BACnet network 2, Home Assistant 3, and cards for Daikin iTM, Mitsubishi AE-200, Daikin MicroTech III, Trane Symbio 700, AAON VCCX2, Lennox CORE, Lochinvar Crest, Belimo Energy Valve, Grundfos MAGNA3, Wilo Stratos MAXO, ABB ACH580 and Schneider ATV600, each with Guide and Open" loading="lazy" style="display:block;width:100%;height:auto">
+    <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);padding:0.6rem 0.9rem;border-top:1px solid var(--steel)">The Device library lists BACnet and Modbus devices: BACManager reads both.</figcaption>
+  </figure>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">From the guide or the library, BACManager first shows what the workspace holds &mdash; pages and elements, tags, whether it has a script &mdash; and that no connection comes with it. Opening replaces the workspace you have open, so <strong>Save mine first&hellip;</strong> is right there.</p>
+  <figure style="margin:1.2rem auto 0;max-width:460px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="workspace-ask.png" width="690" height="365" alt="Dialog Open a workspace from bacmanager.com: ABB ACH580, one dashboard page with 23 elements, 17 tags, no scripts, connection not included; opening replaces your current workspace; Cancel, Save mine first and Open" loading="lazy" style="display:block;width:100%;height:auto">
+  </figure>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="remap">
+  <div class="sec-label">// your device instance</div>
+  <h2 class="sec-title">Point it at the device on your network</h2>
+  <p class="sec-sub">A workspace names BACnet devices by instance. The ACH580 workspace reads device 1021 &mdash; your drive almost certainly has another number.</p>
+  <div class="feat-grid">
+    <div class="feat"><h3>1. Discover first</h3><p>On the BACnet tab choose BACnet/IP, MS/TP or BACnet/SC, open the client and press <strong>Discover</strong>, so BACManager knows the devices on your network.</p></div>
+    <div class="feat"><h3>2. Open the workspace</h3><p>BACManager sees that device 1021 is not here and asks which discovered device takes its place. The dialog has its own Discover button too.</p></div>
+    <div class="feat"><h3>3. Load workspace</h3><p>Every point moves over at once: tags, dashboard elements, the script, logged series, gateway rows, PID loops and request gaps.</p></div>
+  </div>
+  <figure style="margin:1.6rem auto 0;max-width:480px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+    <img src="workspace-remap.png" width="720" height="435" alt="BACManager dialog BACnet devices in this workspace: device 1021 with 17 points is read from 58040 AHU-1 SF ACH580 found on the network; Discover, found 1 device; Cancel and Load workspace" loading="lazy" style="display:block;width:100%;height:auto">
+  </figure>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75"><strong>Keep</strong> leaves a number as it is, and two workspace devices can never both go to one. With nothing discovered yet, the workspace loads unchanged and a hint names the device numbers it reads &mdash; discover and open it again. A <a href="/bacnet-hmi-runtime.html">Runtime kiosk</a> is never asked. Workspaces with Modbus devices connect on the Modbus side as in <a href="https://modbusmanager.com/workspace.html">ModbusManager</a>.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section">
+  <div class="sec-label">// keep it</div>
+  <h2 class="sec-title">Save your own, move it to another PC</h2>
+  <div class="feat-grid">
+    <div class="feat"><h3>&#128190; Workspace</h3><p>Saves the setup under your own name to your Documents folder; &#128194; lists it the next time. On quit BACManager asks whether to save.</p></div>
+    <div class="feat"><h3>Another PC</h3><p>Copy the <code>.json</code> file and open it there with &#128194; &rarr; Browse&hellip;. Only the client and the network interface are chosen again.</p></div>
+    <div class="feat"><h3>Runtime and ModbusManager</h3><p>The same file becomes a <a href="/bacnet-hmi-runtime.html">Runtime package</a> for an operator screen, and ModbusManager Pro opens it too.</p></div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin:1.6rem auto 0;max-width:1000px">
+    <figure style="margin:0;flex:1 1 300px;max-width:460px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+      <img src="workspace-save.png" width="570" height="252" alt="Save Workspace dialog: file name AHU-1 supply fan, saved to the Documents folder, Cancel and Save" loading="lazy" style="display:block;width:100%;height:auto">
+    </figure>
+    <figure style="margin:0;flex:1 1 300px;max-width:460px;border:2px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--plate)">
+      <img src="workspace-open.png" width="630" height="236" alt="Open Workspace dialog listing AHU-1 supply fan.json, with Browse, Device library and Cancel" loading="lazy" style="display:block;width:100%;height:auto">
+    </figure>
+  </div>
+  <p style="max-width:820px;margin:1.6rem auto 0;color:var(--body);line-height:1.75">Ready workspaces come with every <a href="/bacnet-devices.html">BACnet device guide</a>: chillers and rooftop units, air handling units, VAV controllers, drives, pumps, energy meters, VRF systems and routers. The <a href="/manual.html">user manual</a> has the full reference.</p>
+</section>
+
+<div class="divider-line"></div>
+
+<section class="section" id="faq">
+  <div class="sec-label">// questions</div>
+  <h2 class="sec-title">Workspaces &mdash; FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is a BACManager workspace?<span class="icon">+</span></div>
+      <div class="faq-a">One JSON file with a complete setup: the dashboard, tags and script, the BACnet points they read, the Historian series, Modbus poll windows and the gateway. Opening it restores all of that at once.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does a workspace contain my network settings?<span class="icon">+</span></div>
+      <div class="faq-a">No. The network interface, the MS/TP port and the BACnet/SC hub stay with each PC, so a workspace from the website never connects anywhere by itself.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">My device has a different instance number. Do I edit every point?<span class="icon">+</span></div>
+      <div class="faq-a">No. Discover your devices first, then open the workspace: BACManager asks which discovered device takes the place of each one in the file and moves every point over at once.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Where are workspaces saved?<span class="icon">+</span></div>
+      <div class="faq-a">In your Documents folder. The folder button lists the workspaces there; Browse opens one from any other folder.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can ModbusManager Pro open a BACManager workspace?<span class="icon">+</span></div>
+      <div class="faq-a">Yes. ModbusManager Pro and BACManager open each other's workspaces.</div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-strip">
+  <h2>Open a ready workspace in BACManager</h2>
+  <p>Device library, dashboards and device remap included in the free trial. No credit card.</p>
+  <div class="ctas">
+    <a href="#download" data-dl="github.com/vend123/bacmanager/releases/download/v1.4.10/BACManager.Setup.1.4.10.exe" class="btn-cta-yellow" onclick="trackDownload()">Download free trial</a>
+    <a href="/#pricing" class="btn-cta-outline">See pricing</a>
+  </div>
+  <p style="margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--steel)">Windows 10/11 &middot; $149 one-time</p>
+</div>
+
+<footer class="sf" id="support">
+  <div class="sf-cols">
+    <div class="sf-col"><div class="sf-h">Features</div>
+      <a href="/bacnet-scanner.html">Scanner</a>
+      <a href="/bacnet-schedule-editor.html">Schedule editor</a>
+      <a href="/bacnet-priority-array.html">Priority array</a>
+      <a href="/bacnet-mstp-rs485.html">MS/TP over RS-485</a>
+      <a href="/bacnet-bbmd-foreign-device.html">BBMD &amp; Foreign Device</a>
+      <a href="/bacnet-modbus-gateway.html">Gateway</a>
+      <a href="/bacnet-to-mqtt-home-assistant.html">BACnet to MQTT</a>
+    </div>
+    <div class="sf-col"><div class="sf-h">Guides</div>
+      <a href="/bacnet-devices.html">Device guides</a>
+      <a href="/bacnet-explorer-alternative.html">Alternative to YABE</a>
+      <a href="/cas-bacnet-explorer-alternative.html">Alternative to CAS</a>
+    </div>
+    <div class="sf-col"><div class="sf-h">Help</div>
+      <a href="/manual.html">User manual</a>
+      <a href="mailto:support@bacmanager.com">Support</a>
+      <a href="/license-terms.html#refund">Refund policy</a>
+    </div>
+    <div class="sf-col"><div class="sf-h">Company</div>
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/license-terms.html">License terms</a>
+      <a href="https://modbusmanager.com">ModbusManager (Modbus) &#8599;</a>
+    </div>
+  </div>
+  <div class="sf-bot"><span class="sf-logo">BACManager</span><span>Every device. One tool. Pay once.</span><span>&copy; 2026 E-Netter O&Uuml;</span><a href="mailto:support@bacmanager.com">support@bacmanager.com</a></div>
+<script id="sf-js">(function(){
+  function box(t){for(var e=t,i=0;e&&i<3;e=e.parentElement,i++){var o=getComputedStyle(e).overflowX;if(o==='auto'||o==='scroll')return e}return null}
+  function check(b){var h=b.previousElementSibling,wide=b.scrollWidth>b.clientWidth+4;
+    if(!h||!h.classList.contains('sf-swipe')){if(!wide)return;h=document.createElement('div');h.className='sf-swipe';h.textContent='Table continues \u2014 swipe sideways \u2192';b.parentNode.insertBefore(h,b);
+      b.addEventListener('scroll',function(){if(b.scrollLeft>20)h.hidden=true},{passive:true})}
+    if(!wide)h.hidden=true;else if(b.scrollLeft<=20)h.hidden=false}
+  function run(){var seen=[];document.querySelectorAll('table').forEach(function(t){var b=box(t);if(b&&seen.indexOf(b)<0){seen.push(b);check(b);if(window.ResizeObserver)new ResizeObserver(function(){check(b)}).observe(b)}})}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+})();</script>
+</footer>
+
+<script>
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function trackDownload(){ if (typeof gtag === 'function') { gtag('event', 'download', { 'event_category': 'Download', 'event_label': 'BACManager-Trial' }); } return true; }
+function openBuyModal(){
+  window.location.href = '/#pricing';
+}
+</script>
+
+<style>
+#bac-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#16181A);color:#E6E8E3;border-top:3px solid var(--safety,#F2A900);padding:1rem 1.4rem;display:none;font-family:'Archivo',sans-serif;font-size:0.88rem;line-height:1.5}
+#bac-consent.show{display:flex;gap:1rem 1.4rem;align-items:center;flex-wrap:wrap;justify-content:center}
+#bac-consent p{margin:0;max-width:720px}
+#bac-consent a{color:var(--safety,#F2A900);text-decoration:underline}
+#bac-consent .bac-btns{display:flex;gap:.6rem;flex-shrink:0}
+#bac-consent button{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;padding:.6rem 1.1rem;border:2px solid var(--safety,#F2A900);border-radius:3px;cursor:pointer}
+#bac-consent .bac-accept{background:var(--safety,#F2A900);color:var(--ink,#16181A);font-weight:600}
+#bac-consent .bac-decline{background:transparent;color:var(--safety,#F2A900)}
+</style>
+<div id="bac-consent" role="dialog" aria-label="Cookie consent">
+  <p>We use Google Analytics cookies to see how the site is used. You can accept or decline &mdash; declining keeps analytics off.</p>
+  <div class="bac-btns">
+    <button class="bac-decline" type="button" onclick="bacConsent(false)">Decline</button>
+    <button class="bac-accept" type="button" onclick="bacConsent(true)">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  function apply(g){ if(typeof gtag==='function'){ gtag('consent','update',{'analytics_storage': g?'granted':'denied'}); } }
+  window.bacConsent=function(ok){
+    try{ localStorage.setItem('bac_consent', ok?'granted':'denied'); }catch(e){}
+    apply(ok);
+    var b=document.getElementById('bac-consent'); if(b){ b.classList.remove('show'); }
+  };
+  function init(){
+    var c=null; try{ c=localStorage.getItem('bac_consent'); }catch(e){}
+    if(c==='granted'){ apply(true); }
+    else if(c==='denied'){ apply(false); }
+    else { var b=document.getElementById('bac-consent'); if(b){ b.classList.add('show'); } }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+
+<script>
+/* Download buttons (2026-10-26): the installer is fetched on a click, not
+   through the link's href, so crawlers that follow every link no longer count
+   as downloads on GitHub. data-dl is the address without https://.
+   Each click is also counted in our own Google Sheet (Apps Script), cookie
+   consent or not: site, product, version, page, referrer, language, time
+   zone. No cookies, no IP address. The download never waits for it.
+   A workspace (.json or .zip on this site) is counted as product "Workspace" with
+   the file name as its version, a manual (.pdf) as product "Manual"; both
+   download as before. */
+function dlCount(product, version) {
+  try {
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbyx9RacY_l5KDK0RBBmLk41uKv3McyR_UJmCTWqnRqklh6fYgeXvYecddcQDGzRx5-F/exec', JSON.stringify({
+      site: location.hostname, product: product, version: version,
+      page: location.pathname, referrer: document.referrer, lang: navigator.language,
+      tz: (window.Intl && Intl.DateTimeFormat().resolvedOptions().timeZone) || ''
+    }));
+  } catch (err) {}
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var w = e.target.closest('a[href$=".json"], a[href$=".zip"]');
+  if (w) { dlCount('Workspace', (w.getAttribute('href').match(/([^\/]+)\.(?:json|zip)$/) || [])[1] || ''); return; }
+  var m = e.target.closest('a[href$=".pdf"]');
+  if (m) { dlCount('Manual', (m.getAttribute('href').match(/([^\/]+)\.pdf$/) || [])[1] || ''); return; }
+  var a = e.target.closest('a[data-dl]');
+  if (!a || e.defaultPrevented) return;
+  e.preventDefault();
+  var dl = a.getAttribute('data-dl');
+  dlCount(/bacmanager/i.test(dl) ? 'BACManager' : (/Pro\.Setup|pro-v/i.test(dl) ? 'ModbusManager Pro' : 'ModbusManager Standard'),
+    (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
+  window.location.href = 'https://' + dl;
+});
+</script>
+</body>
+</html>

@@ -39,12 +39,21 @@
         n.appendChild(d);
         var o = document.createElement('div');
         o.style.cssText = 'font-size:0.8rem;opacity:0.8';
-        o.innerHTML = 'Or download the .json file below and open it with <i>Open workspace</i>.';
+        o.innerHTML = 'Or download the .json file below and open it with <i>Open workspace</i> &mdash; <a href="/workspace.html" style="color:inherit">how workspaces work</a>.';
         n.appendChild(o);
         b.parentNode.insertBefore(n, b.nextSibling && b.nextSibling.nextSibling ? b.nextSibling.nextSibling : null);
       }, 1500);
     });
     a.parentNode.insertBefore(b, a);
     if (a.className) a.parentNode.insertBefore(document.createTextNode(' '), a);
+    // under the buttons, once per button row: what a workspace is and how to use it (work list 3.46)
+    var row = a.parentNode;
+    if (row && row.parentNode && !row.getAttribute('data-ws-help')) {
+      row.setAttribute('data-ws-help', '1');
+      var h = document.createElement('div');
+      h.style.cssText = 'margin:0.7rem 0 0;font-size:0.85rem;line-height:1.5;text-align:' + (getComputedStyle(row).textAlign === 'center' ? 'center' : 'left');
+      h.innerHTML = '<a href="/workspace.html" style="color:inherit">What is a workspace? How to open it and connect your device &rarr;</a>';
+      row.parentNode.insertBefore(h, row.nextSibling);
+    }
   });
 })();
