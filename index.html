@@ -235,6 +235,31 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 .sf-swipe{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber-ink,#8A6200);text-align:right;margin:.3rem 0 .4rem}
 .sf-swipe[hidden]{display:none}
 </style>
+<style>
+/* hero showcase (2026-11-19): a screen that cross-fades, caption, thumbnails */
+section:has(> .hero){max-width:1320px!important}
+.hero{max-width:1320px!important;grid-template-columns:480px minmax(0,1fr)!important;gap:2.6rem!important}
+@media(max-width:1180px){.hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}}
+@media(max-width:900px){.hero{grid-template-columns:1fr!important}}
+.showcase{display:flex;flex-direction:column;gap:12px;min-width:0}
+.sc-screen{position:relative;border:2px solid var(--ink);border-radius:6px;background:#0a1220;padding:9px 9px 0;box-shadow:0 18px 40px rgba(22,24,26,.28);cursor:zoom-in}
+.sc-view{position:relative;aspect-ratio:1320/825;overflow:hidden;border-radius:3px;background:#0b1626}
+.sc-view img,.sc-view video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s ease}
+.sc-view img.on,.sc-view video.on{opacity:1}
+.sc-bar{display:flex;justify-content:space-between;align-items:center;padding:7px 3px 8px;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:#8fa3b8;text-transform:uppercase}
+.sc-bar .led{color:#3ddc97}
+.sc-bar .led::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:#3ddc97;box-shadow:0 0 6px #3ddc97;margin-right:7px;vertical-align:1px}
+.sc-hint{position:absolute;top:18px;right:18px;background:#16181Acc;color:#E6E8E3;font-family:'IBM Plex Mono',monospace;font-size:.68rem;padding:4px 9px;border-radius:2px;opacity:0;transition:opacity .2s;pointer-events:none}
+.sc-screen:hover .sc-hint{opacity:1}
+.sc-cap{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--body);line-height:1.45;min-height:2.9em}
+.sc-cap b{font-family:'Saira Condensed',sans-serif;font-size:1.05rem;letter-spacing:.02em;color:var(--ink);text-transform:uppercase;margin-right:.5em}
+.sc-thumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+.sc-thumbs button{padding:0;border:2px solid var(--steel);border-radius:3px;background:#0a1220;cursor:pointer;aspect-ratio:16/10;overflow:hidden;transition:border-color .2s,transform .2s}
+.sc-thumbs button:hover{transform:translateY(-2px)}
+.sc-thumbs button.on{border-color:var(--safety)}
+.sc-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:768px){.sc-thumbs{grid-template-columns:repeat(3,1fr)}}
+</style>
 </head>
 <body>
 
@@ -357,10 +382,15 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
       </div>
     </div>
     <div class="hero-right">
-      <div class="screenshot-wrap" onclick="galOpen(0)" title="Click to view all screenshots">
-        <div class="screenshot-zoom-hint">&#128269; Click to view all screenshots</div>
-        <img src="bac-mstp.png" alt="BACManager connection panel" style="width:100%;display:block">
+      <div class="showcase" onmouseenter="scHold=1" onmouseleave="scHold=0">
+      <div class="sc-screen" onclick="galOpen(scIdx)" title="Click to enlarge">
+        <div class="sc-view"><video src="swegon-gold-dashboard.mp4" poster="swegon-gold-dashboard.png" muted loop playsinline preload="auto" aria-label="Air handling unit: Swegon GOLD over BACnet: supply and extract fans, set points at priority 8" class="on"></video><video src="carrier-30rc-dashboard.mp4" poster="carrier-30rc-dashboard.png" muted loop playsinline preload="none" aria-label="Chiller: Carrier AquaSnap 30RC: four compressors, leaving and entering water, demand limit"></video><video src="liebert-icom-dashboard.mp4" poster="liebert-icom-dashboard.png" muted loop playsinline preload="none" aria-label="Data-centre cooling: Vertiv Liebert iCOM CRAC unit: supply and return air, humidity, compressors"></video><video src="york-ylaa-dashboard.mp4" poster="york-ylaa-dashboard.png" muted loop playsinline preload="none" aria-label="Air-cooled chiller: York YLAA: chilled water, compressors, remote set point and load limit"></video><video src="danfoss-fc102-dashboard.mp4" poster="danfoss-fc102-dashboard.png" muted loop playsinline preload="none" aria-label="HVAC drive: Danfoss VLT FC 102 on an AHU fan: drive faceplate, frequency, current, power"></video><video src="kmc-conquest-vav-dashboard.mp4" poster="kmc-conquest-vav-dashboard.png" muted loop playsinline preload="none" aria-label="VAV box: KMC Conquest VAV box: room faceplate, set points, occupancy"></video></div>
+        <div class="sc-hint">&#128269; Click to enlarge</div>
+        <div class="sc-bar"><span class="led">LIVE &middot; BACManager 1.4.11 &middot; Modern theme</span><span id="scNum">1 / 6</span></div>
       </div>
+      <div class="sc-cap" id="scCap"><b>Air handling unit</b>Swegon GOLD over BACnet: supply and extract fans, set points at priority 8</div>
+      <div class="sc-thumbs"><button type="button" aria-label="Air handling unit" class="on" onclick="scGo(0)"><img src="swegon-gold-dashboard.png" alt="" loading="lazy"></button><button type="button" aria-label="Chiller" onclick="scGo(1)"><img src="carrier-30rc-dashboard.png" alt="" loading="lazy"></button><button type="button" aria-label="Data-centre cooling" onclick="scGo(2)"><img src="liebert-icom-dashboard.png" alt="" loading="lazy"></button><button type="button" aria-label="Air-cooled chiller" onclick="scGo(3)"><img src="york-ylaa-dashboard.png" alt="" loading="lazy"></button><button type="button" aria-label="HVAC drive" onclick="scGo(4)"><img src="danfoss-fc102-dashboard.png" alt="" loading="lazy"></button><button type="button" aria-label="VAV box" onclick="scGo(5)"><img src="kmc-conquest-vav-dashboard.png" alt="" loading="lazy"></button></div>
+    </div>
     </div>
   </div>
 </section>
@@ -378,9 +408,12 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 
 <script>
 var GALLERY = [
-  {src:'bac-mstp.png', caption:'BACnet connection panel — BACnet/IP or MS/TP, then Open and Discover'},
-  {src:'bac-simulator.png', caption:'Built-in BACnet device simulator — demo objects incl. Schedule & Calendar'},
-  {src:'bac-registers.png', caption:'Modbus register table — the same window polling a Modbus TCP device'}
+  {src:'swegon-gold-dashboard.png', caption:'Air handling unit — Swegon GOLD over BACnet: supply and extract fans, set points at priority 8'},
+  {src:'carrier-30rc-dashboard.png', caption:'Chiller — Carrier AquaSnap 30RC: four compressors, leaving and entering water, demand limit'},
+  {src:'liebert-icom-dashboard.png', caption:'Data-centre cooling — Vertiv Liebert iCOM CRAC unit: supply and return air, humidity, compressors'},
+  {src:'york-ylaa-dashboard.png', caption:'Air-cooled chiller — York YLAA: chilled water, compressors, remote set point and load limit'},
+  {src:'danfoss-fc102-dashboard.png', caption:'HVAC drive — Danfoss VLT FC 102 on an AHU fan: drive faceplate, frequency, current, power'},
+  {src:'kmc-conquest-vav-dashboard.png', caption:'VAV box — KMC Conquest VAV box: room faceplate, set points, occupancy'}
 ];
 var galIndex = 0;
 function galRender(){
@@ -879,6 +912,18 @@ document.addEventListener('click', function (e) {
     (dl.match(/(\d+(?:\.\d+)+)\.exe$/) || [])[1] || '');
   window.location.href = 'https://' + dl;
 });
+</script>
+<script>
+var scIdx = 0, scHold = 0, SC_N = 6, SC_STILL = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+function scPlay(){ document.querySelectorAll('.sc-view > *').forEach(function(m, k){ if (m.tagName !== 'VIDEO') return; if (k === scIdx && !SC_STILL) { m.preload = 'auto'; var p = m.play(); if (p && p.catch) p.catch(function(){}); } else { m.pause(); } }); }
+function scGo(i){ scIdx = (i + SC_N) % SC_N;
+  document.querySelectorAll('.sc-view > *').forEach(function(m, k){ m.classList.toggle('on', k === scIdx); }); scPlay();
+  document.querySelectorAll('.sc-thumbs button').forEach(function(b, k){ b.classList.toggle('on', k === scIdx); });
+  var g = GALLERY[scIdx].caption.split(' — ');
+  document.getElementById('scCap').innerHTML = '<b>' + g[0] + '</b>' + g.slice(1).join(' — ');
+  document.getElementById('scNum').textContent = (scIdx + 1) + ' / ' + SC_N; }
+scPlay();
+if (!SC_STILL) setInterval(function(){ if (!scHold && document.visibilityState === 'visible') scGo(scIdx + 1); }, 9000);
 </script>
 </body>
 </html>
