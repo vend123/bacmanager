@@ -382,7 +382,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <!-- crumbs (site-crumbs.js) --><style>.sc-crumbs{max-width:1140px;margin:0 auto;padding:.75rem 3rem 0;font-family:'IBM Plex Mono',monospace;font-size:.72rem;line-height:1.5;color:var(--muted,#5F5E5A)}.sc-crumbs a{color:var(--muted,#5F5E5A);text-decoration:none;border-bottom:1px dotted currentColor}.sc-crumbs a:hover{color:var(--ink,#16181A)}.sc-crumbs .sep{margin:0 .45rem;opacity:.7}.sc-crumbs [aria-current]{color:var(--ink,#16181A)}@media(max-width:768px){.sc-crumbs{padding:.6rem 1.2rem 0}}</style><div class="sc-crumbs" role="navigation" aria-label="Breadcrumb"><a href="/">BACManager</a><span class="sep">&rsaquo;</span><span aria-current="page">User Manual</span></div><!-- /crumbs -->
 
 <header class="hero">
-  <div class="eyebrow">Documentation &mdash; BACManager v1.4.11 &middot; updated 19 November 2026</div>
+  <div class="eyebrow">Documentation &mdash; BACManager v1.4.11 &middot; updated 22 November 2026</div>
   <h1>BACManager <span class="accent">User Manual</span></h1>
   <p class="hero-desc">How to discover, browse, write and schedule BACnet/IP and MS/TP devices, read Modbus devices in the same window, and build dashboards, logs, alarms and a BACnet&ndash;Modbus gateway with BACManager on Windows. Jump to a topic, or download the manual as a PDF.</p>
   <div class="hero-ctas">
@@ -466,11 +466,12 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <figure class="shot"><img src="/bac-mstp.png" loading="lazy" alt="BACnet connection row with the MS/TP datalink: serial port, refresh, baud and MAC"><figcaption>MS/TP: serial port, baud rate and this station&rsquo;s MAC address.</figcaption></figure>
 <ol class="body-list">
 <li>Connect a USB-RS485 adapter to the MS/TP trunk and choose the datalink <b>MS/TP (RS-485)</b>.</li>
-<li><b>Serial</b>: the COM port (&#8635; refreshes the list if the adapter was plugged in later).</li>
+<li><b>Serial</b>: the COM port (&#8635; refreshes the list if the adapter was plugged in later). The field can be typed too &mdash; for a port Windows does not list (com0com, some USB adapters).</li>
 <li><b>Baud</b>: 9600, 19200, 38400 (default), 57600, 76800 or 115200 &mdash; the same as the trunk.</li>
 <li><b>MAC</b>: this station&rsquo;s address, 0&ndash;127 (default 99). It must be unique on the segment.</li>
 <li><b>Open</b>, then <b>Discover</b>.</li>
 </ol>
+<p>BACManager takes part in the token passing: it answers Poll For Master, so a controller that joins the bus later gets the token and is found, and a device&rsquo;s <i>Reply Postponed</i> passes the token on at once instead of holding the bus. Errors say what happened, e.g. &ldquo;No answer from device VAV-3 (2103) in 3 s&rdquo;.</p>
 <p>BACManager joins the token ring as a master node (it answers Poll-For-Master and passes the token; Max Master 127), so it can send confirmed requests: browse, write, COV, schedules and EDE work as on BACnet/IP. Discover sends one broadcast Who-Is on the segment; Target IP and BBMD do not apply. MS/TP and Modbus RTU use separate COM ports, so both can run at once. More: <a class="inline-link" href="/bacnet-mstp-rs485.html">BACnet MS/TP over RS-485</a>.</p>
 </section>
 
@@ -529,7 +530,8 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <p>Commandable objects (AO, BO, MSO, and AV/BV/MSV where the device makes them commandable) keep a 16-slot <b>priority array</b>; the present value is the highest-priority slot that is not NULL, or the relinquish default.</p>
 <ul class="body-list">
 <li>Set <b>Write priority</b> in the bar (8 = Manual Operator is the usual choice), then &#9998; on the row and enter the value.</li>
-<li><b>Relinquish</b>: leave the value empty &mdash; NULL is written at that priority and the slot is released.</li>
+<li><b>Relinquish</b>: leave the value empty &mdash; NULL is written at that priority and the slot is released. On the dashboard&rsquo;s priority overview, a point overridden at priority 8 has a <b>&#8634; 8</b> button on its compact row in run mode (it asks first).</li>
+<li>The property view shows the priority array as &ldquo;8: 100 &middot; 16: 35&rdquo; and enumerations by name: &ldquo;98 (%)&rdquo;, &ldquo;1 (analog-output)&rdquo;, &ldquo;0 (normal)&rdquo;.</li>
 <li>With priority &ldquo;&mdash;&rdquo; no priority is sent and the device applies its default (normally 16).</li>
 <li>Properties other than the present value (e.g. a Loop setpoint) are written without a priority.</li>
 <li>Tags, dashboard elements and gateway rows that write BACnet carry their own priority, 8 by default.</li>
@@ -549,10 +551,10 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <figure class="shot"><img src="/manual-sched.jpg" width="1190" height="560" loading="lazy" alt="Schedule editor: present value 21.50, default 16, priority 8; Monday to Friday 06:00 21.5 and 18:00 18, Saturday and Sunday 08:00 19; writes to AV:0 present-value; one exception referencing calendar CAL:0 at priority 10; Reload and Write schedule buttons"><figcaption>A Schedule object as a weekly grid; it writes AV 0 at priority 8.</figcaption></figure>
 <p>&#128269; on a <b>schedule</b> object opens the weekly grid instead of the property list. The line above shows the present value, the schedule default and the priority it writes with.</p>
 <ul class="body-list">
-<li>Each day lists time/value pairs: edit them in place, &times; removes one, <b>+ add</b> adds one. Times are <code>HH:MM</code>.</li>
+<li>Each day lists time/value pairs: edit them in place, &times; removes one, <b>+ add</b> adds one, of the schedule&rsquo;s own type. Times are <code>HH:MM</code>; each day is written and shown in time order. A binary or multistate schedule offers the point&rsquo;s own texts (On / Off, the state texts) instead of numbers. <b>Copy Monday to Tue&ndash;Fri</b> copies the Monday row to the working days.</li>
 <li><b>Write schedule</b> writes the weekly schedule to the device; <b>Reload</b> reads it again; <b>Raw properties</b> switches to the property browser.</li>
 <li>An impossible entry &mdash; a time like 25:61, an empty or non-numeric value &mdash; is marked and nothing is written until it is fixed; the device keeps its schedule.</li>
-<li><b>Writes to</b> (the object properties the schedule commands) and <b>Exceptions</b> (dates, week-n-day entries and calendar references with their priority) are shown read-only.</li>
+<li><b>Writes to</b> (the object properties the schedule commands) and <b>Exceptions</b> (dates, week-n-day entries and calendar references with their priority, a calendar by name: &ldquo;Holidays (CAL:0)&rdquo;) are shown read-only.</li>
 </ul>
 <p>A <b>calendar</b> object opens as a list of entries: specific dates (<code>yyyy-mm-dd</code>, an empty part means &ldquo;any&rdquo;), <b>date ranges</b> (from &hellip; to, e.g. a summer shutdown, or 1&ndash;15 August of every year with the year left empty) and week-n-day patterns (month, week, weekday). <b>+ date</b>, <b>+ range</b> and <b>+ weekday</b> add entries, &times; removes one, <b>Write calendar</b> writes the list. A month 15, a day 35 or a year outside 1900&ndash;2154 is refused before writing.</p>
 <p>More: <a class="inline-link" href="/bacnet-schedule-editor.html">BACnet schedule &amp; calendar editor</a>.</p>
@@ -582,6 +584,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <li><b>Devices</b>: for each device the requests, answers, average and longest answer time, timeouts, and the errors, rejects and aborts with how many times each reason came.</li>
 <li><b>MS/TP bus</b> (on MS/TP): every frame on the bus, not only BACManager&rsquo;s &mdash; the stations, who passes the token, frame counts, the token round time, Poll-For-Master, frames with a bad header or data CRC, and a station that stopped passing the token.</li>
 </ul>
+<p>Token and poll frames are kept apart (the last 2 000) and shown only with the <b>token / poll frames</b> box, so they do not push the messages out. Names stay after Close.</p>
 <p><b>&#9679; Recording</b> stops and starts it, <b>Clear</b> empties it; up to 10 000 messages are kept in memory and nothing is written to disk unless you export: <b>CSV</b>, or <b>.pcap</b> to open in Wireshark (BACnet/IP as IPv4, MS/TP as raw frames). Other devices&rsquo; unicast traffic with each other is not seen &mdash; that needs a mirrored switch port and Wireshark.</p>
 </section>
 
@@ -666,6 +669,7 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <li><b>Destinations</b>: the <b>Modbus map</b> &mdash; a Modbus TCP slave (PLC side, port 502) any PLC or SCADA polls; a <b>BACnet obj</b> on the gateway&rsquo;s own BACnet/IP device; an <b>S7 DB</b> a Siemens PLC reads with GET; or <b>MQTT</b> (below).</li>
 <li><b>BMS side</b>: tick <b>Expose mapping rows as a BACnet device</b>, set the Device ID (default 1001), name and BACnet/IP port (47808). It runs as a separate process, so it can use 47808 while the BACnet tab&rsquo;s client uses another port. Rows with Dest &ldquo;BACnet obj&rdquo; become AI, AO, AV, BI, BO, BV, MSV or Loop objects with an instance and optional units. A BMS discovers it with Who-Is and can read, subscribe to COV and &mdash; for rows in write mode on commandable types &mdash; write with priority; the write goes on to the source device.</li>
 <li><b>Allowed BMS addresses (write)</b> on the BMS side limits which BACnet devices may write to the gateway&rsquo;s objects (empty = all); a refused write is answered write-access-denied and logged; reads are not limited. The Modbus PLC side has <b>Allowed PLC addresses</b> the same way.</li>
+<li>The <b>Value</b> column shows what each row read; a row whose source stopped answering shows &#9888;, its last value, its age and the error. One silent Modbus device on an RS-485 line no longer disturbs the others: it is asked again every 10 seconds. <b>When a source does not answer</b> (PLC side): keep the last value, or answer the PLC with exception 11 (0x0B). The S7, BACnet server and MQTT settings are below the mapping, folded until switched on.</li>
 <li><b>Mode</b> read (source &rarr; destination) or write (destination &rarr; source); data type, scale and offset per row. Every row has an <b>On</b> switch; a value that does not fit its destination is a row error, never wrapped; two rows writing the same place, or two MQTT rows with the same topic, are named in the log at start.</li>
 </ul>
 <p><b>Start gateway</b>; <b>Start gateway automatically</b> plus the tray options keep it running unattended. Rows and endpoints import from and export to CSV (an imported row with a bad address is skipped and named), and the configuration is saved with the workspace. The S7 server needs its <b>Allowed PLC addresses</b> list &mdash; empty means no PLC can connect. More: <a class="inline-link" href="/bacnet-modbus-gateway.html">BACnet &harr; Modbus gateway</a>.</p>
@@ -705,6 +709,9 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <li><b>Trial</b>: 14 days with every feature, from the first start; reinstalling does not reset it.</li>
 <li><b>Machine ID</b>: &#128273; <b>License</b> in the toolbar shows it with a copy button.</li>
 <li><b>Buy</b>: on <a class="inline-link" href="/#pricing">bacmanager.com</a> enter the Machine ID and e-mail; the key (<code>BACP-</code>&hellip;) is e-mailed after checkout. Paste it in the licence window and press <b>Activate license</b>. Runtime keys start <code>BACR-</code>.</li>
+<li><b>Buy from the application</b>: <b>Buy</b> in the reminder or in the licence window opens the checkout with this PC&rsquo;s Machine ID filled in. For 30 minutes after you press Buy, BACManager asks the licence server for this PC&rsquo;s key and <b>activates it by itself</b> a minute or two after the payment; the e-mail with the key still comes.</li>
+<li><b>Need more time?</b> When the trial is over, or in its last 5 days, the licence window offers <b>7 more days, once</b>: enter your e-mail and paste the <code>TRIALB-</code>&hellip; code it sends into the key field.</li>
+<li>The reminder comes once a day while more than 5 trial days are left, then every 15 minutes. BACManager talks to the licence server only when you press Buy or ask for more days; the trial itself works offline.</li>
 <li>A key is perpetual and bound to one machine; to move it to a new PC write to <a class="inline-link" href="mailto:support@bacmanager.com">support@bacmanager.com</a>. A key activated on another computer says so in the licence window, with that computer&rsquo;s Machine ID. Terms: <a class="inline-link" href="/license-terms.html">licence terms</a>.</li>
 </ul>
 <p><b>Languages</b>: English, German, Spanish, French, Portuguese, Ukrainian, Chinese, Polish and Estonian, from the flag in the toolbar.</p>
