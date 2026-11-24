@@ -432,6 +432,18 @@ footer.sf a:hover{color:var(--ink,#16181A);text-decoration:underline}
 <tr><td><b>BACManager</b> &mdash; &#36;149</td><td>Everything in this manual: BACnet explorer and editors, BACnet simulator, Modbus tools, dashboard editor, Historian, alarms, gateway, Siemens S7, Runtime package export.</td></tr>
 <tr><td><b>Runtime</b> &mdash; &#36;39 / machine</td><td>Runs a dashboard package full screen on a panel PC with live BACnet and Modbus, alarms and trends; no editor, scanner, schedule editor, gateway or simulator. See <a class="inline-link" href="#runtime">Runtime edition</a>.</td></tr>
 </tbody></table>
+<!-- system-requirements (add-system-requirements.js) -->
+<h3 id="system-requirements">System requirements</h3>
+<p>BACManager run on an ordinary office laptop or PC:</p>
+<table class="doc-table"><thead><tr><th style="width:150px">Item</th><th>Minimum</th></tr></thead><tbody>
+<tr><td><b>Operating system</b></td><td>Windows 10 or Windows 11, 64-bit</td></tr>
+<tr><td><b>Processor</b></td><td>Any x64 processor (Intel or AMD), two cores or more</td></tr>
+<tr><td><b>Memory</b></td><td>4 GB RAM minimum, 8 GB recommended. The application itself uses about 0.4 GB, and up to 0.6 GB with many poll windows, a dashboard and the Historian running (measured).</td></tr>
+<tr><td><b>Disk</b></td><td>About 600 MB for the program, plus room for logged history if you use the Historian</td></tr>
+<tr><td><b>Screen</b></td><td>1366 &times; 768 or larger; 1920 &times; 1080 recommended for dashboards</td></tr>
+<tr><td><b>Connections</b></td><td>BACnet/IP, BACnet/SC and Modbus TCP: a normal Ethernet or Wi-Fi connection. MS/TP and Modbus RTU: a USB-to-RS485 adapter that appears as a COM port in Windows.</td></tr>
+<tr><td><b>Internet</b></td><td>Not needed to run the software or to use a licence key. Only buying online, alarm messages by e-mail or Telegram and an MQTT broker on the internet use a connection.</td></tr>
+</tbody></table>
 <div class="steps"><div class="step"><div class="step-label">Install</div><div class="step-title">Run the installer</div><div class="step-text">Download the installer and start BACManager from the Start menu.</div></div><div class="step"><div class="step-label">Trial</div><div class="step-title">14 days, full features</div><div class="step-text">No account, no credit card. The licence button shows the days left.</div></div><div class="step"><div class="step-label">Open</div><div class="step-title">Open the BACnet client</div><div class="step-text">BACnet/IP or MS/TP, then <b>Open</b>.</div></div><div class="step"><div class="step-label">Discover</div><div class="step-title">Find the devices</div><div class="step-text"><b>Discover</b> sends Who-Is; pick a device and browse its objects.</div></div></div>
 <div class="callout tip"><div class="c-label">No device at hand?</div><p>Start the built-in <a class="inline-link" href="#simulator">BACnet simulator</a>, tick <b>localhost (sim)</b> in the BACnet tab, Open, Discover &mdash; everything in this manual can be tried on it.</p></div>
 </section>

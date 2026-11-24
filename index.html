@@ -168,6 +168,7 @@ nav .nav-links.open{display:flex!important;flex-direction:column;position:absolu
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What PC does BACManager need?","acceptedAnswer":{"@type":"Answer","text":"BACManager runs on an ordinary office laptop or PC: Windows 10 or 11, 64-bit, any x64 processor with two cores or more, 4 GB RAM minimum (8 GB recommended; the application itself uses about 0.4 GB, up to 0.6 GB with a dashboard and the Historian), about 600 MB of disk, and a 1366 x 768 or larger screen. BACnet/IP, BACnet/SC and Modbus TCP use a normal network connection; MS/TP and Modbus RTU need a USB-to-RS485 adapter. No internet connection is needed to run it."}},
 {"@type":"Question","name":"Aren't there free BACnet tools already?","acceptedAnswer":{"@type":"Answer","text":"Free BACnet tools exist and are good at BACnet, but they are BACnet-only. When a site also has Modbus energy meters, drives or inverters, a BACnet-only tool means switching to a second app. BACManager reads both BACnet and Modbus in one tool."}},
 {"@type":"Question","name":"Does BACManager support MS/TP or just BACnet/IP?","acceptedAnswer":{"@type":"Answer","text":"Full MS/TP master-node support over RS-485 alongside BACnet/IP. The same property browser, schedule editor and EDE export work over MS/TP and IP."}},
 {"@type":"Question","name":"How deep is the Modbus support?","acceptedAnswer":{"@type":"Answer","text":"Modbus RTU and TCP polling of registers, coils, common data types and scaling. For heavy Modbus work like dashboards, alarms, historian and scripting, ModbusManager goes further."}},
@@ -664,6 +665,19 @@ document.addEventListener('keydown', function(e){
     <details style="background:var(--plate);border:1px solid var(--steel);border-radius:3px;padding:1rem 1.2rem">
       <summary style="font-family:'Saira Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;cursor:pointer;font-size:1.05rem">One-time price, or subscription?</summary>
       <p style="color:var(--body);line-height:1.65;font-size:0.92rem;margin-top:0.8rem">One-time. $149 buys the tool with 12 months of free updates. No subscription, no per-point fees, no cloud dependency &mdash; it runs entirely on your Windows machine.</p>
+    </details>
+    <!-- system-requirements (add-system-requirements.js) -->
+    <details id="requirements" style="background:var(--plate);border:1px solid var(--steel);border-radius:3px;padding:1rem 1.2rem">
+      <summary style="font-family:'Saira Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;cursor:pointer;font-size:1.05rem">What PC does it need?</summary>
+      <ul style="color:var(--body);line-height:1.65;font-size:0.92rem;margin:0.8rem 0 0 1.1rem">
+        <li><b>Operating system:</b> Windows 10 or Windows 11, 64-bit</li>
+        <li><b>Processor:</b> Any x64 processor (Intel or AMD), two cores or more</li>
+        <li><b>Memory:</b> 4 GB RAM minimum, 8 GB recommended. The application itself uses about 0.4 GB, and up to 0.6 GB with many poll windows, a dashboard and the Historian running (measured).</li>
+        <li><b>Disk:</b> About 600 MB for the program, plus room for logged history if you use the Historian</li>
+        <li><b>Screen:</b> 1366 &times; 768 or larger; 1920 &times; 1080 recommended for dashboards</li>
+        <li><b>Connections:</b> BACnet/IP, BACnet/SC and Modbus TCP: a normal Ethernet or Wi-Fi connection. MS/TP and Modbus RTU: a USB-to-RS485 adapter that appears as a COM port in Windows.</li>
+        <li><b>Internet:</b> Not needed to run the software or to use a licence key. Only buying online, alarm messages by e-mail or Telegram and an MQTT broker on the internet use a connection.</li>
+      </ul>
     </details>
   </div>
 </section>
